@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'src/config/router/app_router.dart';
+import 'src/config/themes/app_themes.dart';
+import 'src/presentation/cubits/cubit/signin_cubit.dart';
 
 Future<void> main() async {
   runApp(MyApp());
@@ -9,10 +11,14 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerDelegate: appRouter.delegate(),
-      routeInformationParser: appRouter.defaultRouteParser(),
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => SigninCubit())],
+      child: MaterialApp.router(
+        theme: AppTheme.light,
+        debugShowCheckedModeBanner: false,
+        routerDelegate: appRouter.delegate(),
+        routeInformationParser: appRouter.defaultRouteParser(),
+      ),
     );
   }
 }
