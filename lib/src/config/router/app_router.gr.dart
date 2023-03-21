@@ -17,16 +17,16 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    HomePageViewRoute.name: (routeData) {
-      return AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const HomePageView(),
-      );
-    },
     SignInViewRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
         routeData: routeData,
         child: const SignInView(),
+      );
+    },
+    HomePageViewRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const HomePageView(),
       );
     },
   };
@@ -34,26 +34,14 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          HomePageViewRoute.name,
+          SignInViewRoute.name,
           path: '/',
         ),
         RouteConfig(
-          SignInViewRoute.name,
-          path: '/sign-in-view',
+          HomePageViewRoute.name,
+          path: '/home-page-view',
         ),
       ];
-}
-
-/// generated route for
-/// [HomePageView]
-class HomePageViewRoute extends PageRouteInfo<void> {
-  const HomePageViewRoute()
-      : super(
-          HomePageViewRoute.name,
-          path: '/',
-        );
-
-  static const String name = 'HomePageViewRoute';
 }
 
 /// generated route for
@@ -62,8 +50,20 @@ class SignInViewRoute extends PageRouteInfo<void> {
   const SignInViewRoute()
       : super(
           SignInViewRoute.name,
-          path: '/sign-in-view',
+          path: '/',
         );
 
   static const String name = 'SignInViewRoute';
+}
+
+/// generated route for
+/// [HomePageView]
+class HomePageViewRoute extends PageRouteInfo<void> {
+  const HomePageViewRoute()
+      : super(
+          HomePageViewRoute.name,
+          path: '/home-page-view',
+        );
+
+  static const String name = 'HomePageViewRoute';
 }
