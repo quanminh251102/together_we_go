@@ -17,10 +17,22 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    InitSocketRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const InitSocket(),
+      );
+    },
     SignInViewRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
         routeData: routeData,
         child: const SignInView(),
+      );
+    },
+    ChatPageRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const ChatPage(),
       );
     },
     HomePageViewRoute.name: (routeData) {
@@ -34,8 +46,16 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          SignInViewRoute.name,
+          InitSocketRoute.name,
           path: '/',
+        ),
+        RouteConfig(
+          SignInViewRoute.name,
+          path: '/sign-in-view',
+        ),
+        RouteConfig(
+          ChatPageRoute.name,
+          path: '/chat-page',
         ),
         RouteConfig(
           HomePageViewRoute.name,
@@ -45,15 +65,39 @@ class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [InitSocket]
+class InitSocketRoute extends PageRouteInfo<void> {
+  const InitSocketRoute()
+      : super(
+          InitSocketRoute.name,
+          path: '/',
+        );
+
+  static const String name = 'InitSocketRoute';
+}
+
+/// generated route for
 /// [SignInView]
 class SignInViewRoute extends PageRouteInfo<void> {
   const SignInViewRoute()
       : super(
           SignInViewRoute.name,
-          path: '/',
+          path: '/sign-in-view',
         );
 
   static const String name = 'SignInViewRoute';
+}
+
+/// generated route for
+/// [ChatPage]
+class ChatPageRoute extends PageRouteInfo<void> {
+  const ChatPageRoute()
+      : super(
+          ChatPageRoute.name,
+          path: '/chat-page',
+        );
+
+  static const String name = 'ChatPageRoute';
 }
 
 /// generated route for
