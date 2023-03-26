@@ -2,8 +2,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class HomePageView extends StatefulWidget {
-  const HomePageView({super.key});
-
+  const HomePageView({super.key, required this.email});
+  final String email;
   @override
   State<HomePageView> createState() => _HomePageViewState();
 }
