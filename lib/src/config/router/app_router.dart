@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../presentation/views/signin.dart';
 
 import '../../presentation/views/homepage.dart';
+import '../../presentation/views/signup.dart';
 
 part 'app_router.gr.dart';
 
@@ -10,6 +11,7 @@ part 'app_router.gr.dart';
   routes: [
     AutoRoute(page: SignInView, initial: true),
     AutoRoute(page: HomePageView),
+    AutoRoute(page: SignUpView)
   ],
 )
 class AppRouter extends _$AppRouter {}
