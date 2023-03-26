@@ -24,9 +24,19 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     HomePageViewRoute.name: (routeData) {
+      final args = routeData.argsAs<HomePageViewRouteArgs>();
       return AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const HomePageView(),
+        child: HomePageView(
+          key: args.key,
+          email: args.email,
+        ),
+      );
+    },
+    SignUpViewRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const SignUpView(),
       );
     },
   };
@@ -40,6 +50,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           HomePageViewRoute.name,
           path: '/home-page-view',
+        ),
+        RouteConfig(
+          SignUpViewRoute.name,
+          path: '/sign-up-view',
         ),
       ];
 }
@@ -58,12 +72,46 @@ class SignInViewRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [HomePageView]
-class HomePageViewRoute extends PageRouteInfo<void> {
-  const HomePageViewRoute()
-      : super(
+class HomePageViewRoute extends PageRouteInfo<HomePageViewRouteArgs> {
+  HomePageViewRoute({
+    Key? key,
+    required String email,
+  }) : super(
           HomePageViewRoute.name,
           path: '/home-page-view',
+          args: HomePageViewRouteArgs(
+            key: key,
+            email: email,
+          ),
         );
 
   static const String name = 'HomePageViewRoute';
+}
+
+class HomePageViewRouteArgs {
+  const HomePageViewRouteArgs({
+    this.key,
+    required this.email,
+  });
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'HomePageViewRouteArgs{key: $key, email: $email}';
+  }
+}
+
+/// generated route for
+/// [SignUpView]
+class SignUpViewRoute extends PageRouteInfo<void> {
+  const SignUpViewRoute()
+      : super(
+          SignUpViewRoute.name,
+          path: '/sign-up-view',
+        );
+
+  static const String name = 'SignUpViewRoute';
 }
