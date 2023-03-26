@@ -72,6 +72,7 @@ class MessageCubit extends Cubit<MessageState> {
       userId: curent_user_id,
       message: message,
       type: type,
+      createdAt: DateTime.now().toIso8601String(),
     );
     this.messages.add(_message);
 
@@ -80,6 +81,7 @@ class MessageCubit extends Cubit<MessageState> {
       'userId': curent_user_id,
       'message': message,
       'type': type,
+      'createdAt': DateTime.now().toIso8601String(),
     };
     appSocket.socket.emit('send_message_to_chat_room', data);
     emit(LoadingNewMessageState());

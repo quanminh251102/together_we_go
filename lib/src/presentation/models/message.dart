@@ -22,18 +22,6 @@ class Message {
     };
   }
 
-  // Message.fromJson(Map<String, dynamic> body)
-  //     : message = body['message'] == null ? '' : body['message'],
-  //       userId = body['userId'] == null ? '' : body['userId'],
-  //       chatRoomId = body['chatRoomId'] == null ? '' : body['chatRoomId'],
-  //       type = body['type'] == null ? '' : body['type'],
-  //       createdAt = body['createdAt'] == null
-  //           ? ''
-  //           : DateTime.parse(body['createdAt'] as String)
-  //               .toLocal()
-  //               .toString()
-  //               .substring(11, 16);
-
   Message.fromJson(Map<String, dynamic> body)
       : message = body['message'] == null ? '' : body['message'],
         userId = body['userId'] == null ? '' : body['userId'],

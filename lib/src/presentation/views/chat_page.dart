@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import '../../utils/constants/colors.dart';
 import '../cubits/cubit/message_cubit.dart';
 import '../models/message.dart';
 import 'package:flutter/cupertino.dart';
@@ -176,13 +177,6 @@ class _ChatPageState extends State<ChatPage> {
       elevation: 0.5,
       leading: IconButton(
         onPressed: () {
-          //socket.onDisconnect((data) => null);
-          //socket.emit('disconnect');
-          //socket.close();
-          // Map data = {'value': '${widget.chatRoom.ChatRoomId}'};
-          // socket.emit("leave_chat_room", data);
-          // SocketProvider.filterText_MessagePage = '';
-          // Provider.of<SocketProvider>(context, listen: false).getChatRooms(1);
           BlocProvider.of<MessageCubit>(context).leave_chat_room();
           Navigator.pop(context);
         },
@@ -233,7 +227,6 @@ class _ChatPageState extends State<ChatPage> {
           },
           icon: const Icon(
             Icons.call,
-            color: Color(0xFF229D1F),
           ),
         ),
         IconButton(
@@ -242,33 +235,46 @@ class _ChatPageState extends State<ChatPage> {
           },
           icon: const Icon(
             Icons.video_call_sharp,
-            color: Color(0xFF229D1F),
           ),
         ),
       ],
     );
 
-    Widget textRight(Message message) => Padding(
+    Widget textRight(Message message, String startTime) => Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Align(
             alignment: Alignment.centerRight,
             child: Container(
               constraints: const BoxConstraints(maxWidth: 250),
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(12),
               margin: const EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
-                color: const Color(0xff1972F5),
+                color: AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Text(
-                message.message,
-                style: const TextStyle(color: Colors.white, fontSize: 15),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    constraints: const BoxConstraints(maxWidth: 180),
+                    child: Text(
+                      message.message,
+                      style: const TextStyle(
+                          color: AppColors.textPrimaryColor, fontSize: 15),
+                    ),
+                  ),
+                  Text(
+                    startTime,
+                    style: TextStyle(color: AppColors.textSecondaryColor),
+                  )
+                ],
               ),
             ),
           ),
         );
 
-    Widget textLeft(Message message) => Padding(
+    Widget textLeft(Message message, String startTime) => Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Row(
             children: [
@@ -280,31 +286,55 @@ class _ChatPageState extends State<ChatPage> {
               const SizedBox(width: 10),
               Container(
                 constraints: const BoxConstraints(maxWidth: 250),
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 225, 231, 236),
+                  color: Color.fromARGB(94, 158, 158, 158),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text(
-                  message.message,
-                  style: const TextStyle(
-                    fontSize: 15,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Container(
+                      constraints: const BoxConstraints(maxWidth: 180),
+                      child: Text(
+                        message.message,
+                        style: const TextStyle(
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      startTime,
+                      style: TextStyle(color: AppColors.textSecondaryColor),
+                    )
+                  ],
                 ),
               ),
             ],
           ),
         );
 
-    Widget imageRight(Message message) => Padding(
+    Widget imageRight(Message message, String startTime) => Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Align(
             alignment: Alignment.centerRight,
-            child: Image.network(message.message, width: 150, fit: BoxFit.fill),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(message.message,
+                        width: 150, fit: BoxFit.fill)),
+                SizedBox(height: 4),
+                Text(startTime,
+                    style: TextStyle(color: AppColors.textSecondaryColor)),
+              ],
+            ),
           ),
         );
 
-    Widget imageLeft(Message message) => Padding(
+    Widget imageLeft(Message message, String startTime) => Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,18 +345,38 @@ class _ChatPageState extends State<ChatPage> {
                     'https://images.unsplash.com/photo-1657299170222-1c67dc056b70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'),
               ),
               const SizedBox(width: 10),
-              Image.network(message.message, width: 150, fit: BoxFit.fill),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: Image.network(message.message,
+                          width: 150, fit: BoxFit.fill)),
+                  SizedBox(height: 4),
+                  Text(
+                    startTime,
+                    style: TextStyle(color: AppColors.textSecondaryColor),
+                  )
+                ],
+              ),
             ],
           ),
         );
     context.watch<MessageCubit>().scrollDown();
 
-    Widget dateWidget(Message message) => Padding(
-        padding: EdgeInsets.fromLTRB(0, 24, 0, 24),
+    Widget dateWidget(Message message, String startTime) => Padding(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
         child: Center(
-            child: Text(
-          message.message,
-          style: TextStyle(color: Colors.grey),
+            child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(97, 158, 158, 158),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(
+            message.message,
+            style: TextStyle(color: AppColors.textSecondaryColor, fontSize: 12),
+          ),
         )));
     final _message_list = BlocConsumer<MessageCubit, MessageState>(
       listener: (BuildContext context, state) async {
@@ -375,20 +425,24 @@ class _ChatPageState extends State<ChatPage> {
               controller: context.watch<MessageCubit>().controller,
               itemCount: context.watch<MessageCubit>().messages.length,
               itemBuilder: (context, index) {
-                //print('Index Chat message: $index ${list.length}');
                 var _message = messages[index];
+                String customStartTime =
+                    DateTime.parse(_message.createdAt as String)
+                        .toLocal()
+                        .toString()
+                        .substring(11, 16);
 
                 String _type = _message.type;
 
                 return (_type == "isDate")
-                    ? dateWidget(_message)
+                    ? dateWidget(_message, customStartTime)
                     : _message.userId == current_user_id // mean is Me
                         ? ((_type == "isText")
-                            ? (textRight(_message))
-                            : (imageRight(_message)))
+                            ? (textRight(_message, customStartTime))
+                            : (imageRight(_message, customStartTime)))
                         : ((_type == "isText")
-                            ? (textLeft(_message))
-                            : (imageLeft(_message)));
+                            ? (textLeft(_message, customStartTime))
+                            : (imageLeft(_message, customStartTime)));
               });
           return messagesList;
         } else {
@@ -480,7 +534,10 @@ class _ChatPageState extends State<ChatPage> {
                         print("upload image");
                         openMediaDialog();
                       },
-                      child: Icon(Icons.image)),
+                      child: Icon(
+                        Icons.image,
+                        color: AppColors.primaryColor,
+                      )),
                 ),
               ),
             ),
@@ -488,7 +545,7 @@ class _ChatPageState extends State<ChatPage> {
               splashRadius: 20,
               icon: const Icon(
                 Icons.send,
-                color: Colors.blue,
+                color: AppColors.primaryColor,
               ),
               onPressed: () {
                 BlocProvider.of<MessageCubit>(context)
