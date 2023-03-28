@@ -5,8 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:cloudinary/cloudinary.dart';
 import 'package:image_picker/image_picker.dart';
 
-const baseUrl = 'http://192.168.1.19:8080';
-
 final cloudinary = Cloudinary.signedConfig(
   apiKey: '948192272522128',
   apiSecret: 'jms91MYN0ZKY4X7t9E2t8GgRrXM',
