@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utils/constants/colors.dart';
 import '../cubits/chat/chat_rooms_cubit.dart';
+import '../cubits/home_page/home_page_cubit.dart';
 import 'chat/chat_rooms_page.dart';
 import 'profile_and_settings/profile_page.dart';
 
@@ -58,6 +59,7 @@ class _HomePageViewState extends State<HomePageView> {
         currentIndex: _currentIndex,
         onTap: (value) {
           if (value == 2) context.read<ChatRoomsCubit>().get_chatRoom();
+          //BlocProvider.of<HomePageCubit>(context).set_current_index(value);
           setState(() {
             _currentIndex = value;
           });

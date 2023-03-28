@@ -29,6 +29,8 @@ class _ProfilePageState extends State<ProfilePage> {
         //     .read<MessageCubit>()
         //     .send_message_to_chat_room(value, "isImage");
         await UserService.editAvatar(value);
+        appUser.edit_avatar(value);
+        //appRouter.push(HomePageViewRoute(email: appUser.gmail));
       }
       setState(() {
         _isLoadingImage = false;
@@ -143,12 +145,14 @@ class _ProfilePageState extends State<ProfilePage> {
       const SizedBox(height: 8),
       CircleAvatar(
         radius: 60.0,
-        backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+        backgroundImage: NetworkImage(appUser.avatar),
         backgroundColor: Colors.transparent,
       ),
       Visibility(visible: _isLoadingImage, child: CircularProgressIndicator()),
       ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          openMediaDialog();
+        },
         child: Text('Edit avatar'),
       ),
       const SizedBox(height: 8),
