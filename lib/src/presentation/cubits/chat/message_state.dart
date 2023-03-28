@@ -1,4 +1,4 @@
-part of 'message_cubit.dart';
+part of '../chat/message_cubit.dart';
 
 abstract class MessageState extends Equatable {
   const MessageState();

@@ -1,6 +1,6 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-const baseUrl = 'http://192.168.1.19:8080';
+import '../../config/url/config.dart';
 
 class AppSocket {
   late IO.Socket _socket;

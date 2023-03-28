@@ -13,12 +13,8 @@ class SigninInitial extends SigninState {}
 class SigninLoading extends SigninState {}
 
 class SigninSuccess extends SigninState {
-  final String username;
-  final String password;
-  SigninSuccess({
-    required this.username,
-    required this.password,
-  });
+  final String email;
+  SigninSuccess(this.email);
 }
 
 class SigninError extends SigninState {}
