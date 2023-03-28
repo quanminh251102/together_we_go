@@ -13,7 +13,7 @@ class ChatRoom {
     return {
       'id': id,
       'partner_name': partner_name,
-      'partner_name': partner_gmail,
+      'partner_gmail': partner_gmail,
     };
   }
 

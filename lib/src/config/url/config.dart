@@ -10,3 +10,5 @@ const urlSignUp = '$baseUrl/api/auth/register'; // post
 const urlGetMessage = '$baseUrl/api/message';
 
 const urlGetChatRoom = '$baseUrl/api/chat_room';
+
+const urlEditAvatar = '$baseUrl/api/user/edit_avatar';

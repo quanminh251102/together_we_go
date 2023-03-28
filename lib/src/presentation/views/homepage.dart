@@ -3,8 +3,10 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../utils/constants/colors.dart';
 import '../cubits/chat/chat_rooms_cubit.dart';
 import 'chat/chat_rooms_page.dart';
+import 'profile_and_settings/profile_page.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key, required this.email});
@@ -18,30 +20,69 @@ class _HomePageViewState extends State<HomePageView> {
 
   final tabs = [
     Container(
-      child: Center(child: Text('home page')),
+      child: Center(
+          child: Text(
+        'Home page',
+        style: TextStyle(fontSize: 20),
+      )),
     ),
-    Center(child: ChatRoomsPage()),
     Container(
-      child: Center(child: Text('profile')),
+      child: Center(
+          child: Text(
+        'Bookings',
+        style: TextStyle(fontSize: 20),
+      )),
     ),
+    const Center(child: ChatRoomsPage()),
+    Container(
+      child: Center(
+          child: Text(
+        'Wallet',
+        style: TextStyle(fontSize: 20),
+      )),
+    ),
+    Container(child: const ProfilePage()),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabs[_currentIndex],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(24, 48, 24, 0),
+          child: tabs[_currentIndex],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: AppColors.primaryColor,
+        unselectedItemColor: AppColors.borderColor,
         currentIndex: _currentIndex,
         onTap: (value) {
-          context.read<ChatRoomsCubit>().get_chatRoom();
+          if (value == 2) context.read<ChatRoomsCubit>().get_chatRoom();
           setState(() {
             _currentIndex = value;
           });
         },
-        iconSize: 40,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'message'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
+          const BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.home),
+              label: 'Home'),
+          const BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.car_rental),
+              label: 'Bookings'),
+          const BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.message),
+              label: 'Inbox'),
+          const BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.wallet),
+              label: 'Wallet'),
+          const BottomNavigationBarItem(
+              backgroundColor: Colors.white,
+              icon: Icon(Icons.person),
+              label: 'Profile'),
         ],
       ),
     );
