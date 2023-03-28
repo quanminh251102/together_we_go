@@ -23,6 +23,12 @@ class _$AppRouter extends RootStackRouter {
         child: const SignInView(),
       );
     },
+    ChatPageRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const ChatPage(),
+      );
+    },
     HomePageViewRoute.name: (routeData) {
       final args = routeData.argsAs<HomePageViewRouteArgs>();
       return AdaptivePage<dynamic>(
@@ -48,6 +54,10 @@ class _$AppRouter extends RootStackRouter {
           path: '/',
         ),
         RouteConfig(
+          ChatPageRoute.name,
+          path: '/chat-page',
+        ),
+        RouteConfig(
           HomePageViewRoute.name,
           path: '/home-page-view',
         ),
@@ -68,6 +78,18 @@ class SignInViewRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignInViewRoute';
+}
+
+/// generated route for
+/// [ChatPage]
+class ChatPageRoute extends PageRouteInfo<void> {
+  const ChatPageRoute()
+      : super(
+          ChatPageRoute.name,
+          path: '/chat-page',
+        );
+
+  static const String name = 'ChatPageRoute';
 }
 
 /// generated route for

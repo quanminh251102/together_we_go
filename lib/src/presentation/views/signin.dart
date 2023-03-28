@@ -7,6 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../config/router/app_router.dart';
 import '../../utils/constants/colors.dart';
+import '../cubits/app_socket.dart';
+import '../cubits/chat/message_cubit.dart';
 import '../cubits/signin/signin_cubit.dart';
 
 class SignInView extends StatefulWidget {
@@ -58,6 +60,11 @@ class _SignInViewState extends State<SignInView> {
       );
   @override
   Widget build(BuildContext context) {
+    void init_app() {
+      appSocket.init();
+      BlocProvider.of<MessageCubit>(context).init_socket();
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -74,6 +81,7 @@ class _SignInViewState extends State<SignInView> {
             buildErrorLayout();
           } else if (state is SigninSuccess) {
             clearTextData();
+            init_app();
             appRouter.push(HomePageViewRoute(email: state.email));
           }
         },

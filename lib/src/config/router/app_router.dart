@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import '../../presentation/views/signin.dart';
 
+import '../../presentation/views/signin.dart';
 import '../../presentation/views/homepage.dart';
+import '../../presentation/views/chat/chat_page.dart';
 import '../../presentation/views/signup.dart';
 
 part 'app_router.gr.dart';
@@ -10,6 +11,7 @@ part 'app_router.gr.dart';
 @AdaptiveAutoRouter(
   routes: [
     AutoRoute(page: SignInView, initial: true),
+    AutoRoute(page: ChatPage),
     AutoRoute(page: HomePageView),
     AutoRoute(page: SignUpView)
   ],
