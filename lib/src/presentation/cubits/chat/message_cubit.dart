@@ -3,35 +3,30 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import '../../models/chat_room.dart';
 import '../../services/message.dart';
 import '../app_socket.dart';
 import '../../models/message.dart';
 import 'package:flutter/material.dart';
-part 'message_state.dart';
 
-final String chatRoomId = "641dc278b35f299b2b12b2ea";
+import '../app_user.dart';
+part '../chat/message_state.dart';
 
 class MessageCubit extends Cubit<MessageState> {
-  MessageCubit() : super(MessageInitial()) {
-    get_message();
-  }
-  String curent_user_id = "";
+  MessageCubit() : super(MessageInitial()) {}
+
   ScrollController controller = new ScrollController();
   List<Message> messages = [];
   bool init_socket_message = false;
+  late ChatRoom chatRoom;
+  void setChatRoom(ChatRoom _chatRoom) {
+    chatRoom = _chatRoom;
+  }
 
   void scrollDown() {
     if (controller.hasClients) {
       controller.jumpTo(controller.position.maxScrollExtent + 100);
     }
-  }
-
-  void set_user_id(String user_id) {
-    curent_user_id = user_id;
-  }
-
-  String get_user_id() {
-    return curent_user_id;
   }
 
   void init_socket() {
@@ -53,12 +48,11 @@ class MessageCubit extends Cubit<MessageState> {
       });
       init_socket_message = true;
     }
-    join_chat_room();
   }
 
   void join_chat_room() {
     Map data = {
-      'chat_room_id': '$chatRoomId',
+      'chat_room_id': '${chatRoom.id}',
     };
     appSocket.socket.emit('join_chat_room', data);
   }
@@ -68,8 +62,8 @@ class MessageCubit extends Cubit<MessageState> {
     String type,
   ) {
     Message _message = Message(
-      chatRoomId: chatRoomId,
-      userId: curent_user_id,
+      chatRoomId: chatRoom.id,
+      userId: appUser.id,
       message: message,
       type: type,
       createdAt: DateTime.now().toIso8601String(),
@@ -77,8 +71,8 @@ class MessageCubit extends Cubit<MessageState> {
     this.messages.add(_message);
 
     Map data = {
-      'chat_room_id': chatRoomId,
-      'userId': curent_user_id,
+      'chat_room_id': chatRoom.id,
+      'userId': appUser.id,
       'message': message,
       'type': type,
       'createdAt': DateTime.now().toIso8601String(),
@@ -91,7 +85,7 @@ class MessageCubit extends Cubit<MessageState> {
 
   void leave_chat_room() {
     Map data = {
-      'chat_room_id': '$chatRoomId',
+      'chat_room_id': '${chatRoom.id}',
     };
     appSocket.socket.emit('leave_chat_room', data);
   }
@@ -99,7 +93,7 @@ class MessageCubit extends Cubit<MessageState> {
   void get_message() async {
     try {
       emit(LoadingState());
-      this.messages = await MessageService.getMessageChatRoom(chatRoomId);
+      this.messages = await MessageService.getMessageChatRoom(chatRoom.id);
 
       var customMessages = [];
       for (int i = 0; i < this.messages.length; i++) {

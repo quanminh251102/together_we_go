@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import '../../config/url/config.dart';
 import '../models/message.dart';
-//import '../../../config/config.dart' as config;
-
-final chatUrl = 'http://192.168.1.19:8080/api/message/641dc278b35f299b2b12b2ea';
 
 class MessageService {
   static Future<List<Message>> getMessageChatRoom(
     String chatRoomId,
   ) async {
-    //var uri = Uri.parse(config.urlGetMessageChatRoom + chatRoomId);
-    var uri = Uri.parse(chatUrl);
-    //print(config.urlGetMessageChatRoom + chatRoomId);
+    var uri = Uri.parse(urlGetMessage + "/" + chatRoomId);
     Response res = await post(
       uri,
     );

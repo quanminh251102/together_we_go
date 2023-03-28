@@ -1,70 +1,83 @@
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../config/router/app_router.dart';
 import '../../utils/constants/colors.dart';
-import '../cubits/app_socket.dart';
-import '../cubits/chat/message_cubit.dart';
-import '../cubits/signin/signin_cubit.dart';
+import '../cubits/signup/signup_cubit.dart';
 
-class SignInView extends StatefulWidget {
-  const SignInView({super.key});
+class SignUpView extends StatefulWidget {
+  const SignUpView({super.key});
 
   @override
-  State<SignInView> createState() => _SignInViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignInViewState extends State<SignInView> {
-  late FocusNode emailFocus;
+class _SignUpViewState extends State<SignUpView> {
+  late FocusNode usernameFocus;
   late FocusNode passwordFocus;
-  late TextEditingController email;
+  late FocusNode emailFocus;
+  late FocusNode passwordConFirmFocus;
+  late TextEditingController username;
   late TextEditingController password;
+  late TextEditingController email;
+  late TextEditingController passwordConfirm;
   late GlobalKey<FormState> _formKey;
   @override
   void initState() {
     super.initState();
+    usernameFocus = FocusNode();
     emailFocus = FocusNode();
     passwordFocus = FocusNode();
+    passwordConFirmFocus = FocusNode();
+    usernameFocus.addListener(() {
+      setState(() {});
+    });
     emailFocus.addListener(() {
+      setState(() {});
+    });
+    passwordConFirmFocus.addListener(() {
       setState(() {});
     });
     passwordFocus.addListener(() {
       setState(() {});
     });
+    passwordConFirmFocus.addListener(() {
+      setState(() {});
+    });
     _formKey = GlobalKey<FormState>();
+    username = TextEditingController();
     email = TextEditingController();
     password = TextEditingController();
+    passwordConfirm = TextEditingController();
   }
 
   @override
   void dispose() {
+    username.dispose();
     email.dispose();
     password.dispose();
+    passwordConfirm.dispose();
     super.dispose();
   }
 
   clearTextData() {
+    username.clear();
     email.clear();
     password.clear();
+    passwordConfirm.clear();
   }
 
   ScaffoldFeatureController buildErrorLayout() =>
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please enter email/password!'),
+          backgroundColor: Colors.grey,
+          content: const Text('Mật khẩu không khớp!'),
         ),
       );
   @override
   Widget build(BuildContext context) {
-    void init_app() {
-      appSocket.init();
-      BlocProvider.of<MessageCubit>(context).init_socket();
-    }
-
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -75,22 +88,30 @@ class _SignInViewState extends State<SignInView> {
           ),
         ),
       ),
-      body: BlocConsumer<SigninCubit, SigninState>(
+      body: BlocConsumer<SignupCubit, SignupState>(
         listener: (context, state) {
-          if (state is SigninError) {
+          if (state is SignupError) {
             buildErrorLayout();
-          } else if (state is SigninSuccess) {
+          } else if (state is SignupSuccess) {
             clearTextData();
-            init_app();
             appRouter.push(HomePageViewRoute(email: state.email));
           }
         },
         builder: (context, state) {
-          if (state is SigninLoading) {
+          if (state is SignupLoading) {
             return const Center(child: CircularProgressIndicator());
           } else {
             return buildInitial(
-                context, email, password, _formKey, emailFocus, passwordFocus);
+                context,
+                username,
+                email,
+                password,
+                passwordConfirm,
+                _formKey,
+                usernameFocus,
+                emailFocus,
+                passwordFocus,
+                passwordConFirmFocus);
           }
         },
       ),
@@ -100,11 +121,15 @@ class _SignInViewState extends State<SignInView> {
 
 Widget buildInitial(
         BuildContext context,
+        TextEditingController username,
         TextEditingController email,
-        TextEditingController passWord,
+        TextEditingController password,
+        TextEditingController passwordConfirm,
         GlobalKey<FormState> _formKey,
+        FocusNode usernameFocus,
         FocusNode emailFocus,
-        FocusNode passwordFocus) =>
+        FocusNode passwordFocus,
+        FocusNode passwordConfirmFocus) =>
     SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -116,7 +141,7 @@ Widget buildInitial(
               padding: EdgeInsets.only(
                   right: MediaQuery.of(context).size.width * 0.2),
               child: const Text(
-                'Đăng nhập vào tài khoản của bạn',
+                'Tạo tài khoản mới của bạn',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 30,
@@ -128,6 +153,39 @@ Widget buildInitial(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextFormField(
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                      focusNode: usernameFocus,
+                      controller: username,
+                      decoration: InputDecoration(
+                        filled: true, //<-- SEE HERE
+                        fillColor: usernameFocus.hasFocus
+                            ? AppColors.primaryColor.withOpacity(0.1)
+                            : Colors.grey.withOpacity(0.1),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:
+                              const BorderSide(color: AppColors.primaryColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.grey.withOpacity(0.1),
+                            width: 2.0,
+                          ),
+                        ),
+                        hintText: 'Họ và tên',
+                        prefixIcon: Icon(
+                          Icons.person_2_outlined,
+                          color: usernameFocus.hasFocus
+                              ? AppColors.primaryColor
+                              : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
@@ -172,7 +230,7 @@ Widget buildInitial(
                     child: TextFormField(
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       focusNode: passwordFocus,
-                      controller: passWord,
+                      controller: password,
                       obscureText: true,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -213,6 +271,52 @@ Widget buildInitial(
                           )),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextFormField(
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      focusNode: passwordConfirmFocus,
+                      controller: passwordConfirm,
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Vui lòng nhập mật khẩu";
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                          labelStyle:
+                              const TextStyle(fontWeight: FontWeight.w600),
+                          focusColor: Colors.black,
+                          filled: true, //<-- SEE HERE
+                          fillColor: passwordConfirmFocus.hasFocus
+                              ? AppColors.primaryColor.withOpacity(0.1)
+                              : Colors.grey.withOpacity(0.1),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide:
+                                const BorderSide(color: AppColors.primaryColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Colors.grey.withOpacity(0.1),
+                              width: 2.0,
+                            ),
+                          ),
+                          hintText: 'Xác nhận mật khẩu',
+                          prefixIcon: Icon(Icons.password_outlined,
+                              color: passwordFocus.hasFocus
+                                  ? AppColors.primaryColor
+                                  : Colors.black),
+                          suffixIcon: Icon(
+                            Icons.lock_outline,
+                            color: passwordConfirmFocus.hasFocus
+                                ? AppColors.primaryColor
+                                : Colors.black,
+                          )),
+                    ),
+                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
@@ -220,8 +324,11 @@ Widget buildInitial(
                     child: NeumorphicButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          BlocProvider.of<SigninCubit>(context)
-                              .SignIn(email.text, passWord.text);
+                          BlocProvider.of<SignupCubit>(context).SignUp(
+                              username.text,
+                              email.text,
+                              password.text,
+                              passwordConfirm.text);
                         }
                       },
                       style: NeumorphicStyle(
@@ -235,7 +342,7 @@ Widget buildInitial(
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: const Center(
                           child: Text(
-                            'Đăng nhập',
+                            'Đăng ký',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
@@ -245,117 +352,19 @@ Widget buildInitial(
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Center(
-                      child: Text(
-                        'Quên mật khẩu? ',
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                  ),
-                  Row(
-                    children: const [
-                      Expanded(
-                          child: Divider(
-                        thickness: 0.2,
-                        color: Colors.black,
-                      )),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          "Hoặc đăng nhập bằng",
-                          style: TextStyle(
-                            color: Colors.black26,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          child: Divider(
-                        thickness: 0.2,
-                        color: Colors.black,
-                      )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      NeumorphicButton(
-                        onPressed: () {
-                          print("onClick");
-                        },
-                        style: NeumorphicStyle(
-                            shape: NeumorphicShape.concave,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(12)),
-                            depth: 4,
-                            color: Colors.white),
-                        child: SvgPicture.asset(
-                          'assets/svg/facebook.svg',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      NeumorphicButton(
-                        onPressed: () {
-                          print("onClick");
-                        },
-                        style: NeumorphicStyle(
-                            shape: NeumorphicShape.concave,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(10)),
-                            depth: 4,
-                            color: Colors.white),
-                        child: SvgPicture.asset(
-                          'assets/svg/google_box.svg',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      NeumorphicButton(
-                        onPressed: () {
-                          print("onClick");
-                        },
-                        style: NeumorphicStyle(
-                            shape: NeumorphicShape.concave,
-                            boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(10)),
-                            depth: 4,
-                            color: Colors.white),
-                        child: SvgPicture.asset(
-                          'assets/svg/apple.svg',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: MediaQuery.of(context).size.height * 0.08,
                   ),
                   Center(
                     child: RichText(
                       text: TextSpan(
-                        text: 'Bạn chưa có tài khoản? ',
+                        text: 'Bạn đã có tài khoản? ',
                         style: DefaultTextStyle.of(context).style,
                         children: <TextSpan>[
                           TextSpan(
                             recognizer: TapGestureRecognizer()
                               ..onTap =
-                                  () => appRouter.push(const SignUpViewRoute()),
-                            text: 'Đăng ký tại đây',
+                                  () => appRouter.push(const SignInViewRoute()),
+                            text: 'Đăng nhập tại đây',
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.primaryColor),

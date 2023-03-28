@@ -3,15 +3,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import '../../utils/constants/colors.dart';
-import '../cubits/cubit/message_cubit.dart';
-import '../models/message.dart';
+import '../../../utils/constants/colors.dart';
+import '../../cubits/app_user.dart';
+import '../../cubits/chat/message_cubit.dart';
+import '../../models/message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
 
-import '../services/image.dart';
+import '../../services/image.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -168,8 +169,7 @@ class _ChatPageState extends State<ChatPage> {
 
     final isKeyBoardShow = MediaQuery.of(context).viewInsets.bottom > 0;
     final keyBoardHeight = MediaQuery.of(context).viewInsets.bottom;
-    final current_user_id =
-        BlocProvider.of<MessageCubit>(context).curent_user_id;
+    final current_user_id = appUser.id;
     final _appBar = AppBar(
       toolbarHeight: appBarHeight,
       centerTitle: false,
