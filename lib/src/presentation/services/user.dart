@@ -7,6 +7,7 @@ class UserService {
     String avatar_url,
   ) async {
     var uri = Uri.parse(urlEditAvatar + "/" + appUser.id);
+    print(urlEditAvatar + "/" + appUser.id);
     Response res = await post(uri, body: {
       'avatar_url': avatar_url,
     });

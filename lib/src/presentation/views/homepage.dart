@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../utils/constants/colors.dart';
 import '../cubits/chat/chat_rooms_cubit.dart';
 import 'booking/booking_page.dart';
+import '../cubits/home_page/home_page_cubit.dart';
 import 'chat/chat_rooms_page.dart';
 import 'profile_and_settings/profile_page.dart';
 
