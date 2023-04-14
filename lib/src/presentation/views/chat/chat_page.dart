@@ -184,24 +184,24 @@ class _ChatPageState extends State<ChatPage> {
       ),
       title: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 25,
             backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1657299170222-1c67dc056b70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'),
+                context.read<MessageCubit>().chatRoom.partner_avatar),
           ),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 // HandleString.validateForLongStringWithLim(
                 //   (SocketProvider.current_user_id == widget.chatRoom.UserId1
                 //       ? widget.chatRoom.UserName2
                 //       : widget.chatRoom.UserName1),
                 //   10,
                 // ),
-                'kiet',
-                style: TextStyle(
+                context.read<MessageCubit>().chatRoom.partner_name,
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                 ),
@@ -275,10 +275,10 @@ class _ChatPageState extends State<ChatPage> {
           padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 25,
                 backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1657299170222-1c67dc056b70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'),
+                    context.read<MessageCubit>().chatRoom.partner_avatar),
               ),
               const SizedBox(width: 10),
               Container(
@@ -336,10 +336,10 @@ class _ChatPageState extends State<ChatPage> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 25,
                 backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1657299170222-1c67dc056b70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'),
+                    context.read<MessageCubit>().chatRoom.partner_avatar),
               ),
               const SizedBox(width: 10),
               Column(

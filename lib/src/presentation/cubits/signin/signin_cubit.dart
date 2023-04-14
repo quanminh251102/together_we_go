@@ -26,7 +26,8 @@ class SigninCubit extends Cubit<SigninState> {
         //final new_t = json.encode(jsonData);
         final data = json.decode(new_t) as Map<String, dynamic>;
 
-        appUser.init(data["user_id"], data["user_name"], data["user_email"]);
+        appUser.init(data["user_id"], data["user_name"], data["user_email"],
+            data["user_avatar"]);
 
         print(email);
         print(password);

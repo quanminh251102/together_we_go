@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
 import '../../../config/router/app_router.dart';
+import '../../../utils/constants/colors.dart';
 import '../../cubits/chat/chat_rooms_cubit.dart';
 import '../../cubits/chat/message_cubit.dart' as Message;
 
@@ -19,8 +20,10 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(height: 64),
-          const Text('Message Page'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [Text('Inbox'), Icon(Icons.message)],
+          ),
           Container(
             height: 400,
             child: BlocConsumer<ChatRoomsCubit, ChatRoomsState>(
@@ -35,6 +38,7 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                     child: Column(
                       children: [
                         const Icon(Icons.close),
+                        Text('Error: Loading Chat Room failed'),
                       ],
                     ),
                   );
@@ -47,6 +51,9 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                             context.watch<ChatRoomsCubit>().chat_rooms[index];
 
                         return CustomCard(
+                          elevation: 0,
+                          height: 80,
+                          childPadding: 8,
                           onTap: () {
                             BlocProvider.of<Message.MessageCubit>(context)
                                 .setChatRoom(chatRoom);
@@ -56,7 +63,54 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                                 .join_chat_room();
                             appRouter.push(const ChatPageRoute());
                           },
-                          child: Text(chatRoom.partner_name),
+                          borderRadius: 12,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                radius: 30.0,
+                                backgroundImage:
+                                    NetworkImage(chatRoom.partner_avatar),
+                                backgroundColor: Colors.transparent,
+                              ),
+                              SizedBox(width: 12),
+                              SizedBox(
+                                width: 100,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(height: 8),
+                                    Text(
+                                      chatRoom.partner_name,
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    Text('............')
+                                  ],
+                                ),
+                              ),
+                              Expanded(child: SizedBox()),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomCard(
+                                    width: 26,
+                                    height: 26,
+                                    child: Center(
+                                      child: Text(
+                                        '1',
+                                      ),
+                                    ),
+                                    color: AppColors.primaryColor,
+                                    borderRadius: 12,
+                                  ),
+                                  Text('01:30')
+                                ],
+                              ),
+                            ],
+                          ),
                         );
                       });
                   return chatRooms;

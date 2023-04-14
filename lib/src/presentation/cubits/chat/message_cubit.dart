@@ -16,7 +16,12 @@ class MessageCubit extends Cubit<MessageState> {
   ScrollController controller = new ScrollController();
   List<Message> messages = [];
   bool init_socket_message = false;
-  late ChatRoom chatRoom;
+  ChatRoom chatRoom = new ChatRoom(
+    id: '',
+    partner_name: '',
+    partner_gmail: '',
+    partner_avatar: '',
+  );
   void setChatRoom(ChatRoom _chatRoom) {
     chatRoom = _chatRoom;
   }
