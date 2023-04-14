@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../models/chat_room.dart';
 import '../../services/message.dart';
 import '../app_socket.dart';
