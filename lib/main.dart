@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:together_we_go/src/presentation/cubits/chat/chat_rooms_cubit.dart';
+import 'src/presentation/cubits/chat/chat_rooms_cubit.dart';
 import 'package:together_we_go/src/presentation/cubits/home_page/home_page_cubit.dart';
 import 'src/presentation/cubits/signin/signin_cubit.dart';
 import 'src/config/router/app_router.dart';

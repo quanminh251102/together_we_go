@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../utils/constants/colors.dart';
 import '../../cubits/app_user.dart';
@@ -71,12 +68,12 @@ class _ChatPageState extends State<ChatPage> {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.white,
-            title: Text(
+            title: const Text(
               'Chọn nguồn',
               style: TextStyle(fontSize: 14),
             ),
             content: Container(
-              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -87,7 +84,7 @@ class _ChatPageState extends State<ChatPage> {
                           await _picker.pickImage(source: ImageSource.camera);
                       if (image != null) {
                         print("get successfully");
-                        uploadImage(image as XFile);
+                        uploadImage(image);
                         Future.delayed(Duration.zero, () {
                           Navigator.pop(context);
                         });
@@ -96,15 +93,15 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.camera_alt,
                           size: 30,
                         ),
-                        Text('Máy ảnh')
+                        const Text('Máy ảnh')
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 100,
                   ),
                   InkWell(
@@ -113,7 +110,7 @@ class _ChatPageState extends State<ChatPage> {
                       final XFile? image =
                           await _picker.pickImage(source: ImageSource.gallery);
                       if (image != null) {
-                        uploadImage(image as XFile);
+                        uploadImage(image);
                         Future.delayed(Duration.zero, () {
                           Navigator.pop(context);
                         });
@@ -123,11 +120,11 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        Text('Thư viện')
+                        const Text('Thư viện')
                       ],
                     ),
                   ),
@@ -161,8 +158,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appBarHeight = 80.0;
-    final botttomNavigatebarHeight = 80.0;
+    const appBarHeight = 80.0;
+    const botttomNavigatebarHeight = 80.0;
     final bodyHeight = MediaQuery.of(context).size.height -
         appBarHeight -
         botttomNavigatebarHeight;
@@ -209,7 +206,7 @@ class _ChatPageState extends State<ChatPage> {
                   fontSize: 18,
                 ),
               ),
-              Text(
+              const Text(
                 'Online',
                 style: TextStyle(
                   color: Color(0xFF7C7C7C),
@@ -241,7 +238,7 @@ class _ChatPageState extends State<ChatPage> {
     );
 
     Widget textRight(Message message, String startTime) => Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Align(
             alignment: Alignment.centerRight,
             child: Container(
@@ -275,7 +272,7 @@ class _ChatPageState extends State<ChatPage> {
         );
 
     Widget textLeft(Message message, String startTime) => Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Row(
             children: [
               CircleAvatar(
@@ -288,7 +285,7 @@ class _ChatPageState extends State<ChatPage> {
                 constraints: const BoxConstraints(maxWidth: 250),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(94, 158, 158, 158),
+                  color: const Color.fromARGB(94, 158, 158, 158),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -316,7 +313,7 @@ class _ChatPageState extends State<ChatPage> {
         );
 
     Widget imageRight(Message message, String startTime) => Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Align(
             alignment: Alignment.centerRight,
             child: Column(
@@ -326,7 +323,7 @@ class _ChatPageState extends State<ChatPage> {
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(message.message,
                         width: 150, fit: BoxFit.fill)),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(startTime,
                     style: TextStyle(color: AppColors.textSecondaryColor)),
               ],
@@ -335,7 +332,7 @@ class _ChatPageState extends State<ChatPage> {
         );
 
     Widget imageLeft(Message message, String startTime) => Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -352,7 +349,7 @@ class _ChatPageState extends State<ChatPage> {
                       borderRadius: BorderRadius.circular(20.0),
                       child: Image.network(message.message,
                           width: 150, fit: BoxFit.fill)),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     startTime,
                     style: TextStyle(color: AppColors.textSecondaryColor),
@@ -365,12 +362,12 @@ class _ChatPageState extends State<ChatPage> {
     context.watch<MessageCubit>().scrollDown();
 
     Widget dateWidget(Message message, String startTime) => Padding(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 24),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
         child: Center(
             child: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Color.fromARGB(97, 158, 158, 158),
+            color: const Color.fromARGB(97, 158, 158, 158),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
@@ -399,14 +396,14 @@ class _ChatPageState extends State<ChatPage> {
       builder: (BuildContext context, state) {
         context.read<MessageCubit>().scrollDown();
         if (state is LoadingState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (state is ErrorState) {
           return Center(
             child: Column(
               children: [
-                Icon(Icons.close),
+                const Icon(Icons.close),
               ],
             ),
           );
@@ -455,7 +452,7 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Visibility(
             visible: isLoading,
-            child: CupertinoActivityIndicator(),
+            child: const CupertinoActivityIndicator(),
           ),
           GestureDetector(
             onTap: () {
@@ -476,8 +473,8 @@ class _ChatPageState extends State<ChatPage> {
           //SizedBox(height: botttomNavigatebarHeight),
           Visibility(
             visible: _isLoadingImage,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+            child: const Padding(
+              padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: CupertinoActivityIndicator(),
@@ -534,7 +531,7 @@ class _ChatPageState extends State<ChatPage> {
                         print("upload image");
                         openMediaDialog();
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.image,
                         color: AppColors.primaryColor,
                       )),
