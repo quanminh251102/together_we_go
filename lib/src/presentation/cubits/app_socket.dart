@@ -5,11 +5,11 @@ import '../../config/url/config.dart';
 class AppSocket {
   late IO.Socket _socket;
   IO.Socket get socket => _socket;
-  init() {
+  init(String userId) {
     _socket = IO.io(
       baseUrl,
-      IO.OptionBuilder()
-          .setTransports(['websocket']).setQuery({'private': ''}).build(),
+      IO.OptionBuilder().setTransports(['websocket']).setQuery(
+          {'user_id': '$userId'}).build(),
     );
   }
 }
