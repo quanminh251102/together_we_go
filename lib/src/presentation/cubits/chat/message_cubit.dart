@@ -23,6 +23,7 @@ class MessageCubit extends Cubit<MessageState> {
     partner_name: '',
     partner_gmail: '',
     partner_avatar: '',
+    partner_id: '',
   );
   void setChatRoom(ChatRoom _chatRoom) {
     chatRoom = _chatRoom;

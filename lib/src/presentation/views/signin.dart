@@ -8,8 +8,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../config/router/app_router.dart';
 import '../../utils/constants/colors.dart';
 import '../cubits/app_socket.dart';
+import '../cubits/calling_audio/calling_audio_cubit.dart';
 import '../cubits/chat/message_cubit.dart';
 import '../cubits/signin/signin_cubit.dart';
+import '../cubits/app_user.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -61,8 +63,9 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     void init_app() {
-      appSocket.init();
+      appSocket.init(appUser.id);
       BlocProvider.of<MessageCubit>(context).init_socket();
+      BlocProvider.of<CallingAudioCubit>(context).init_socket_calling_audio();
     }
 
     return Scaffold(
