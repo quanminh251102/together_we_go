@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../config/router/app_router.dart';
@@ -44,12 +42,12 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.white,
-            title: Text(
+            title: const Text(
               'Chọn nguồn',
               style: TextStyle(fontSize: 14),
             ),
             content: Container(
-              margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -60,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           await _picker.pickImage(source: ImageSource.camera);
                       if (image != null) {
                         print("get successfully");
-                        uploadImage(image as XFile);
+                        uploadImage(image);
                         Future.delayed(Duration.zero, () {
                           Navigator.pop(context);
                         });
@@ -69,15 +67,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.camera_alt,
                           size: 30,
                         ),
-                        Text('Máy ảnh')
+                        const Text('Máy ảnh')
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 100,
                   ),
                   InkWell(
@@ -86,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       final XFile? image =
                           await _picker.pickImage(source: ImageSource.gallery);
                       if (image != null) {
-                        uploadImage(image as XFile);
+                        uploadImage(image);
                         Future.delayed(Duration.zero, () {
                           Navigator.pop(context);
                         });
@@ -96,11 +94,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        Text('Thư viện')
+                        const Text('Thư viện')
                       ],
                     ),
                   ),
@@ -112,24 +110,25 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   final settings = [
-    ListTile(
-      leading: Icon(Icons.account_box),
-      title: Text('Edit Profile'),
-      trailing: Icon(Icons.arrow_right),
-    ),
-    ListTile(
+    const ListTile(
+        leading: Icon(Icons.account_box),
+        title: Text('Edit Profile'),
+        trailing: Icon(
+          Icons.keyboard_arrow_right,
+        )),
+    const ListTile(
       leading: Icon(Icons.location_on),
       title: Text('Address'),
-      trailing: Icon(Icons.arrow_right),
+      trailing: Icon(Icons.keyboard_arrow_right),
     ),
-    ListTile(
+    const ListTile(
       leading: Icon(Icons.notifications),
       title: Text('Notification'),
-      trailing: Icon(Icons.arrow_right),
+      trailing: Icon(Icons.keyboard_arrow_right),
     ),
     ListTile(
-      leading: Icon(Icons.logout),
-      title: Text('Logout'),
+      leading: const Icon(Icons.logout),
+      title: const Text('Logout'),
       onTap: () {
         appRouter.push(const SignInViewRoute());
       },
@@ -137,30 +136,39 @@ class _ProfilePageState extends State<ProfilePage> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text('Profile'), Icon(Icons.message)],
-      ),
-      const SizedBox(height: 8),
-      CircleAvatar(
-        radius: 60.0,
-        backgroundImage: NetworkImage(appUser.avatar),
-        backgroundColor: Colors.transparent,
-      ),
-      Visibility(visible: _isLoadingImage, child: CircularProgressIndicator()),
-      ElevatedButton(
-        onPressed: () {
-          openMediaDialog();
-        },
-        child: Text('Edit avatar'),
-      ),
-      const SizedBox(height: 8),
-      Text(appUser.name),
-      const SizedBox(height: 8),
-      Text(appUser.gmail),
-      const SizedBox(height: 24),
-      ...settings,
-    ]);
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.05,
+          vertical: MediaQuery.of(context).size.height * 0.05),
+      child: Column(children: [
+        const Align(
+          child: Text(
+            'Thông tin tài khoản',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          alignment: Alignment.topLeft,
+        ),
+        const SizedBox(height: 8),
+        CircleAvatar(
+          radius: 60.0,
+          backgroundImage: NetworkImage(appUser.avatar),
+          backgroundColor: Colors.transparent,
+        ),
+        Visibility(
+            visible: _isLoadingImage, child: const CircularProgressIndicator()),
+        ElevatedButton(
+          onPressed: () {
+            openMediaDialog();
+          },
+          child: const Text('Edit avatar'),
+        ),
+        const SizedBox(height: 8),
+        Text(appUser.name),
+        const SizedBox(height: 8),
+        Text(appUser.gmail),
+        const SizedBox(height: 24),
+        ...settings,
+      ]),
+    );
   }
 }

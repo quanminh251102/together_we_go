@@ -1,7 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:get_storage/get_storage.dart';
 //import 'package:loviser/config/config.dart';
-import 'package:http/http.dart' as http;
 import 'package:cloudinary/cloudinary.dart';
 import 'package:image_picker/image_picker.dart';
 

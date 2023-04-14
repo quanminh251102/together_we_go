@@ -1,10 +1,10 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../utils/constants/colors.dart';
 import '../cubits/chat/chat_rooms_cubit.dart';
+import 'booking/booking_page.dart';
 import '../cubits/home_page/home_page_cubit.dart';
 import 'chat/chat_rooms_page.dart';
 import 'profile_and_settings/profile_page.dart';
@@ -16,42 +16,84 @@ class HomePageView extends StatefulWidget {
   State<HomePageView> createState() => _HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _HomePageViewState extends State<HomePageView>
+    with TickerProviderStateMixin {
   int _currentIndex = 0;
+  late TabController _tabController;
+  bool isBookingPage = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+    );
+  }
 
-  final tabs = [
-    Container(
-      child: Center(
-          child: Text(
-        'Home page',
-        style: TextStyle(fontSize: 20),
-      )),
-    ),
-    Container(
-      child: Center(
-          child: Text(
-        'Bookings',
-        style: TextStyle(fontSize: 20),
-      )),
-    ),
-    const Center(child: ChatRoomsPage()),
-    Container(
-      child: Center(
-          child: Text(
-        'Wallet',
-        style: TextStyle(fontSize: 20),
-      )),
-    ),
-    Container(child: const ProfilePage()),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 48, 24, 0),
-          child: tabs[_currentIndex],
-        ),
+      appBar: _currentIndex == 1
+          ? AppBar(
+              leading: const Icon(Icons.book_outlined),
+              title: const Text(
+                'Bài đăng',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              bottom: TabBar(
+                controller: _tabController,
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorColor: AppColors.primaryColor,
+                tabs: [
+                  const Tab(
+                      child: Text(
+                    'Đang hoạt động',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14),
+                  )),
+                  const Tab(
+                      child: Text(
+                    'Hoàn thành',
+                    style: TextStyle(fontSize: 14),
+                  )),
+                  const Tab(
+                      child: Text(
+                    'Đã hủy',
+                    style: TextStyle(fontSize: 14),
+                  )),
+                ],
+              ),
+            )
+          : _currentIndex == 0
+              ? AppBar()
+              : _currentIndex == 2
+                  ? AppBar()
+                  : _currentIndex == 3
+                      ? AppBar()
+                      : AppBar(),
+      body: SizedBox(
+        child: _currentIndex == 0
+            ? Container(
+                child: const Center(
+                    child: Text(
+                  'Home page',
+                  style: TextStyle(fontSize: 20),
+                )),
+              )
+            : _currentIndex == 1
+                ? BookingPage(tabController: _tabController)
+                : _currentIndex == 2
+                    ? const Center(child: ChatRoomsPage())
+                    : _currentIndex == 3
+                        ? Container(
+                            child: const Center(
+                                child: Text(
+                              'Wallet',
+                              style: TextStyle(fontSize: 20),
+                            )),
+                          )
+                        : Container(child: const ProfilePage()),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: AppColors.primaryColor,
@@ -59,7 +101,10 @@ class _HomePageViewState extends State<HomePageView> {
         currentIndex: _currentIndex,
         onTap: (value) {
           if (value == 2) context.read<ChatRoomsCubit>().get_chatRoom();
-          //BlocProvider.of<HomePageCubit>(context).set_current_index(value);
+          if (value == 1)
+            setState(() {
+              isBookingPage == true;
+            });
           setState(() {
             _currentIndex = value;
           });
