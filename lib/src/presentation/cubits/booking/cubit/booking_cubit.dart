@@ -5,4 +5,7 @@ part 'booking_state.dart';
 
 class BookingCubit extends Cubit<BookingState> {
   BookingCubit() : super(BookingInitial());
+  void getListBooking() async {
+    emit(BookingLoaded());
+  }
 }

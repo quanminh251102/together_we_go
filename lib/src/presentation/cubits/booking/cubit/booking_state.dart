@@ -8,3 +8,9 @@ abstract class BookingState extends Equatable {
 }
 
 class BookingInitial extends BookingState {}
+
+class BookingLoading extends BookingState {}
+
+class BookingLoaded extends BookingState {}
+
+class BookingError extends BookingState {}
