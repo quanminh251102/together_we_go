@@ -72,29 +72,27 @@ class _HomePageViewState extends State<HomePageView>
                   : _currentIndex == 3
                       ? AppBar()
                       : AppBar(),
-      body: SizedBox(
-        child: _currentIndex == 0
-            ? Container(
-                child: const Center(
-                    child: Text(
-                  'Home page',
-                  style: TextStyle(fontSize: 20),
-                )),
-              )
-            : _currentIndex == 1
-                ? BookingPage(tabController: _tabController)
-                : _currentIndex == 2
-                    ? const Center(child: ChatRoomsPage())
-                    : _currentIndex == 3
-                        ? Container(
-                            child: const Center(
-                                child: Text(
-                              'Wallet',
-                              style: TextStyle(fontSize: 20),
-                            )),
-                          )
-                        : Container(child: const ProfilePage()),
-      ),
+      body: _currentIndex == 0
+          ? Container(
+              child: const Center(
+                  child: Text(
+                'Home page',
+                style: TextStyle(fontSize: 20),
+              )),
+            )
+          : _currentIndex == 1
+              ? BookingPage(tabController: _tabController)
+              : _currentIndex == 2
+                  ? const Center(child: ChatRoomsPage())
+                  : _currentIndex == 3
+                      ? Container(
+                          child: const Center(
+                              child: Text(
+                            'Wallet',
+                            style: TextStyle(fontSize: 20),
+                          )),
+                        )
+                      : Container(child: const ProfilePage()),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: AppColors.borderColor,
