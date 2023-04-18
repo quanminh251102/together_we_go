@@ -45,6 +45,12 @@ class _$AppRouter extends RootStackRouter {
         child: const SignUpView(),
       );
     },
+    CallingAudioPageRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const CallingAudioPage(),
+      );
+    },
   };
 
   @override
@@ -64,6 +70,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           SignUpViewRoute.name,
           path: '/sign-up-view',
+        ),
+        RouteConfig(
+          CallingAudioPageRoute.name,
+          path: '/calling-audio-page',
         ),
       ];
 }
@@ -136,4 +146,16 @@ class SignUpViewRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignUpViewRoute';
+}
+
+/// generated route for
+/// [CallingAudioPage]
+class CallingAudioPageRoute extends PageRouteInfo<void> {
+  const CallingAudioPageRoute()
+      : super(
+          CallingAudioPageRoute.name,
+          path: '/calling-audio-page',
+        );
+
+  static const String name = 'CallingAudioPageRoute';
 }

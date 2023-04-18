@@ -36,24 +36,21 @@ class MessageCubit extends Cubit<MessageState> {
   }
 
   void init_socket() {
-    if (init_socket_message == false) {
-      appSocket.socket.on('receive_message_from_chat_room', (jsonData) {
-        final currentState = state;
-        if (currentState is LoadedState) {
-          final new_t = json.encode(jsonData);
-          final data = json.decode(new_t) as Map<String, dynamic>;
-          Message _message = Message.fromJson(data);
+    appSocket.socket.on('receive_message_from_chat_room', (jsonData) {
+      final currentState = state;
+      if (currentState is LoadedState) {
+        final new_t = json.encode(jsonData);
+        final data = json.decode(new_t) as Map<String, dynamic>;
+        Message _message = Message.fromJson(data);
 
-          this.messages.add(_message);
+        this.messages.add(_message);
 
-          print("debug : received message");
-          emit(LoadingNewMessageState());
-          emit(LoadedState());
-          scrollDown();
-        }
-      });
-      init_socket_message = true;
-    }
+        print("debug : received message");
+        emit(LoadingNewMessageState());
+        emit(LoadedState());
+        scrollDown();
+      }
+    });
   }
 
   void join_chat_room() {
