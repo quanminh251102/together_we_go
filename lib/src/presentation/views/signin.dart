@@ -64,6 +64,9 @@ class _SignInViewState extends State<SignInView> {
   Widget build(BuildContext context) {
     void init_app() {
       appSocket.init(appUser.id);
+      BlocProvider.of<MessageCubit>(context).init_socket_message = false;
+      BlocProvider.of<CallingAudioCubit>(context).init_socket = false;
+
       BlocProvider.of<MessageCubit>(context).init_socket();
       BlocProvider.of<CallingAudioCubit>(context).init_socket_calling_audio();
     }

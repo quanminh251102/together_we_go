@@ -8,3 +8,15 @@ abstract class CallingAudioState extends Equatable {
 }
 
 class CallingAudioInitial extends CallingAudioState {}
+
+class CallingAudioNewState extends CallingAudioState {
+  CallingAudioNewState();
+  @override
+  List<Object> get props => [];
+}
+
+class CallingAudioLoadedState extends CallingAudioState {
+  CallingAudioLoadedState();
+  @override
+  List<Object> get props => [];
+}
