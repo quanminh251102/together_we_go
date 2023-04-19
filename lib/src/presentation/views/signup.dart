@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../config/router/app_router.dart';
 import '../../utils/constants/colors.dart';

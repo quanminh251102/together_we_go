@@ -1,10 +1,10 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../utils/constants/colors.dart';
 import '../cubits/chat/chat_rooms_cubit.dart';
+import 'booking/booking_page.dart';
 import '../cubits/home_page/home_page_cubit.dart';
 import 'chat/chat_rooms_page.dart';
 import 'profile_and_settings/profile_page.dart';
@@ -16,50 +16,119 @@ class HomePageView extends StatefulWidget {
   State<HomePageView> createState() => _HomePageViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _HomePageViewState extends State<HomePageView>
+    with TickerProviderStateMixin {
   int _currentIndex = 0;
+  late TabController _tabController;
+  bool isBookingPage = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+    );
+  }
 
-  final tabs = [
-    Container(
-      child: Center(
-          child: Text(
-        'Home page',
-        style: TextStyle(fontSize: 20),
-      )),
-    ),
-    Container(
-      child: Center(
-          child: Text(
-        'Bookings',
-        style: TextStyle(fontSize: 20),
-      )),
-    ),
-    const Center(child: ChatRoomsPage()),
-    Container(
-      child: Center(
-          child: Text(
-        'Wallet',
-        style: TextStyle(fontSize: 20),
-      )),
-    ),
-    Container(child: const ProfilePage()),
-  ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 48, 24, 0),
-          child: tabs[_currentIndex],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
+    _appBar(index) {
+      var _appBar;
+      switch (index) {
+        case 1:
+          _appBar = AppBar(
+            leading: const Icon(Icons.book_outlined),
+            title: const Text(
+              'Bài đăng',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            bottom: TabBar(
+              controller: _tabController,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorColor: AppColors.primaryColor,
+              tabs: [
+                const Tab(
+                    child: Text(
+                  'Đang hoạt động',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14),
+                )),
+                const Tab(
+                    child: Text(
+                  'Hoàn thành',
+                  style: TextStyle(fontSize: 14),
+                )),
+                const Tab(
+                    child: Text(
+                  'Đã hủy',
+                  style: TextStyle(fontSize: 14),
+                )),
+              ],
+            ),
+          );
+          break;
+        case 2:
+          _appBar = AppBar(
+            toolbarHeight: 0,
+          );
+          break;
+        default:
+          _appBar = AppBar(
+            toolbarHeight: 0,
+          );
+          break;
+      }
+      return _appBar;
+    }
+
+    _body(index) {
+      var _body;
+      switch (index) {
+        case 0:
+          _body = Container(
+            child: const Center(
+                child: Text(
+              'Home page',
+              style: TextStyle(fontSize: 20),
+            )),
+          );
+          break;
+        case 1:
+          _body = BookingPage(tabController: _tabController);
+          break;
+        case 2:
+          _body = ChatRoomsPage();
+          break;
+        case 3:
+          _body = Container(
+            child: const Center(
+                child: Text(
+              'Wallet',
+              style: TextStyle(fontSize: 20),
+            )),
+          );
+          break;
+        case 4:
+          _body = Container(child: const ProfilePage());
+          break;
+        default:
+          break;
+      }
+      return _body;
+    }
+
+    _bottomNavigationBar() {
+      return BottomNavigationBar(
         selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: AppColors.borderColor,
         currentIndex: _currentIndex,
         onTap: (value) {
           if (value == 2) context.read<ChatRoomsCubit>().get_chatRoom();
-          //BlocProvider.of<HomePageCubit>(context).set_current_index(value);
+          if (value == 1)
+            setState(() {
+              isBookingPage == true;
+            });
           setState(() {
             _currentIndex = value;
           });
@@ -86,7 +155,13 @@ class _HomePageViewState extends State<HomePageView> {
               icon: Icon(Icons.person),
               label: 'Profile'),
         ],
-      ),
+      );
+    }
+
+    return Scaffold(
+      appBar: _appBar(_currentIndex),
+      body: _body(_currentIndex),
+      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
 }
