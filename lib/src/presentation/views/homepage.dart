@@ -33,67 +33,93 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _currentIndex == 1
-          ? AppBar(
-              leading: const Icon(Icons.book_outlined),
-              title: const Text(
-                'Bài đăng',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              bottom: TabBar(
-                controller: _tabController,
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorColor: AppColors.primaryColor,
-                tabs: [
-                  const Tab(
-                      child: Text(
-                    'Đang hoạt động',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14),
-                  )),
-                  const Tab(
-                      child: Text(
-                    'Hoàn thành',
-                    style: TextStyle(fontSize: 14),
-                  )),
-                  const Tab(
-                      child: Text(
-                    'Đã hủy',
-                    style: TextStyle(fontSize: 14),
-                  )),
-                ],
-              ),
-            )
-          : _currentIndex == 0
-              ? AppBar()
-              : _currentIndex == 2
-                  ? AppBar()
-                  : _currentIndex == 3
-                      ? AppBar()
-                      : AppBar(),
-      body: _currentIndex == 0
-          ? Container(
-              child: const Center(
-                  child: Text(
-                'Home page',
-                style: TextStyle(fontSize: 20),
-              )),
-            )
-          : _currentIndex == 1
-              ? BookingPage(tabController: _tabController)
-              : _currentIndex == 2
-                  ? const Center(child: ChatRoomsPage())
-                  : _currentIndex == 3
-                      ? Container(
-                          child: const Center(
-                              child: Text(
-                            'Wallet',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                        )
-                      : Container(child: const ProfilePage()),
-      bottomNavigationBar: BottomNavigationBar(
+    _appBar(index) {
+      var _appBar;
+      switch (index) {
+        case 1:
+          _appBar = AppBar(
+            leading: const Icon(Icons.book_outlined),
+            title: const Text(
+              'Bài đăng',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            bottom: TabBar(
+              controller: _tabController,
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorColor: AppColors.primaryColor,
+              tabs: [
+                const Tab(
+                    child: Text(
+                  'Đang hoạt động',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14),
+                )),
+                const Tab(
+                    child: Text(
+                  'Hoàn thành',
+                  style: TextStyle(fontSize: 14),
+                )),
+                const Tab(
+                    child: Text(
+                  'Đã hủy',
+                  style: TextStyle(fontSize: 14),
+                )),
+              ],
+            ),
+          );
+          break;
+        case 2:
+          _appBar = AppBar(
+            toolbarHeight: 0,
+          );
+          break;
+        default:
+          _appBar = AppBar(
+            toolbarHeight: 0,
+          );
+          break;
+      }
+      return _appBar;
+    }
+
+    _body(index) {
+      var _body;
+      switch (index) {
+        case 0:
+          _body = Container(
+            child: const Center(
+                child: Text(
+              'Home page',
+              style: TextStyle(fontSize: 20),
+            )),
+          );
+          break;
+        case 1:
+          _body = BookingPage(tabController: _tabController);
+          break;
+        case 2:
+          _body = ChatRoomsPage();
+          break;
+        case 3:
+          _body = Container(
+            child: const Center(
+                child: Text(
+              'Wallet',
+              style: TextStyle(fontSize: 20),
+            )),
+          );
+          break;
+        case 4:
+          _body = Container(child: const ProfilePage());
+          break;
+        default:
+          break;
+      }
+      return _body;
+    }
+
+    _bottomNavigationBar() {
+      return BottomNavigationBar(
         selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: AppColors.borderColor,
         currentIndex: _currentIndex,
@@ -129,7 +155,13 @@ class _HomePageViewState extends State<HomePageView>
               icon: Icon(Icons.person),
               label: 'Profile'),
         ],
-      ),
+      );
+    }
+
+    return Scaffold(
+      appBar: _appBar(_currentIndex),
+      body: _body(_currentIndex),
+      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
 }
