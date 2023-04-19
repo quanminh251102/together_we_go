@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
@@ -32,14 +30,14 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
               listener: (context, state) {},
               builder: (BuildContext context, state) {
                 if (state is LoadingState) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is ErrorState) {
                   return Center(
                     child: Column(
                       children: [
-                        Icon(Icons.close),
+                        const Icon(Icons.close),
                         Text('Error: Loading Chat Room failed'),
                       ],
                     ),
