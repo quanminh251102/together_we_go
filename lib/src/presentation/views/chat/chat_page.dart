@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../utils/constants/colors.dart';
 import '../../cubits/app_user.dart';
+import '../../cubits/calling_audio/calling_audio_cubit.dart';
 import '../../cubits/chat/message_cubit.dart';
 import '../../models/message.dart';
 import 'package:flutter/cupertino.dart';
@@ -221,6 +222,9 @@ class _ChatPageState extends State<ChatPage> {
         IconButton(
           onPressed: () {
             //make_call('just_audio');
+
+            BlocProvider.of<CallingAudioCubit>(context)
+                .make_call(context.read<MessageCubit>().chatRoom.partner_id);
           },
           icon: const Icon(
             Icons.call,
