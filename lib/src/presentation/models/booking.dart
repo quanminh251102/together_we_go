@@ -5,11 +5,13 @@ class Booking {
   String authorAvatar;
   String price;
   final String bookingType; //
-  final DateTime time;
+  final String time;
   final String contact;
   final String content;
   final String startPoint;
+  final String startPointAddress;
   final String endPoint;
+  final String endPointAddress;
   final String status;
   Booking({
     required this.authorId,
@@ -23,48 +25,23 @@ class Booking {
     required this.startPoint,
     required this.endPoint,
     required this.status,
+    required this.startPointAddress,
+    required this.endPointAddress,
   });
   static toBooking(Map<String, dynamic> map) {
     return Booking(
         status: map["status"],
-        authorId: map["authorId"],
-        authorName: map["authorName"],
-        price: map["price"],
-        authorAvatar: map["authorAvatar"],
+        authorId: map["authorId"]["_id"],
+        authorName: map["authorId"]["first_name"],
+        price: map["price"].toString(),
+        authorAvatar: map["authorId"]["avatarUrl"],
         bookingType: map["bookingType"],
         time: map["time"],
-        contact: map["contact"],
+        contact: map["authorId"]["phoneNumber"] ?? " ",
         content: map["content"],
         startPoint: map["startPoint"],
+        startPointAddress: map["startPointAddress"],
+        endPointAddress: map["endPointAddress"],
         endPoint: map["endPoint"]);
   }
-
-  static List<Booking> list = [
-    Booking(
-        authorId: '123',
-        authorName: 'Lê Minh Quân',
-        authorAvatar:
-            'https://hinhnen4k.com/wp-content/uploads/2023/02/anh-gai-xinh-vn-2.jpg',
-        bookingType: 'Tìm người chở',
-        price: '10000',
-        time: DateTime.now(),
-        contact: '0987101231',
-        content: 'Tìm người yêu để chở em đi chơi',
-        startPoint: 'KTX khu B',
-        endPoint: 'Khách sạn tình yêu',
-        status: 'available'),
-    Booking(
-        authorId: '1234',
-        authorName: 'Nguyễn Hoàng Kiệt',
-        authorAvatar:
-            'https://hinhnen4k.com/wp-content/uploads/2023/02/anh-gai-xinh-vn-2.jpg',
-        bookingType: 'Tìm người chở',
-        price: '10000',
-        time: DateTime.now(),
-        contact: '0987101231',
-        content: 'Tìm người yêu để chở em đi chơi',
-        startPoint: 'KTX khu B',
-        endPoint: 'Khách sạn tình yêu',
-        status: 'available'),
-  ];
 }

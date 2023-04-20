@@ -16,7 +16,6 @@ class BookingPage extends StatefulWidget {
 }
 
 class _BookingPageState extends State<BookingPage> {
-  List<Booking> bookings = Booking.list;
   @override
   void initState() {
     // TODO: implement initState
@@ -26,44 +25,37 @@ class _BookingPageState extends State<BookingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BookingCubit, BookingState>(
-      listener: (context, state) {
-        if (state is BookingError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Error in Booking '),
-            ),
-          );
-        }
-      },
-      builder: (context, state) {
-        if (state is BookingLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          if (state is BookingInitial) {
-            return const Center(child: Text('Danh sách trống'));
-          } else {
-            {
-              return Column(
-                children: [
-                  Expanded(
-                    child: TabBarView(
-                      controller: widget.tabController,
-                      children: <Widget>[
-                        ListBooking(bookings: bookings),
-                        Icon(Icons.directions_transit, size: 350),
-                        Icon(Icons.directions_car, size: 350),
-                      ],
-                    ),
-                  ),
+    return BlocConsumer<BookingCubit, BookingState>(listener: (context, state) {
+      if (state is BookingError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Error in Booking '),
+          ),
+        );
+      }
+    }, builder: (context, state) {
+      if (state is BookingLoading) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      } else if (state is BookingLoaded) {
+        return Column(
+          children: [
+            Expanded(
+              child: TabBarView(
+                controller: widget.tabController,
+                children: <Widget>[
+                  ListBooking(bookings: state.list),
+                  Icon(Icons.directions_transit, size: 350),
+                  Icon(Icons.directions_car, size: 350),
                 ],
-              );
-            }
-          }
-        }
-      },
-    );
+              ),
+            ),
+          ],
+        );
+      } else {
+        return const Center(child: Text('Danh sách trống'));
+      }
+    });
   }
 }
