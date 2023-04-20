@@ -51,6 +51,12 @@ class _$AppRouter extends RootStackRouter {
         child: const NewBookingView(),
       );
     },
+    CallingAudioPageRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const CallingAudioPage(),
+      );
+    },
   };
 
   @override
@@ -74,6 +80,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           NewBookingViewRoute.name,
           path: '/new-booking-view',
+        ),
+        RouteConfig(
+          CallingAudioPageRoute.name,
+          path: '/calling-audio-page',
         ),
       ];
 }
@@ -158,4 +168,16 @@ class NewBookingViewRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NewBookingViewRoute';
+}
+
+/// generated route for
+/// [CallingAudioPage]
+class CallingAudioPageRoute extends PageRouteInfo<void> {
+  const CallingAudioPageRoute()
+      : super(
+          CallingAudioPageRoute.name,
+          path: '/calling-audio-page',
+        );
+
+  static const String name = 'CallingAudioPageRoute';
 }
