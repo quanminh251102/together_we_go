@@ -74,7 +74,13 @@ class _ListBookingItemState extends State<ListBookingItem> {
                                     : Colors.red),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(widget.booking.status),
+                          child: Text(
+                            widget.booking.status.toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                         ))
                   ]),
                 ),
