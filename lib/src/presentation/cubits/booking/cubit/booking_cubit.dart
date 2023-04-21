@@ -20,12 +20,24 @@ class BookingCubit extends Cubit<BookingState> {
       if (result.statusCode == 200) {
         print(jsonDecode(result.body));
         List<dynamic> data = jsonDecode(result.body) as List<dynamic>;
-        List<Booking> booking = [];
+        List<Booking> bookingAvailable = [];
+        List<Booking> bookingComplete = [];
+        List<Booking> bookingCancel = [];
         for (int i = 0; i < data.length; i++) {
-          booking.add(Booking.toBooking(data[i] as Map<String, dynamic>));
-          print(booking[i].authorId);
+          if (data[i]['status'] == 'available') {
+            bookingAvailable.add(Booking.toBooking(data[i]));
+          } else {
+            if (data[i]['status'] == 'complete') {
+              bookingComplete.add(Booking.toBooking(data[i]));
+            } else {
+              bookingCancel.add(Booking.toBooking(data[i]));
+            }
+          }
         }
-        emit(BookingLoaded(list: booking));
+        emit(BookingLoaded(
+            listAvailable: bookingAvailable,
+            listComplete: bookingComplete,
+            listCancel: bookingCancel));
       }
     } catch (e) {
       print(e);
