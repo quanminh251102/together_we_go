@@ -158,10 +158,15 @@ class _HomePageViewState extends State<HomePageView>
       );
     }
 
-    return Scaffold(
-      appBar: _appBar(_currentIndex),
-      body: _body(_currentIndex),
-      bottomNavigationBar: _bottomNavigationBar(),
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        appBar: _appBar(_currentIndex),
+        body: _body(_currentIndex),
+        bottomNavigationBar: _bottomNavigationBar(),
+      ),
     );
   }
 }
