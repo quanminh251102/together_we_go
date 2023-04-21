@@ -70,6 +70,8 @@ dependencies:
   flutter_webrtc: ^0.9.25
   cloud_firestore: ^4.5.2
   google_sign_in: ^6.1.0
+  flutter_login_facebook: ^1.8.0
+  path_provider: ^2.0.14
 
 dev_dependencies:
   flutter_test:

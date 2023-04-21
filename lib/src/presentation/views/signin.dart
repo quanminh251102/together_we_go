@@ -267,6 +267,8 @@ class _SignInViewState extends State<SignInView> {
                           NeumorphicButton(
                             onPressed: () {
                               print("onClick");
+                              BlocProvider.of<SigninCubit>(context)
+                                  .SignInWithFacebook();
                             },
                             style: NeumorphicStyle(
                                 shape: NeumorphicShape.concave,
