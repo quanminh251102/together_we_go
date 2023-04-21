@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../utils/constants/colors.dart';
-import '../cubits/chat/chat_rooms_cubit.dart';
-import 'booking/booking_page.dart';
-import '../cubits/home_page/home_page_cubit.dart';
-import 'chat/chat_rooms_page.dart';
-import 'profile_and_settings/profile_page.dart';
+import '../../../config/router/app_router.dart';
+import '../../../utils/constants/colors.dart';
+import '../../cubits/chat/chat_rooms_cubit.dart';
+import '../booking/add_booking.dart';
+import '../booking/booking_page.dart';
+import '../../cubits/home_page/home_page_cubit.dart';
+import '../chat/chat_rooms_page.dart';
+import 'widget/blurred_dialog.dart';
+import '../profile_and_settings/profile_page.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key, required this.email});
