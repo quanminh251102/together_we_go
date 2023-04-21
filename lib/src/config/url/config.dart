@@ -12,3 +12,4 @@ const urlGetMessage = '$baseUrl/api/message';
 const urlGetChatRoom = '$baseUrl/api/chat_room';
 
 const urlEditAvatar = '$baseUrl/api/user/edit_avatar';
+const urlGetListBooking = '$baseUrl/api/booking/getAllListBooking';

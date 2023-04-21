@@ -17,7 +17,6 @@ class _ListBookingItemState extends State<ListBookingItem> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final date = DateFormat('yyyy-MM-dd hh:mm:ss').format(widget.booking.time);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
       child: Card(
@@ -25,7 +24,6 @@ class _ListBookingItemState extends State<ListBookingItem> {
         shadowColor: Colors.grey,
         child: Container(
           color: Colors.white.withOpacity(0.85),
-          height: size.height * 0.4,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
             child: Column(
@@ -36,8 +34,8 @@ class _ListBookingItemState extends State<ListBookingItem> {
                     Padding(
                       padding: const EdgeInsets.only(right: 20.0),
                       child: SizedBox(
-                        height: 50,
-                        width: 50,
+                        height: 60,
+                        width: 60,
                         child: CircleAvatar(
                             radius: 25,
                             backgroundImage:
@@ -58,6 +56,11 @@ class _ListBookingItemState extends State<ListBookingItem> {
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w400),
                         ),
+                        Text(
+                          widget.booking.bookingType,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
                     const Spacer(),
@@ -75,134 +78,160 @@ class _ListBookingItemState extends State<ListBookingItem> {
                         ))
                   ]),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5.0,
-                  ),
-                  child: Divider(
-                    color: Colors.grey.withOpacity(0.2),
-                    thickness: 1,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            "assets/svg/distance.svg",
-                            height: 30,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Text(
-                            '4,5 km',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            "assets/svg/clock.svg",
-                            height: 30,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Text(
-                            '15 phút',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            "assets/svg/wallet.svg",
-                            height: 30,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '${widget.booking.price} VND',
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Thời gian: ',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        date,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                ExpansionTile(
+                  title: const Text('Chi tiết'),
                   children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/svg/location-svgrepo-com.svg',
-                          height: 30,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          widget.booking.startPoint,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    Text(widget.booking.content,
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.italic)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0,
+                      ),
+                      child: Divider(
+                        color: Colors.grey.withOpacity(0.2),
+                        thickness: 1,
+                      ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: SvgPicture.asset(
-                        'assets/svg/downarrow.svg',
-                        height: 30,
-                        width: 100,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/svg/distance.svg",
+                                height: 30,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Text(
+                                '4,5 km',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/svg/clock.svg",
+                                height: 30,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Text(
+                                '15 phút',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/svg/wallet.svg",
+                                height: 30,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '${widget.booking.price} VND',
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 8),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Thời gian: ',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          const Spacer(),
+                          Text(
+                            widget.booking.time,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5.0,
+                      ),
+                      child: Divider(
+                        color: Colors.grey.withOpacity(0.2),
+                        thickness: 1,
                       ),
                     ),
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/svg/location.svg',
-                          height: 30,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/svg/location-svgrepo-com.svg',
+                              height: 40,
+                            ),
+                            SvgPicture.asset(
+                              'assets/svg/downarrow.svg',
+                              height: 40,
+                            ),
+                            SvgPicture.asset(
+                              'assets/svg/location.svg',
+                              height: 40,
+                            ),
+                          ],
                         ),
                         const SizedBox(
-                          width: 5,
+                          width: 15,
                         ),
-                        Text(
-                          widget.booking.endPoint,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.booking.startPoint,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(widget.booking.startPointAddress),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              widget.booking.endPoint,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            Text(widget.booking.endPointAddress)
+                          ],
                         ),
                       ],
                     )
                   ],
-                )
+                ),
               ],
             ),
           ),
