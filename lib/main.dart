@@ -9,8 +9,11 @@ import 'src/config/router/app_router.dart';
 import 'src/config/themes/app_themes.dart';
 import 'src/presentation/cubits/signup/signup_cubit.dart';
 import 'src/presentation/cubits/chat/message_cubit.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../cubits/app_user.dart';
+import '../../cubits/signin/signin_cubit.dart';
 import '../../services/image.dart';
 import '../../services/user.dart';
 
@@ -109,31 +111,32 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
-  final settings = [
-    const ListTile(
-        leading: Icon(Icons.account_box),
-        title: Text('Edit Profile'),
-        trailing: Icon(
-          Icons.keyboard_arrow_right,
-        )),
-    const ListTile(
-      leading: Icon(Icons.location_on),
-      title: Text('Address'),
-      trailing: Icon(Icons.keyboard_arrow_right),
-    ),
-    const ListTile(
-      leading: Icon(Icons.notifications),
-      title: Text('Notification'),
-      trailing: Icon(Icons.keyboard_arrow_right),
-    ),
-    ListTile(
-      leading: const Icon(Icons.logout),
-      title: const Text('Logout'),
-      onTap: () {
-        appRouter.push(const SignInViewRoute());
-      },
-    ),
-  ];
+  settings(context) => [
+        const ListTile(
+            leading: Icon(Icons.account_box),
+            title: Text('Edit Profile'),
+            trailing: Icon(
+              Icons.keyboard_arrow_right,
+            )),
+        const ListTile(
+          leading: Icon(Icons.location_on),
+          title: Text('Address'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+        ),
+        const ListTile(
+          leading: Icon(Icons.notifications),
+          title: Text('Notification'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+        ),
+        ListTile(
+          leading: const Icon(Icons.logout),
+          title: const Text('Logout'),
+          onTap: () {
+            BlocProvider.of<SigninCubit>(context).Logout();
+            appRouter.push(const SignInViewRoute());
+          },
+        ),
+      ];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -167,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
         const SizedBox(height: 8),
         Text(appUser.gmail),
         const SizedBox(height: 24),
-        ...settings,
+        ...settings(context),
       ]),
     );
   }

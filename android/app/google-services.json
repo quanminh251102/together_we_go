@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "605468072689",
+    "project_id": "together-we-go",
+    "storage_bucket": "together-we-go.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605468072689:android:82b7dc5e7ecce935f9e750",
+        "android_client_info": {
+          "package_name": "com.example.together_we_go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605468072689-od0qm7bqavj4sj8l7v1p4spp7nda1aim.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.together_we_go",
+            "certificate_hash": "0d74b3d6ce421157295004db590c424ba7215c7f"
+          }
+        },
+        {
+          "client_id": "605468072689-2khqlo3udnhgrogl49fqnttnscs16cva.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmoAxMBU9t0AYiBOIsxJnT5lEiwC79ls8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605468072689-2khqlo3udnhgrogl49fqnttnscs16cva.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

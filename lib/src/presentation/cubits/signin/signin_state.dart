@@ -17,4 +17,7 @@ class SigninSuccess extends SigninState {
   SigninSuccess(this.email);
 }
 
-class SigninError extends SigninState {}
+class SigninError extends SigninState {
+  final String content;
+  SigninError(this.content);
+}
