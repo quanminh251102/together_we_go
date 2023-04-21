@@ -45,9 +45,11 @@ class _BookingPageState extends State<BookingPage> {
               child: TabBarView(
                 controller: widget.tabController,
                 children: <Widget>[
-                  ListBooking(bookings: state.list),
-                  Icon(Icons.directions_transit, size: 350),
-                  Icon(Icons.directions_car, size: 350),
+                  ListBooking(bookings: state.listAvailable),
+                  ListBooking(bookings: state.listComplete),
+                  ListBooking(
+                    bookings: state.listCancel,
+                  )
                 ],
               ),
             ),

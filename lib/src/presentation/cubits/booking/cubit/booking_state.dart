@@ -13,9 +13,13 @@ class BookingInitial extends BookingState {}
 class BookingLoading extends BookingState {}
 
 class BookingLoaded extends BookingState {
-  final List<Booking> list;
+  final List<Booking> listAvailable;
+  final List<Booking> listComplete;
+  final List<Booking> listCancel;
   BookingLoaded({
-    required this.list,
+    required this.listAvailable,
+    required this.listComplete,
+    required this.listCancel,
   });
 }
 
