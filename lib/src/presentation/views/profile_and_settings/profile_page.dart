@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../config/router/app_router.dart';
+import '../../../utils/constants/colors.dart';
 import '../../cubits/app_user.dart';
 import '../../cubits/signin/signin_cubit.dart';
 import '../../services/image.dart';
@@ -111,6 +114,96 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
+  void _modalBottomSheetLogout(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return new Container(
+            height: 200.0,
+            color: Colors.transparent, //could change this to Color(0xFF737373),
+            //so you don't have to change MaterialApp canvasColor
+            child: new Container(
+                padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
+                decoration: new BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: new BorderRadius.only(
+                        topLeft: const Radius.circular(30.0),
+                        topRight: const Radius.circular(30.0))),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Đăng xuất",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      "Bạn chắc chắn muốn đăng xuất?",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        NeumorphicButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(15)),
+                              depth: 4,
+                              color: Color.fromARGB(255, 241, 229, 229)),
+                          padding: const EdgeInsets.all(12.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: const Center(
+                              child: Text(
+                                'Hủy',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        NeumorphicButton(
+                          onPressed: () {
+                            BlocProvider.of<SigninCubit>(context).Logout();
+                            appRouter.push(const SignInViewRoute());
+                          },
+                          style: NeumorphicStyle(
+                              shape: NeumorphicShape.concave,
+                              boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(15)),
+                              depth: 4,
+                              color: AppColors.primaryColor),
+                          padding: const EdgeInsets.all(12.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: const Center(
+                              child: Text(
+                                'Vâng, Đăng xuất',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )),
+          );
+        });
+  }
+
   settings(context) => [
         const ListTile(
             leading: Icon(Icons.account_box),
@@ -129,11 +222,18 @@ class _ProfilePageState extends State<ProfilePage> {
           trailing: Icon(Icons.keyboard_arrow_right),
         ),
         ListTile(
-          leading: const Icon(Icons.logout),
-          title: const Text('Logout'),
+          leading: const Icon(
+            Icons.logout,
+            color: Colors.red,
+          ),
+          title: const Text(
+            'Logout',
+            style: TextStyle(
+              color: Colors.red,
+            ),
+          ),
           onTap: () {
-            BlocProvider.of<SigninCubit>(context).Logout();
-            appRouter.push(const SignInViewRoute());
+            _modalBottomSheetLogout(context);
           },
         ),
       ];
@@ -152,10 +252,23 @@ class _ProfilePageState extends State<ProfilePage> {
           alignment: Alignment.topLeft,
         ),
         const SizedBox(height: 8),
-        CircleAvatar(
-          radius: 60.0,
-          backgroundImage: NetworkImage(appUser.avatar),
-          backgroundColor: Colors.transparent,
+        CachedNetworkImage(
+          imageUrl: appUser.avatar,
+          imageBuilder: (context, imageProvider) => Container(
+            width: 120,
+            height: 120,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(
+                      60.0) //                 <--- border radius here
+                  ),
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
         ),
         Visibility(
             visible: _isLoadingImage, child: const CircularProgressIndicator()),
