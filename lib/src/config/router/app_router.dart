@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../presentation/views/booking/add_booking.dart';
 import '../../presentation/views/calling_audio/calling_audio_page.dart';
+import '../../presentation/views/forgot_pasword/forgot_password.dart';
 import '../../presentation/views/signin.dart';
 import '../../presentation/views/homepage/homepage.dart';
 import '../../presentation/views/chat/chat_page.dart';
@@ -18,6 +19,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: SignUpView),
     AutoRoute(page: NewBookingView),
     AutoRoute(page: CallingAudioPage),
+    AutoRoute(page: ForgotPasswordScreen),
   ],
 )
 class AppRouter extends _$AppRouter {}
