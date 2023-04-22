@@ -207,19 +207,27 @@ class _ProfilePageState extends State<ProfilePage> {
   settings(context) => [
         const ListTile(
             leading: Icon(Icons.account_box),
-            title: Text('Edit Profile'),
+            title: Text('Cập nhật thông tin cá nhân'),
             trailing: Icon(
               Icons.keyboard_arrow_right,
             )),
-        const ListTile(
-          leading: Icon(Icons.location_on),
-          title: Text('Address'),
-          trailing: Icon(Icons.keyboard_arrow_right),
-        ),
-        const ListTile(
+        // const ListTile(
+        //   leading: Icon(Icons.location_on),
+        //   title: Text('Địa chỉ'),
+        //   trailing: Icon(Icons.keyboard_arrow_right),
+        // ),
+        // const ListTile(
+        //   leading: Icon(Icons.notifications),
+        //   title: Text('Thông báo'),
+        //   trailing: Icon(Icons.keyboard_arrow_right),
+        // ),
+        ListTile(
           leading: Icon(Icons.notifications),
-          title: Text('Notification'),
-          trailing: Icon(Icons.keyboard_arrow_right),
+          title: Text('Chính sách quyền riêng tư'),
+          trailing: Icon(Icons.lock_clock),
+          onTap: () {
+            appRouter.push(const PrivacyPolicyPageRoute());
+          },
         ),
         ListTile(
           leading: const Icon(
@@ -227,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.red,
           ),
           title: const Text(
-            'Logout',
+            'Đăng xuất',
             style: TextStyle(
               color: Colors.red,
             ),
@@ -239,52 +247,55 @@ class _ProfilePageState extends State<ProfilePage> {
       ];
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.05,
-          vertical: MediaQuery.of(context).size.height * 0.05),
-      child: Column(children: [
-        const Align(
-          child: Text(
-            'Thông tin tài khoản',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.05,
+            vertical: MediaQuery.of(context).size.height * 0.05),
+        child: Column(children: [
+          const Align(
+            child: Text(
+              'Thông tin tài khoản',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            alignment: Alignment.topLeft,
           ),
-          alignment: Alignment.topLeft,
-        ),
-        const SizedBox(height: 8),
-        CachedNetworkImage(
-          imageUrl: appUser.avatar,
-          imageBuilder: (context, imageProvider) => Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(
-                      60.0) //                 <--- border radius here
-                  ),
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover,
+          const SizedBox(height: 8),
+          CachedNetworkImage(
+            imageUrl: appUser.avatar,
+            imageBuilder: (context, imageProvider) => Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(
+                        60.0) //                 <--- border radius here
+                    ),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
-          placeholder: (context, url) => CircularProgressIndicator(),
-          errorWidget: (context, url, error) => Icon(Icons.error),
-        ),
-        Visibility(
-            visible: _isLoadingImage, child: const CircularProgressIndicator()),
-        ElevatedButton(
-          onPressed: () {
-            openMediaDialog();
-          },
-          child: const Text('Edit avatar'),
-        ),
-        const SizedBox(height: 8),
-        Text(appUser.name),
-        const SizedBox(height: 8),
-        Text(appUser.gmail),
-        const SizedBox(height: 24),
-        ...settings(context),
-      ]),
+          Visibility(
+              visible: _isLoadingImage,
+              child: const CircularProgressIndicator()),
+          ElevatedButton(
+            onPressed: () {
+              openMediaDialog();
+            },
+            child: const Text('Đổi ảnh đại diện'),
+          ),
+          const SizedBox(height: 8),
+          Text(appUser.name),
+          const SizedBox(height: 8),
+          Text(appUser.gmail),
+          const SizedBox(height: 24),
+          ...settings(context),
+        ]),
+      ),
     );
   }
 }

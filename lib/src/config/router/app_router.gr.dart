@@ -63,6 +63,12 @@ class _$AppRouter extends RootStackRouter {
         child: const ForgotPasswordScreen(),
       );
     },
+    PrivacyPolicyPageRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const PrivacyPolicyPage(),
+      );
+    },
   };
 
   @override
@@ -94,6 +100,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           ForgotPasswordScreenRoute.name,
           path: '/forgot-password-screen',
+        ),
+        RouteConfig(
+          PrivacyPolicyPageRoute.name,
+          path: '/privacy-policy-page',
         ),
       ];
 }
@@ -202,4 +212,16 @@ class ForgotPasswordScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ForgotPasswordScreenRoute';
+}
+
+/// generated route for
+/// [PrivacyPolicyPage]
+class PrivacyPolicyPageRoute extends PageRouteInfo<void> {
+  const PrivacyPolicyPageRoute()
+      : super(
+          PrivacyPolicyPageRoute.name,
+          path: '/privacy-policy-page',
+        );
+
+  static const String name = 'PrivacyPolicyPageRoute';
 }
