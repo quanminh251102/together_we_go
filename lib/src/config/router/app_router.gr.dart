@@ -57,6 +57,12 @@ class _$AppRouter extends RootStackRouter {
         child: const CallingAudioPage(),
       );
     },
+    ForgotPasswordScreenRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const ForgotPasswordScreen(),
+      );
+    },
   };
 
   @override
@@ -84,6 +90,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           CallingAudioPageRoute.name,
           path: '/calling-audio-page',
+        ),
+        RouteConfig(
+          ForgotPasswordScreenRoute.name,
+          path: '/forgot-password-screen',
         ),
       ];
 }
@@ -180,4 +190,16 @@ class CallingAudioPageRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'CallingAudioPageRoute';
+}
+
+/// generated route for
+/// [ForgotPasswordScreen]
+class ForgotPasswordScreenRoute extends PageRouteInfo<void> {
+  const ForgotPasswordScreenRoute()
+      : super(
+          ForgotPasswordScreenRoute.name,
+          path: '/forgot-password-screen',
+        );
+
+  static const String name = 'ForgotPasswordScreenRoute';
 }
