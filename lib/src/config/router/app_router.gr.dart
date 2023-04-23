@@ -63,6 +63,22 @@ class _$AppRouter extends RootStackRouter {
         child: const ForgotPasswordScreen(),
       );
     },
+    PrivacyPolicyPageRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const PrivacyPolicyPage(),
+      );
+    },
+    UpdateProfilePageRoute.name: (routeData) {
+      final args = routeData.argsAs<UpdateProfilePageRouteArgs>();
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: UpdateProfilePage(
+          key: args.key,
+          user: args.user,
+        ),
+      );
+    },
   };
 
   @override
@@ -94,6 +110,14 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           ForgotPasswordScreenRoute.name,
           path: '/forgot-password-screen',
+        ),
+        RouteConfig(
+          PrivacyPolicyPageRoute.name,
+          path: '/privacy-policy-page',
+        ),
+        RouteConfig(
+          UpdateProfilePageRoute.name,
+          path: '/update-profile-page',
         ),
       ];
 }
@@ -202,4 +226,50 @@ class ForgotPasswordScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ForgotPasswordScreenRoute';
+}
+
+/// generated route for
+/// [PrivacyPolicyPage]
+class PrivacyPolicyPageRoute extends PageRouteInfo<void> {
+  const PrivacyPolicyPageRoute()
+      : super(
+          PrivacyPolicyPageRoute.name,
+          path: '/privacy-policy-page',
+        );
+
+  static const String name = 'PrivacyPolicyPageRoute';
+}
+
+/// generated route for
+/// [UpdateProfilePage]
+class UpdateProfilePageRoute extends PageRouteInfo<UpdateProfilePageRouteArgs> {
+  UpdateProfilePageRoute({
+    Key? key,
+    required Map<String, dynamic> user,
+  }) : super(
+          UpdateProfilePageRoute.name,
+          path: '/update-profile-page',
+          args: UpdateProfilePageRouteArgs(
+            key: key,
+            user: user,
+          ),
+        );
+
+  static const String name = 'UpdateProfilePageRoute';
+}
+
+class UpdateProfilePageRouteArgs {
+  const UpdateProfilePageRouteArgs({
+    this.key,
+    required this.user,
+  });
+
+  final Key? key;
+
+  final Map<String, dynamic> user;
+
+  @override
+  String toString() {
+    return 'UpdateProfilePageRouteArgs{key: $key, user: $user}';
+  }
 }
