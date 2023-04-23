@@ -12,6 +12,8 @@ import 'src/presentation/cubits/signup/signup_cubit.dart';
 import 'src/presentation/cubits/chat/message_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'src/presentation/cubits/update_profile/update_profile_cubit.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BookingCubit()),
         BlocProvider(create: (context) => CallingAudioCubit()),
         BlocProvider(create: (context) => ForgotPasswordCubit()),
+        BlocProvider(create: (context) => UpdateProfileCubit()),
       ],
       child: MaterialApp.router(
         theme: AppTheme.light,
