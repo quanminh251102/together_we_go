@@ -8,8 +8,10 @@ import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
 import '../../cubits/app_user.dart';
 import '../../cubits/signin/signin_cubit.dart';
+import '../../cubits/update_profile/update_profile_cubit.dart';
 import '../../services/image.dart';
 import '../../services/user.dart';
+import 'update_profile/update_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -19,6 +21,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool _isLoadingForUpdateProfilePage = false;
   bool _isLoadingImage = false;
 
   void uploadImage(XFile file) {
@@ -204,13 +207,31 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
+  void cancel_loading() {
+    setState(() {
+      this._isLoadingForUpdateProfilePage = false;
+    });
+  }
+
   settings(context) => [
-        const ListTile(
-            leading: Icon(Icons.account_box),
-            title: Text('Cập nhật thông tin cá nhân'),
-            trailing: Icon(
-              Icons.keyboard_arrow_right,
-            )),
+        ListTile(
+          leading: Icon(Icons.account_box),
+          title: Text('Cập nhật thông tin cá nhân'),
+          trailing: this._isLoadingForUpdateProfilePage
+              ? CircularProgressIndicator()
+              : Icon(
+                  Icons.keyboard_arrow_right,
+                ),
+          onTap: () {
+            if (this._isLoadingForUpdateProfilePage == false) {
+              setState(() {
+                _isLoadingForUpdateProfilePage = true;
+              });
+              BlocProvider.of<UpdateProfileCubit>(context)
+                  .navigateToUpdateProfileScreen(cancel_loading);
+            }
+          },
+        ),
         // const ListTile(
         //   leading: Icon(Icons.location_on),
         //   title: Text('Địa chỉ'),
@@ -222,9 +243,9 @@ class _ProfilePageState extends State<ProfilePage> {
         //   trailing: Icon(Icons.keyboard_arrow_right),
         // ),
         ListTile(
-          leading: Icon(Icons.notifications),
+          leading: Icon(Icons.lock_clock),
           title: Text('Chính sách quyền riêng tư'),
-          trailing: Icon(Icons.lock_clock),
+          trailing: Icon(Icons.keyboard_arrow_right),
           onTap: () {
             appRouter.push(const PrivacyPolicyPageRoute());
           },

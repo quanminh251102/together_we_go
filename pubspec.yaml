@@ -74,6 +74,7 @@ dependencies:
   path_provider: ^2.0.14
   firebase_auth: ^4.4.2
   cached_network_image: ^3.2.3
+  dropdown_textfield: ^1.0.8
 
 dev_dependencies:
   flutter_test:

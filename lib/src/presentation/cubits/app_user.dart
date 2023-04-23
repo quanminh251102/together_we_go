@@ -26,6 +26,10 @@ class AppUser {
   edit_avatar(String url) {
     _avatar = url;
   }
+
+  edit_name(String name) {
+    _name = name;
+  }
 }
 
 final appUser = AppUser();
