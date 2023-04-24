@@ -5,12 +5,15 @@ import 'src/presentation/cubits/booking/booking_cubit.dart';
 import 'src/presentation/cubits/chat/chat_rooms_cubit.dart';
 import 'package:together_we_go/src/presentation/cubits/home_page/home_page_cubit.dart';
 import 'src/presentation/cubits/map/map_cubit.dart';
+import 'src/presentation/cubits/forgot_password/forgot_password_cubit.dart';
 import 'src/presentation/cubits/signin/signin_cubit.dart';
 import 'src/config/router/app_router.dart';
 import 'src/config/themes/app_themes.dart';
 import 'src/presentation/cubits/signup/signup_cubit.dart';
 import 'src/presentation/cubits/chat/message_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'src/presentation/cubits/update_profile/update_profile_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +33,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => HomePageCubit()),
         BlocProvider(create: (context) => BookingCubit()),
         BlocProvider(create: (context) => CallingAudioCubit()),
-        BlocProvider(create: (context) => MapCubit())
+        BlocProvider(create: (context) => MapCubit()),
+        BlocProvider(create: (context) => ForgotPasswordCubit()),
+        BlocProvider(create: (context) => UpdateProfileCubit()),
       ],
       child: MaterialApp.router(
         theme: AppTheme.light,

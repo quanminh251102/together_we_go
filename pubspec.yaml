@@ -63,7 +63,7 @@ dependencies:
   flutter_custom_cards: ^0.2.1
   flutter_neumorphic: ^3.2.0
   http: ^0.13.5
-  intl: ^0.18.0
+  intl: ^0.17.0
   just_audio: ^0.9.32
   audio_session: ^0.1.13
   peerdart: ^0.5.0
@@ -78,6 +78,11 @@ dependencies:
   get: ^4.6.5
   rxdart: ^0.27.7
   flutter_google_places_hoc081098: ^1.2.0
+  flutter_login_facebook: ^1.8.0
+  path_provider: ^2.0.14
+  firebase_auth: ^4.4.2
+  cached_network_image: ^3.2.3
+  dropdown_textfield: ^1.0.8
 
 dev_dependencies:
   flutter_test:

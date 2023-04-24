@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">together_we_go</string>
+    <string name="facebook_app_id">1392996451484328</string>
+    <string name="fb_login_protocol_scheme">fb1392996451484328</string>
+    <string name="facebook_client_token">82b63cb8f92ec5637ef7d075d1b311e9</string>
+</resources>
+
