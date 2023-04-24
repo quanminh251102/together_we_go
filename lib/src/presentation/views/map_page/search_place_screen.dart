@@ -38,7 +38,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
         if (state is MapLoadError) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Lỗi khi load map'),
+              content: Text('Lỗi khi load'),
             ),
           );
         }
