@@ -8,6 +8,7 @@ import '../../utils/constants/colors.dart';
 import '../cubits/app_socket.dart';
 import '../cubits/calling_audio/calling_audio_cubit.dart';
 import '../cubits/chat/message_cubit.dart';
+import '../cubits/forgot_password/forgot_password_cubit.dart';
 import '../cubits/signin/signin_cubit.dart';
 import '../cubits/app_user.dart';
 
@@ -220,7 +221,10 @@ class _SignInViewState extends State<SignInView> {
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          BlocProvider.of<ForgotPasswordCubit>(context).init();
+                          appRouter.push(const ForgotPasswordScreenRoute());
+                        },
                         child: const Center(
                           child: Text(
                             'Quên mật khẩu? ',
@@ -267,6 +271,8 @@ class _SignInViewState extends State<SignInView> {
                           NeumorphicButton(
                             onPressed: () {
                               print("onClick");
+                              BlocProvider.of<SigninCubit>(context)
+                                  .SignInWithFacebook();
                             },
                             style: NeumorphicStyle(
                                 shape: NeumorphicShape.concave,
