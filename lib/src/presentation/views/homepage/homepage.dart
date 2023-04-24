@@ -9,6 +9,8 @@ import '../booking/add_booking.dart';
 import '../booking/booking_page.dart';
 import '../../cubits/home_page/home_page_cubit.dart';
 import '../chat/chat_rooms_page.dart';
+import '../map_page/map_page.dart';
+import '../map_page/search_place_screen.dart';
 import 'widget/blurred_dialog.dart';
 import '../profile_and_settings/profile_page.dart';
 
@@ -28,6 +30,7 @@ class _HomePageViewState extends State<HomePageView>
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _tabController = TabController(
       length: 3,
       vsync: this,
@@ -89,13 +92,7 @@ class _HomePageViewState extends State<HomePageView>
       var _body;
       switch (index) {
         case 0:
-          _body = Container(
-            child: const Center(
-                child: Text(
-              'Home page',
-              style: TextStyle(fontSize: 20),
-            )),
-          );
+          _body = SearchPlaceScreen();
           break;
         case 1:
           _body = BookingPage(tabController: _tabController);
