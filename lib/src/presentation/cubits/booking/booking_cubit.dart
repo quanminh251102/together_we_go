@@ -4,8 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../config/url/config.dart';
-import '../../../models/booking.dart';
+import '../../../config/url/config.dart';
+import '../../models/booking.dart';
 
 part 'booking_state.dart';
 

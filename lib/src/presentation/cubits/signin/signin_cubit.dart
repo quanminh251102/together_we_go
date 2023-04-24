@@ -52,7 +52,7 @@ class SigninCubit extends Cubit<SigninState> {
 
         emit(SigninLoading());
         _isLoggedIn = true;
-        _userObj = userData!;
+        _userObj = userData;
         var avatar = _userObj.photoUrl!;
         var name = _userObj.displayName!;
         var email = _userObj.email;

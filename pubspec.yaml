@@ -70,6 +70,14 @@ dependencies:
   flutter_webrtc: ^0.9.25
   cloud_firestore: ^4.5.2
   google_sign_in: ^6.1.0
+  google_maps_flutter: ^2.2.5
+  flutter_polyline_points: ^1.0.0
+  permission_handler: ^10.2.0
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  get: ^4.6.5
+  rxdart: ^0.27.7
+  flutter_google_places_hoc081098: ^1.2.0
 
 dev_dependencies:
   flutter_test:
