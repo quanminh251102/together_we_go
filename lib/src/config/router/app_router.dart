@@ -15,11 +15,11 @@ part 'app_router.gr.dart';
 
 @AdaptiveAutoRouter(
   routes: [
-    AutoRoute(page: SignInView, initial: true),
+    AutoRoute(page: NewBookingView, initial: true),
     AutoRoute(page: ChatPage),
     AutoRoute(page: HomePageView),
     AutoRoute(page: SignUpView),
-    AutoRoute(page: NewBookingView),
+    AutoRoute(page: SignInView),
     AutoRoute(page: CallingAudioPage),
     AutoRoute(page: ForgotPasswordScreen),
     AutoRoute(page: PrivacyPolicyPage),
