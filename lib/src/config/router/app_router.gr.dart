@@ -17,10 +17,10 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    SignInViewRoute.name: (routeData) {
+    NewBookingViewRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const SignInView(),
+        child: const NewBookingView(),
       );
     },
     ChatPageRoute.name: (routeData) {
@@ -45,10 +45,10 @@ class _$AppRouter extends RootStackRouter {
         child: const SignUpView(),
       );
     },
-    NewBookingViewRoute.name: (routeData) {
+    SignInViewRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const NewBookingView(),
+        child: const SignInView(),
       );
     },
     CallingAudioPageRoute.name: (routeData) {
@@ -84,7 +84,7 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          SignInViewRoute.name,
+          NewBookingViewRoute.name,
           path: '/',
         ),
         RouteConfig(
@@ -100,8 +100,8 @@ class _$AppRouter extends RootStackRouter {
           path: '/sign-up-view',
         ),
         RouteConfig(
-          NewBookingViewRoute.name,
-          path: '/new-booking-view',
+          SignInViewRoute.name,
+          path: '/sign-in-view',
         ),
         RouteConfig(
           CallingAudioPageRoute.name,
@@ -123,15 +123,15 @@ class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [SignInView]
-class SignInViewRoute extends PageRouteInfo<void> {
-  const SignInViewRoute()
+/// [NewBookingView]
+class NewBookingViewRoute extends PageRouteInfo<void> {
+  const NewBookingViewRoute()
       : super(
-          SignInViewRoute.name,
+          NewBookingViewRoute.name,
           path: '/',
         );
 
-  static const String name = 'SignInViewRoute';
+  static const String name = 'NewBookingViewRoute';
 }
 
 /// generated route for
@@ -193,15 +193,15 @@ class SignUpViewRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [NewBookingView]
-class NewBookingViewRoute extends PageRouteInfo<void> {
-  const NewBookingViewRoute()
+/// [SignInView]
+class SignInViewRoute extends PageRouteInfo<void> {
+  const SignInViewRoute()
       : super(
-          NewBookingViewRoute.name,
-          path: '/new-booking-view',
+          SignInViewRoute.name,
+          path: '/sign-in-view',
         );
 
-  static const String name = 'NewBookingViewRoute';
+  static const String name = 'SignInViewRoute';
 }
 
 /// generated route for

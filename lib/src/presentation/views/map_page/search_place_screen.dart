@@ -7,8 +7,9 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../utils/constants/strings.dart';
 import '../../cubits/booking/booking_cubit.dart';
-import '../../cubits/map/map_cubit.dart';
+import '../../cubits/map/map/map_cubit.dart';
 
 class SearchPlaceScreen extends StatefulWidget {
   const SearchPlaceScreen({super.key});
@@ -17,7 +18,6 @@ class SearchPlaceScreen extends StatefulWidget {
   State<SearchPlaceScreen> createState() => _SearchPlaceScreenState();
 }
 
-const kGoogleApiKey = 'AIzaSyCZXr0NOKXIcaZFmfzelhXk1NurDc7uUig';
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
 class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
@@ -29,6 +29,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
     // TODO: implement initState
     super.initState();
     BlocProvider.of<MapCubit>(context).requestLocationPermission();
+    markerList = BlocProvider.of<MapCubit>(context).markerList;
   }
 
   @override
@@ -59,7 +60,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
                 GoogleMap(
                     myLocationEnabled: true,
                     initialCameraPosition: state.cameraPosition,
-                    markers: markerList,
+                    markers: state.markers,
                     onMapCreated: (GoogleMapController controller) {
                       googleMapController = controller;
                     }),
@@ -92,7 +93,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
   Future<void> _handleSearchButton() async {
     Prediction? p = await PlacesAutocomplete.show(
         context: context,
-        apiKey: kGoogleApiKey,
+        apiKey: GoogleAPI.APIKey,
         onError: onError,
         mode: _mode,
         language: 'vi',
@@ -113,7 +114,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
 
   void displayPredictions(Prediction p, ScaffoldState? currentState) async {
     GoogleMapsPlaces places = GoogleMapsPlaces(
-        apiKey: kGoogleApiKey,
+        apiKey: GoogleAPI.APIKey,
         apiHeaders: await const GoogleApiHeaders().getHeaders());
     PlacesDetailsResponse detailsResponse =
         await places.getDetailsByPlaceId(p.placeId!);
@@ -121,13 +122,13 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
     final lat = detailsResponse.result.geometry!.location.lat;
     final lng = detailsResponse.result.geometry!.location.lng;
 
-    markerList.clear();
-    markerList.add(Marker(
-        markerId: const MarkerId("0"),
+    BlocProvider.of<MapCubit>(context).markerList.add(Marker(
+        markerId: const MarkerId("searchMarker"),
         position: LatLng(lat, lng),
         infoWindow: InfoWindow(title: detailsResponse.result.name)));
     setState(() {});
     googleMapController
-        .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 14));
+        .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 20));
+    BlocProvider.of<MapCubit>(context).markerList.remove("searchMarker");
   }
 }
