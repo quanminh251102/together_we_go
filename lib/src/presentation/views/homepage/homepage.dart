@@ -44,6 +44,15 @@ class _HomePageViewState extends State<HomePageView>
       switch (index) {
         case 1:
           _appBar = AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+              IconButton(
+                  onPressed: () {
+                    appRouter.push(NewBookingViewRoute());
+                  },
+                  icon: const Icon(Icons.post_add))
+            ],
             leading: const Icon(Icons.book_outlined),
             title: const Text(
               'Bài đăng',
