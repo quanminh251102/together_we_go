@@ -8,11 +8,13 @@ class Booking {
   final String time;
   final String contact;
   final String content;
-  final String startPoint;
+  final String startPointMainText;
   final String startPointAddress;
-  final String endPoint;
+  final String endPointMainText;
   final String endPointAddress;
   final String status;
+  final String distance;
+  final String duration;
   Booking({
     required this.authorId,
     required this.authorName,
@@ -22,26 +24,31 @@ class Booking {
     required this.time,
     required this.contact,
     required this.content,
-    required this.startPoint,
-    required this.endPoint,
-    required this.status,
+    required this.startPointMainText,
     required this.startPointAddress,
+    required this.endPointMainText,
     required this.endPointAddress,
+    required this.status,
+    required this.distance,
+    required this.duration,
   });
   static toBooking(Map<String, dynamic> map) {
     return Booking(
-        status: map["status"],
-        authorId: map["authorId"]["_id"],
-        authorName: map["authorId"]["first_name"],
-        price: map["price"].toString(),
-        authorAvatar: map["authorId"]["avatarUrl"],
-        bookingType: map["bookingType"],
-        time: map["time"],
-        contact: map["authorId"]["phoneNumber"] ?? " ",
-        content: map["content"],
-        startPoint: map["startPoint"],
-        startPointAddress: map["startPointAddress"],
-        endPointAddress: map["endPointAddress"],
-        endPoint: map["endPoint"]);
+      distance: map["distance"],
+      duration: map["duration"],
+      status: map["status"],
+      authorId: map["authorId"]["_id"],
+      authorName: map["authorId"]["first_name"],
+      price: map["price"].toString(),
+      authorAvatar: map["authorId"]["avatarUrl"],
+      bookingType: map["bookingType"],
+      time: map["time"],
+      contact: map["authorId"]["phoneNumber"] ?? " ",
+      content: map["content"],
+      startPointMainText: map["startPointMainText"],
+      startPointAddress: map["startPointAddress"],
+      endPointAddress: map["endPointAddress"],
+      endPointMainText: map["endPointMainText"],
+    );
   }
 }
