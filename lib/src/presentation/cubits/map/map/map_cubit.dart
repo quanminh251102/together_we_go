@@ -110,20 +110,4 @@ class MapCubit extends Cubit<MapState> {
       await openAppSettings();
     }
   }
-
-  Future<List<PlaceSearch>> getSearchPlace(String search) async {
-    var url =
-        'https://rsapi.goong.io/Place/AutoComplete?api_key=FazAEl6Rima3SEVquUL7wib3FYu4sbS8gc94c2I2&input=$search';
-    var response = await http.get(Uri.parse(url));
-    var json = convert.jsonDecode(response.body);
-    var jsonResults = json['predictions'] as List;
-    placeSearchList =
-        jsonResults.map((place) => PlaceSearch.fromJson(place)).toList();
-    print(placeSearchList[0].description);
-    print(placeSearchList[1].description);
-    print(placeSearchList[2].description);
-    print(placeSearchList[3].description);
-    print(placeSearchList[4].description);
-    return placeSearchList;
-  }
 }

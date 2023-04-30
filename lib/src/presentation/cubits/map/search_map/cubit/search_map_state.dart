@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'search_map_cubit.dart';
 
 abstract class SearchMapState extends Equatable {
@@ -8,3 +9,14 @@ abstract class SearchMapState extends Equatable {
 }
 
 class SearchMapInitial extends SearchMapState {}
+
+class SearchMapLoading extends SearchMapState {}
+
+class SearchMaping extends SearchMapState {
+  final List<PlaceSearch> placeSearchList;
+  SearchMaping({
+    required this.placeSearchList,
+  });
+}
+
+class SearchMapError extends SearchMapState {}
