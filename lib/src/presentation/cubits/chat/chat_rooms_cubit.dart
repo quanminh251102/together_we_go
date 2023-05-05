@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../models/chat_room.dart';
 import '../../services/chat_room.dart';
+import '../app_socket.dart';
 import '../app_user.dart';
 
 part 'chat_rooms_state.dart';
@@ -21,5 +22,12 @@ class ChatRoomsCubit extends Cubit<ChatRoomsState> {
       print(e);
       emit(ErrorState());
     }
+  }
+
+  void init_socket_chat_room() {
+    appSocket.socket.on('reload_chatRooms', (jsonData) {
+      get_chatRoom();
+      print('reload_chat_rooms');
+    });
   }
 }
