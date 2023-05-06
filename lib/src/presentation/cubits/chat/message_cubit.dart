@@ -22,6 +22,8 @@ class MessageCubit extends Cubit<MessageState> {
     partner_gmail: '',
     partner_avatar: '',
     partner_id: '',
+    numUnWatch: 0,
+    lastMessage: {},
   );
   void setChatRoom(ChatRoom _chatRoom) {
     chatRoom = _chatRoom;
@@ -77,6 +79,7 @@ class MessageCubit extends Cubit<MessageState> {
       'message': message,
       'type': type,
       'createdAt': DateTime.now().toIso8601String(),
+      'partner_id': chatRoom.partner_id,
     };
     appSocket.socket.emit('send_message_to_chat_room', data);
     emit(LoadingNewMessageState());
