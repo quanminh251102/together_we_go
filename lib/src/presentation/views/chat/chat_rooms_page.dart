@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
 import '../../../config/router/app_router.dart';
+import '../../../service/notifi_service.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/funtions/long_string.functions.dart';
 import '../../cubits/chat/chat_rooms_cubit.dart';
