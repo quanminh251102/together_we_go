@@ -10,6 +10,7 @@ import '../cubits/calling_audio/calling_audio_cubit.dart';
 import '../cubits/chat/chat_rooms_cubit.dart';
 import '../cubits/chat/message_cubit.dart';
 import '../cubits/forgot_password/forgot_password_cubit.dart';
+import '../cubits/notification/notification_cubit.dart';
 import '../cubits/signin/signin_cubit.dart';
 import '../cubits/app_user.dart';
 
@@ -71,6 +72,7 @@ class _SignInViewState extends State<SignInView> {
       BlocProvider.of<MessageCubit>(context).init_socket();
       BlocProvider.of<CallingAudioCubit>(context).init_socket_calling_audio();
       BlocProvider.of<ChatRoomsCubit>(context).init_socket_chat_room();
+      BlocProvider.of<NotificationCubit>(context).init_socket_notifications();
     }
 
     Widget buildInitial(

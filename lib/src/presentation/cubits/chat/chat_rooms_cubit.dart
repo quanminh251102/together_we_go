@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../service/notifi_service.dart';
 import '../../models/chat_room.dart';
 import '../../services/chat_room.dart';
 import '../app_socket.dart';
@@ -28,6 +29,8 @@ class ChatRoomsCubit extends Cubit<ChatRoomsState> {
     appSocket.socket.on('reload_chatRooms', (jsonData) {
       get_chatRoom();
       print('reload_chat_rooms');
+      NotificationService().showNotification(
+          title: 'Thông báo', body: 'Có người nhắn tin với bạn');
     });
   }
 }
