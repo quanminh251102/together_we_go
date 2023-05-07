@@ -223,8 +223,8 @@ class _ChatPageState extends State<ChatPage> {
           onPressed: () {
             //make_call('just_audio');
 
-            BlocProvider.of<CallingAudioCubit>(context)
-                .make_call(context.read<MessageCubit>().chatRoom.partner_id);
+            BlocProvider.of<CallingAudioCubit>(context).make_call(
+                context.read<MessageCubit>().chatRoom.partner_id, 'audio');
           },
           icon: const Icon(
             Icons.call,
@@ -233,6 +233,8 @@ class _ChatPageState extends State<ChatPage> {
         IconButton(
           onPressed: () {
             //make_call('meeting');
+            BlocProvider.of<CallingAudioCubit>(context).make_call(
+                context.read<MessageCubit>().chatRoom.partner_id, 'video');
           },
           icon: const Icon(
             Icons.video_call_sharp,
