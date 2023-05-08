@@ -19,10 +19,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'src/presentation/cubits/update_profile/update_profile_cubit.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: "assets/.env");
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService().initNotification();
   await Firebase.initializeApp();
+  await dotenv.load(fileName: "assets/config/.env");
   runApp(MyApp());
 }
 
