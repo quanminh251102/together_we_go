@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../config/router/app_router.dart';
 import '../../utils/constants/colors.dart';
 import '../cubits/app_socket.dart';
@@ -238,8 +237,8 @@ class _SignInViewState extends State<SignInView> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
-                      Row(
-                        children: const [
+                      const Row(
+                        children: [
                           Expanded(
                               child: Divider(
                             thickness: 0.2,
@@ -359,7 +358,7 @@ class _SignInViewState extends State<SignInView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          leading: SizedBox(),
+          leading: const SizedBox(),
         ),
         body: BlocConsumer<SigninCubit, SigninState>(
           listener: (context, state) {

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,7 +10,6 @@ import '../../cubits/signin/signin_cubit.dart';
 import '../../cubits/update_profile/update_profile_cubit.dart';
 import '../../services/image.dart';
 import '../../services/user.dart';
-import 'update_profile/update_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -72,14 +70,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         });
                       }
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.camera_alt,
                           size: 30,
                         ),
-                        const Text('Máy ảnh')
+                        Text('Máy ảnh')
                       ],
                     ),
                   ),
@@ -99,14 +97,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         // image.path
                       }
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        const Text('Thư viện')
+                        Text('Thư viện')
                       ],
                     ),
                   ),
@@ -126,16 +124,15 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.transparent, //could change this to Color(0xFF737373),
             //so you don't have to change MaterialApp canvasColor
             child: new Container(
-                padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
-                decoration: new BoxDecoration(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                decoration: const BoxDecoration(
                     color: Colors.white,
-                    borderRadius: new BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: const Radius.circular(30.0),
                         topRight: const Radius.circular(30.0))),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Đăng xuất",
                       style: TextStyle(
                           color: Colors.red,
@@ -143,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
-                    Text(
+                    const Text(
                       "Bạn chắc chắn muốn đăng xuất?",
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -161,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               boxShape: NeumorphicBoxShape.roundRect(
                                   BorderRadius.circular(15)),
                               depth: 4,
-                              color: Color.fromARGB(255, 241, 229, 229)),
+                              color: const Color.fromARGB(255, 241, 229, 229)),
                           padding: const EdgeInsets.all(12.0),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.35,
@@ -215,11 +212,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   settings(context) => [
         ListTile(
-          leading: Icon(Icons.account_box),
-          title: Text('Cập nhật thông tin cá nhân'),
+          leading: const Icon(Icons.account_box),
+          title: const Text('Cập nhật thông tin cá nhân'),
           trailing: this._isLoadingForUpdateProfilePage
-              ? CircularProgressIndicator()
-              : Icon(
+              ? const CircularProgressIndicator()
+              : const Icon(
                   Icons.keyboard_arrow_right,
                 ),
           onTap: () {
@@ -243,9 +240,9 @@ class _ProfilePageState extends State<ProfilePage> {
         //   trailing: Icon(Icons.keyboard_arrow_right),
         // ),
         ListTile(
-          leading: Icon(Icons.lock_clock),
-          title: Text('Chính sách quyền riêng tư'),
-          trailing: Icon(Icons.keyboard_arrow_right),
+          leading: const Icon(Icons.lock_clock),
+          title: const Text('Chính sách quyền riêng tư'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
           onTap: () {
             appRouter.push(const PrivacyPolicyPageRoute());
           },
@@ -297,8 +294,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
           Visibility(
               visible: _isLoadingImage,

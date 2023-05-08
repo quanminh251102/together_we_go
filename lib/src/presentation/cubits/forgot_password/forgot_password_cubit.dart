@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
-import '../../../config/router/app_router.dart';
 import '../../../config/url/config.dart';
 import '../../../utils/showSnackbar.dart';
 
@@ -71,7 +69,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     }
 
     this.timer = Timer.periodic(
-        Duration(seconds: 3), (_) => checkEmailVirified(email, context));
+        const Duration(seconds: 3), (_) => checkEmailVirified(email, context));
 
     emit(ForgotPasswordInitial());
     emit(ForgotPasswordLoaded(
@@ -86,7 +84,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
       emit(ForgotPasswordInitial());
 
       this.isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
-      this.timer?.cancel();
+      this.timer.cancel();
       showSnackBar(context, 'Xác thực thành công');
       emit(ForgotPasswordLoaded(
           isEmailVerified: this.isEmailVerified,
