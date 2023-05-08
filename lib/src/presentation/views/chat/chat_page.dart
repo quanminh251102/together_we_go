@@ -91,14 +91,14 @@ class _ChatPageState extends State<ChatPage> {
                         });
                       }
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.camera_alt,
                           size: 30,
                         ),
-                        const Text('Máy ảnh')
+                        Text('Máy ảnh')
                       ],
                     ),
                   ),
@@ -118,14 +118,14 @@ class _ChatPageState extends State<ChatPage> {
                         // image.path
                       }
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        const Text('Thư viện')
+                        Text('Thư viện')
                       ],
                     ),
                   ),
@@ -406,10 +406,10 @@ class _ChatPageState extends State<ChatPage> {
             child: CircularProgressIndicator(),
           );
         } else if (state is ErrorState) {
-          return Center(
+          return const Center(
             child: Column(
               children: [
-                const Icon(Icons.close),
+                Icon(Icons.close),
               ],
             ),
           );

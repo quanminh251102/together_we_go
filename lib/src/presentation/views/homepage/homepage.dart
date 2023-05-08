@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
 import '../../cubits/chat/chat_rooms_cubit.dart';
-import '../booking/add_booking.dart';
 import '../booking/booking_page.dart';
-import '../../cubits/home_page/home_page_cubit.dart';
 import '../chat/chat_rooms_page.dart';
-import '../map_page/map_page.dart';
 import '../map_page/search_place_screen.dart';
-import 'widget/blurred_dialog.dart';
 import '../profile_and_settings/profile_page.dart';
 
 class HomePageView extends StatefulWidget {
@@ -49,7 +44,7 @@ class _HomePageViewState extends State<HomePageView>
                   onPressed: () {}, icon: const Icon(Icons.search_outlined)),
               IconButton(
                   onPressed: () {
-                    appRouter.push(NewBookingViewRoute());
+                    appRouter.push(const NewBookingViewRoute());
                   },
                   icon: const Icon(Icons.post_add))
             ],
@@ -101,13 +96,13 @@ class _HomePageViewState extends State<HomePageView>
       var _body;
       switch (index) {
         case 0:
-          _body = SearchPlaceScreen();
+          _body = const SearchPlaceScreen();
           break;
         case 1:
           _body = BookingPage(tabController: _tabController);
           break;
         case 2:
-          _body = ChatRoomsPage();
+          _body = const ChatRoomsPage();
           break;
         case 3:
           _body = Container(
