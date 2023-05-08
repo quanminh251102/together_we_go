@@ -57,6 +57,12 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
     emit(CallingAudioLoadedState());
   }
 
+  void set_isVideo() {
+    emit(CallingAudioNewState());
+    isVideo = !isVideo;
+    emit(CallingAudioLoadedState());
+  }
+
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
@@ -69,7 +75,7 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
     );
   }
 
-  Future<void> init_peer() async {
+  Future<void> init_peer(String call_type) async {
     this.isAudio = true;
 
     peer = Peer(options: PeerOptions(debug: LogLevel.All));
@@ -94,8 +100,11 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
     await localRenderer.initialize();
     await remoteRenderer.initialize();
 
-    final mediaStream = await navigator.mediaDevices
-        .getUserMedia({"video": false, "audio": true});
+    final mediaStream = (call_type == 'video')
+        ? await navigator.mediaDevices
+            .getUserMedia({"video": true, "audio": true})
+        : await navigator.mediaDevices
+            .getUserMedia({"video": false, "audio": true});
 
     mediaDevicesList = await navigator.mediaDevices.enumerateDevices();
 
@@ -138,13 +147,12 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
       );
     }
 
-    await init_peer();
+    await init_peer('video');
 
     appSocket.socket.on('calling', (jsonData) {
       print('calling audio');
     });
     appSocket.socket.on("open_calling_ui", (jsonData) async {
-      await init_peer();
       print('get_calling');
 
       final new_t = json.encode(jsonData);
@@ -155,6 +163,20 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
       this.partner_id = data['partner_id'];
       this.partner_name = data['partner_name'];
       this.partner_avatar = data['partner_avatar'];
+      this.call_type = data['call_type'];
+      if (call_type == 'video') {
+        this.isAudio = true;
+        this.isVideo = true;
+        this.audioEnabled = true;
+        this.videoEnabled = true;
+      } else {
+        this.isAudio = true;
+        this.isVideo = false;
+        this.audioEnabled = true;
+        this.videoEnabled = false;
+      }
+
+      await init_peer(this.call_type);
 
       if (this.isCaller == true) {
         this.page_state = 'calling_caller_body';
@@ -181,10 +203,15 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
 
       try {
         if (this.isCaller == true) {
-          final mediaStream = await navigator.mediaDevices.getUserMedia({
-            "video": false,
-            "audio": true,
-          });
+          final mediaStream = (call_type == 'video')
+              ? await navigator.mediaDevices.getUserMedia({
+                  "video": true,
+                  "audio": true,
+                })
+              : await navigator.mediaDevices.getUserMedia({
+                  "video": false,
+                  "audio": true,
+                });
           mediaDevicesList = await navigator.mediaDevices.enumerateDevices();
 
           this.localStream = mediaStream;
@@ -229,14 +256,15 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
     this.init_socket = true;
   }
 
-  void make_call(String partner_id) {
+  void make_call(String partner_id, String call_type) {
     Map data = {
       'partner_id': '${partner_id}',
+      'call_type': '${call_type}', // audio / video
     };
     appSocket.socket.emit('calling', data);
   }
 
-  void stop_call() {
+  void stop_call() async {
     Map data = {
       'partner_id': '${this.partner_id}',
     };
@@ -244,16 +272,16 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
     audio_stop();
     try {
       if (kIsWeb) {
-        localStream?.getTracks().forEach((track) => track.stop());
+        localStream?.getTracks().forEach((track) async => await track.stop());
       }
       (_timer as Timer).cancel();
       List<MediaStreamTrack> tracks = localRenderer.srcObject!.getTracks();
-      tracks.forEach((track) {
-        track.stop();
+      tracks.forEach((track) async {
+        await track.stop();
       });
       tracks = remoteRenderer.srcObject!.getTracks();
-      tracks.forEach((track) {
-        track.stop();
+      tracks.forEach((track) async {
+        await track.stop();
       });
     } catch (e) {
       print(e);
@@ -282,5 +310,32 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
     }
     emit(CallingAudioLoadedState());
     return false;
+  }
+
+  bool toggleVideo() {
+    emit(CallingAudioNewState());
+    if (localStream != null) {
+      final videoTrack = localStream!.getVideoTracks()[0];
+      if (videoTrack != null) {
+        final bool videoEnabled = videoTrack.enabled = !videoTrack.enabled;
+        this.videoEnabled = videoEnabled;
+        //this._MeetingScreen_isVideo = videoEnabled;
+        emit(CallingAudioLoadedState());
+
+        return videoEnabled;
+      }
+    }
+    emit(CallingAudioLoadedState());
+    return false;
+  }
+
+  void toggleCamera() async {
+    if (localStream == null) throw Exception('Stream is not initialized');
+    emit(CallingAudioNewState());
+    final videoTrack = localStream!
+        .getVideoTracks()
+        .firstWhere((track) => track.kind == 'video');
+    await Helper.switchCamera(videoTrack);
+    emit(CallingAudioLoadedState());
   }
 }

@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
 import '../../../config/router/app_router.dart';
+import '../../../service/notifi_service.dart';
 import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/funtions/long_string.functions.dart';
 import '../../cubits/chat/chat_rooms_cubit.dart';
 import '../../cubits/chat/message_cubit.dart' as Message;
 
@@ -18,9 +21,11 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Text('Inbox'), Icon(Icons.message)],
           ),
@@ -34,10 +39,10 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is ErrorState) {
-                  return const Center(
+                  return Center(
                     child: Column(
                       children: [
-                        Icon(Icons.close),
+                        const Icon(Icons.close),
                         Text('Error: Loading Chat Room failed'),
                       ],
                     ),
@@ -65,6 +70,7 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                           },
                           borderRadius: 12,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               CircleAvatar(
                                 radius: 30.0,
@@ -72,7 +78,7 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                                     NetworkImage(chatRoom.partner_avatar),
                                 backgroundColor: Colors.transparent,
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: 12),
                               SizedBox(
                                 width: 100,
                                 child: Column(
@@ -80,16 +86,16 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const SizedBox(height: 8),
+                                    SizedBox(height: 8),
                                     Text(
                                       chatRoom.partner_name,
-                                      style: const TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 16),
                                     ),
-                                    const Text('............')
+                                    Text('............')
                                   ],
                                 ),
                               ),
-                              const Expanded(child: SizedBox()),
+                              Expanded(child: SizedBox()),
                               Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -97,7 +103,7 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                                   CustomCard(
                                     width: 26,
                                     height: 26,
-                                    child: const Center(
+                                    child: Center(
                                       child: Text(
                                         '1',
                                       ),
@@ -105,7 +111,7 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                                     color: AppColors.primaryColor,
                                     borderRadius: 12,
                                   ),
-                                  const Text('01:30')
+                                  Text('01:30')
                                 ],
                               ),
                             ],
@@ -121,6 +127,6 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
