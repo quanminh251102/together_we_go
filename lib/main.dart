@@ -16,7 +16,6 @@ import 'src/config/themes/app_themes.dart';
 import 'src/presentation/cubits/signup/signup_cubit.dart';
 import 'src/presentation/cubits/chat/message_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'src/presentation/cubits/update_profile/update_profile_cubit.dart';
 
 Future<void> main() async {
@@ -44,6 +43,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UpdateProfileCubit()),
         BlocProvider(
           create: (context) => SearchMapCubit(),
+        ),
         BlocProvider(
           create: (context) => NotificationCubit(),
         ),
