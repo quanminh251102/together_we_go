@@ -1,17 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../config/router/app_router.dart';
-import '../../utils/constants/colors.dart';
-import '../cubits/app_socket.dart';
-import '../cubits/calling_audio/calling_audio_cubit.dart';
-import '../cubits/chat/chat_rooms_cubit.dart';
-import '../cubits/chat/message_cubit.dart';
-import '../cubits/forgot_password/forgot_password_cubit.dart';
-import '../cubits/notification/notification_cubit.dart';
-import '../cubits/signin/signin_cubit.dart';
-import '../cubits/app_user.dart';
+import '../../../../config/router/app_router.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../cubits/app_socket.dart';
+import '../../../cubits/calling_audio/calling_audio_cubit.dart';
+import '../../../cubits/chat/chat_rooms_cubit.dart';
+import '../../../cubits/chat/message_cubit.dart';
+import '../../../cubits/forgot_password/forgot_password_cubit.dart';
+import '../../../cubits/notification/notification_cubit.dart';
+import '../../../cubits/signin/signin_cubit.dart';
+import '../../../cubits/app_user.dart';
+import 'widget/app_icon_button.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({super.key});
@@ -193,33 +194,29 @@ class _SignInViewState extends State<SignInView> {
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
                       Center(
-                        child: NeumorphicButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              BlocProvider.of<SigninCubit>(context)
-                                  .SignIn(email.text, passWord.text);
-                            }
-                          },
-                          style: NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(15)),
-                              depth: 4,
-                              color: AppColors.primaryColor),
-                          padding: const EdgeInsets.all(12.0),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: const Center(
-                              child: Text(
-                                'Đăng nhập',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                          child: GestureDetector(
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            BlocProvider.of<SigninCubit>(context)
+                                .SignIn(email.text, passWord.text);
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(25)),
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: const Center(
+                            child: Text(
+                              'Đăng nhập',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
-                      ),
+                      )),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
@@ -271,58 +268,41 @@ class _SignInViewState extends State<SignInView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          NeumorphicButton(
-                            onPressed: () {
-                              print("onClick");
-                              BlocProvider.of<SigninCubit>(context)
-                                  .SignInWithFacebook();
-                            },
-                            style: NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(12)),
-                                depth: 4,
-                                color: Colors.white),
-                            child: SvgPicture.asset(
-                              'assets/svg/facebook.svg',
-                              height: 30,
-                              width: 30,
-                            ),
-                          ),
-                          NeumorphicButton(
-                            onPressed: () {
-                              BlocProvider.of<SigninCubit>(context)
-                                  .SignInWithGoogle();
-                              print("google click");
-                            },
-                            style: NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(10)),
-                                depth: 4,
-                                color: Colors.white),
-                            child: SvgPicture.asset(
-                              'assets/svg/google_box.svg',
-                              height: 30,
-                              width: 30,
-                            ),
-                          ),
-                          NeumorphicButton(
-                            onPressed: () {
-                              print("onClick");
-                            },
-                            style: NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(10)),
-                                depth: 4,
-                                color: Colors.white),
-                            child: SvgPicture.asset(
-                              'assets/svg/apple.svg',
-                              height: 30,
-                              width: 30,
-                            ),
-                          ),
+                          IconBtn(
+                              icon: SvgPicture.asset(
+                                'assets/svg/facebook.svg',
+                                height: 30,
+                                width: 30,
+                              ),
+                              onPressed: () {
+                                print("onClick");
+                                BlocProvider.of<SigninCubit>(context)
+                                    .SignInWithFacebook();
+                              },
+                              onReleased: () {}),
+                          IconBtn(
+                              icon: SvgPicture.asset(
+                                'assets/svg/google_box.svg',
+                                height: 30,
+                                width: 30,
+                              ),
+                              onPressed: () {
+                                print("onClick");
+                                BlocProvider.of<SigninCubit>(context)
+                                    .SignInWithGoogle();
+                                print("google click");
+                              },
+                              onReleased: () {}),
+                          IconBtn(
+                              icon: SvgPicture.asset(
+                                'assets/svg/google_box.svg',
+                                height: 30,
+                                width: 30,
+                              ),
+                              onPressed: () {
+                                print("onClick");
+                              },
+                              onReleased: () {}),
                         ],
                       ),
                       SizedBox(
