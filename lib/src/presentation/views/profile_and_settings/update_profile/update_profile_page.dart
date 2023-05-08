@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/showSnackbar.dart';
 import '../../../cubits/update_profile/update_profile_cubit.dart';
+import '../../homepage/signin/widget/app_icon_button.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final Map<String, dynamic> user;
@@ -272,18 +273,15 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
             (this._isLoadingUpdate)
                 ? const CircularProgressIndicator()
                 : Center(
-                    child: NeumorphicButton(
-                      onPressed: () {
+                    child: GestureDetector(
+                      onTap: () {
                         this.update_profile_click_event_button();
                       },
-                      style: NeumorphicStyle(
-                          shape: NeumorphicShape.concave,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(15)),
-                          depth: 4,
-                          color: AppColors.primaryColor),
-                      padding: const EdgeInsets.all(12.0),
-                      child: SizedBox(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(25)),
+                        height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: const Center(
                           child: Text(

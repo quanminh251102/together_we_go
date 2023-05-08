@@ -15,13 +15,9 @@ class MapLoading extends MapState {}
 class MapLoadSuccess extends MapState {
   final Position position;
   final CameraPosition cameraPosition;
-  final Set<Circle> circles;
-  final Set<Marker> markers;
   MapLoadSuccess({
     required this.position,
     required this.cameraPosition,
-    required this.circles,
-    required this.markers,
   });
 }
 

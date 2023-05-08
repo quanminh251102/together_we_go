@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../../cubits/map/map/map_cubit.dart';
@@ -54,32 +55,12 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
               body: Stack(
                 children: [
                   MapboxMap(
-                    styleString:
-                        'mapbox://styles/minhquan2511/clhdbvj61014m01pgbkwc0fom',
-                    accessToken:
-                        'pk.eyJ1IjoibWluaHF1YW4yNTExIiwiYSI6ImNsZ3oyc2ZxbzBmYWozanFxbG1pODc1bGoifQ.j_kPZgz3hnzfwTALnZNYBA',
-                    onMapCreated: _onMapCreated,
                     myLocationEnabled: true,
-                    trackCameraPosition: true,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
-                        state.position.latitude,
-                        state.position.longitude,
-                      ),
-                      zoom: 11.0,
-                    ),
-                    onMapClick: (_, latlng) async {
-                      await mapController?.animateCamera(
-                        CameraUpdate.newCameraPosition(
-                          CameraPosition(
-                            bearing: 10.0,
-                            target: LatLng(latlng.latitude, latlng.longitude),
-                            tilt: 30.0,
-                            zoom: 12.0,
-                          ),
-                        ),
-                      );
-                    },
+                    accessToken: dotenv.env['MAPBOX_ACCESS_TOKEN'],
+                    initialCameraPosition: state.cameraPosition,
+                    onMapCreated: _onMapCreated,
+                    myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                    minMaxZoomPreference: const MinMaxZoomPreference(11, 11),
                   ),
                   Positioned(
                     bottom: 0,
