@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
-import '../../cubits/booking/booking_cubit.dart';
-import '../../cubits/map/map/map_cubit.dart';
 import '../../cubits/map/search_map/cubit/search_map_cubit.dart';
 import '../../models/place_search.dart';
 
@@ -166,6 +162,7 @@ class _NewBookingViewState extends State<NewBookingView> {
                                 if (value!.isEmpty) {
                                   return "Vui lòng nhập điểm đi";
                                 }
+                                return null;
                               },
                               decoration: InputDecoration(
                                 filled: true, //<-- SEE HERE
@@ -209,6 +206,7 @@ class _NewBookingViewState extends State<NewBookingView> {
                               if (value!.isEmpty) {
                                 return "Vui lòng nhập điểm đến";
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
                               labelStyle:
@@ -277,6 +275,7 @@ class _NewBookingViewState extends State<NewBookingView> {
                                     return "Vui lòng nhập điểm đi";
                                   }
                                   setState(() {});
+                                  return null;
                                 },
                                 decoration: InputDecoration(
                                   filled: true, //<-- SEE HERE
@@ -321,6 +320,7 @@ class _NewBookingViewState extends State<NewBookingView> {
                                 if (value!.isEmpty) {
                                   return "Vui lòng nhập điểm đến";
                                 }
+                                return null;
                               },
                               decoration: InputDecoration(
                                 labelStyle: const TextStyle(
@@ -491,6 +491,7 @@ class _NewBookingViewState extends State<NewBookingView> {
                                       if (value!.isEmpty) {
                                         return "Vui lòng nhập điểm đi";
                                       }
+                                      return null;
                                     },
                                     decoration: InputDecoration(
                                       filled: true, //<-- SEE HERE
@@ -536,6 +537,7 @@ class _NewBookingViewState extends State<NewBookingView> {
                                     if (value!.isEmpty) {
                                       return "Vui lòng nhập điểm đến";
                                     }
+                                    return null;
                                   },
                                   decoration: InputDecoration(
                                     labelStyle: const TextStyle(

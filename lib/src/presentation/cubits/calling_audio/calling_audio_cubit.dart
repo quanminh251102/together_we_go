@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/funtions/audio_player.functions.dart';
-import '../../views/calling_audio/calling_audio_page.dart';
 import '../app_socket.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:peerdart/peerdart.dart';
@@ -274,14 +273,12 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
     emit(CallingAudioNewState());
     if (localStream != null) {
       final audioTrack = localStream!.getAudioTracks()[0];
-      if (audioTrack != null) {
-        final bool audioEnabled = audioTrack.enabled = !audioTrack.enabled;
-        this.audioEnabled = audioEnabled;
-        // this.isAudio = audioEnabled;
+      final bool audioEnabled = audioTrack.enabled = !audioTrack.enabled;
+      this.audioEnabled = audioEnabled;
+      // this.isAudio = audioEnabled;
 
-        emit(CallingAudioLoadedState());
-        return audioEnabled;
-      }
+      emit(CallingAudioLoadedState());
+      return audioEnabled;
     }
     emit(CallingAudioLoadedState());
     return false;

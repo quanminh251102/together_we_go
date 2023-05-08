@@ -4,5 +4,6 @@
     <string name="facebook_app_id">1392996451484328</string>
     <string name="fb_login_protocol_scheme">fb1392996451484328</string>
     <string name="facebook_client_token">82b63cb8f92ec5637ef7d075d1b311e9</string>
+    <string name="mapbox_access_token" translatable="false">pk.eyJ1IjoibWluaHF1YW4yNTExIiwiYSI6ImNsaGVpNGNrbTB4ZHozZXA0NWN4NHAydWsifQ.eFaaP1FOzhDovmTSXS6Lsw</string>
 </resources>
 

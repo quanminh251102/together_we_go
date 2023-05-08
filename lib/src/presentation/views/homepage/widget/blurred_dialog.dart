@@ -23,7 +23,7 @@ class _BlurredDialogState extends State<BlurredDialog> {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: Container(
-              constraints: BoxConstraints.expand(),
+              constraints: const BoxConstraints.expand(),
             ),
           ),
         ),
