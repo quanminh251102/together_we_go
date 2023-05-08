@@ -1,10 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 
-import '../../config/router/app_router.dart';
-import '../../utils/constants/colors.dart';
-import '../cubits/signup/signup_cubit.dart';
+import '../../../../config/router/app_router.dart';
+import '../../../../utils/constants/colors.dart';
+import '../../../cubits/signup/signup_cubit.dart';
+import '../signin/widget/app_icon_button.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -320,36 +321,31 @@ Widget buildInitial(
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   Center(
-                    child: NeumorphicButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          BlocProvider.of<SignupCubit>(context).SignUp(
-                              username.text,
-                              email.text,
-                              password.text,
-                              passwordConfirm.text);
-                        }
-                      },
-                      style: NeumorphicStyle(
-                          shape: NeumorphicShape.concave,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(15)),
-                          depth: 4,
-                          color: AppColors.primaryColor),
-                      padding: const EdgeInsets.all(12.0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: const Center(
-                          child: Text(
-                            'Đăng ký',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
+                      child: GestureDetector(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        BlocProvider.of<SignupCubit>(context).SignUp(
+                            username.text,
+                            email.text,
+                            password.text,
+                            passwordConfirm.text);
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.circular(25)),
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: const Center(
+                        child: Text(
+                          'Đăng ký',
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
-                  ),
+                  )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.08,
                   ),

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
@@ -10,6 +10,7 @@ import '../../cubits/signin/signin_cubit.dart';
 import '../../cubits/update_profile/update_profile_cubit.dart';
 import '../../services/image.dart';
 import '../../services/user.dart';
+import '../homepage/signin/widget/app_icon_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -149,19 +150,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        NeumorphicButton(
-                          onPressed: () {
+                        GestureDetector(
+                          onTap: () {
                             Navigator.pop(context);
                           },
-                          style: NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(15)),
-                              depth: 4,
-                              color: const Color.fromARGB(255, 241, 229, 229)),
-                          padding: const EdgeInsets.all(12.0),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.35,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(25)),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             child: const Center(
                               child: Text(
                                 'Hủy',
@@ -172,19 +170,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ),
-                        NeumorphicButton(
+                        IconBtn(
                           onPressed: () {
                             BlocProvider.of<SigninCubit>(context).Logout();
                             appRouter.push(const SignInViewRoute());
                           },
-                          style: NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(15)),
-                              depth: 4,
-                              color: AppColors.primaryColor),
-                          padding: const EdgeInsets.all(12.0),
-                          child: SizedBox(
+                          children: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.35,
                             child: const Center(
                               child: Text(
