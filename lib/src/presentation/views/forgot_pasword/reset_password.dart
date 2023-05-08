@@ -1,6 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
@@ -53,7 +50,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ResetPasswordScreen'),
+        title: const Text('ResetPasswordScreen'),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
@@ -101,7 +98,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         : Colors.black,
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             TextFormField(
@@ -145,7 +142,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         : Colors.black,
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             Center(

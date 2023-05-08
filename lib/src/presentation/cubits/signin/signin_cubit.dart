@@ -5,10 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:http/http.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
-import 'package:path_provider/path_provider.dart';
 import '../../../config/url/config.dart';
 import '../app_user.dart';
-import '../chat/chat_rooms_cubit.dart';
 
 part 'signin_state.dart';
 

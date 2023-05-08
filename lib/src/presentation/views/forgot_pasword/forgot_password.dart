@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,7 +47,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             if (state.status == 'error') {
               showSnackBar(context, 'Đã xảy ra lổi, vui lòng đổi mật khẩu lại');
             }
-            await Future.delayed(Duration(seconds: 3));
+            await Future.delayed(const Duration(seconds: 3));
             appRouter.push(const SignInViewRoute());
           }
         }
@@ -62,7 +60,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           return (!state.isEmailVerified)
               ? Scaffold(
                   appBar: AppBar(
-                    title: Text('ForgotPasswordScreen'),
+                    title: const Text('ForgotPasswordScreen'),
                   ),
                   body: Form(
                     key: _formKey,
@@ -105,7 +103,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 24,
                         ),
                         (state.canEmailSend)
@@ -118,16 +116,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                             this.email.text.trim(), context);
                                   }
                                 },
-                                child: Text('Gửi email xác nhận'),
+                                child: const Text('Gửi email xác nhận'),
                               )
-                            : Center(
+                            : const Center(
                                 child: CircularProgressIndicator(),
                               )
                       ]),
                     ),
                   ),
                 )
-              : ResetPasswordScreen();
+              : const ResetPasswordScreen();
         } else {
           return const Center(child: Text('Error'));
         }
