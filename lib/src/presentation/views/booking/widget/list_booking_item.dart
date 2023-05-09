@@ -10,6 +10,7 @@ import '../../../models/booking.dart';
 import '../../../models/chat_room.dart';
 import '../../../services/chat_room.dart';
 import '../../chat/chat_page.dart';
+import '../../apply/create_apply_page.dart';
 
 class ListBookingItem extends StatefulWidget {
   final Booking booking;
@@ -65,13 +66,18 @@ class _ListBookingItemState extends State<ListBookingItem> {
   }
 
   void navigateCreateApply(BuildContext context) async {
-    setState(() {
-      isNavigateCreateApply = true;
-    });
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
-      isNavigateCreateApply = false;
-    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => CreateApplyPage(booking: widget.booking)),
+    );
+    // setState(() {
+    //   isNavigateCreateApply = true;
+    // });
+    // await Future.delayed(Duration(seconds: 2));
+    // setState(() {
+    //   isNavigateCreateApply = false;
+    // });
   }
 
   @override
