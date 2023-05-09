@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../config/router/app_router.dart';
 import '../../../../utils/constants/colors.dart';
+import '../../../cubits/chat/message_cubit.dart';
 import '../../../models/booking.dart';
+import '../../../models/chat_room.dart';
+import '../../../services/chat_room.dart';
+import '../../chat/chat_page.dart';
 
 class ListBookingItem extends StatefulWidget {
   final Booking booking;
@@ -22,6 +28,52 @@ String formatString(String input) {
 }
 
 class _ListBookingItemState extends State<ListBookingItem> {
+  bool isNavigateChatRoom = false;
+  bool isNavigateCreateApply = false;
+
+  void navigateChatRoom(BuildContext context) async {
+    setState(() {
+      isNavigateChatRoom = true;
+    });
+    // Rawait Future.delayed(Duration(seconds: 2));
+    String result = "pass";
+    ChatRoom chatRoom = ChatRoom(
+        id: '',
+        partner_name: '',
+        partner_gmail: '',
+        partner_avatar: '',
+        partner_id: '',
+        numUnWatch: 0,
+        lastMessage: {});
+    try {
+      await ChatRoomService.getChatRoomInBooking(widget.booking.authorId)
+          .then((value) {
+        chatRoom = value;
+      });
+    } catch (e) {
+      result = "error";
+    }
+    if (result == "pass") {
+      BlocProvider.of<MessageCubit>(context).setChatRoom(chatRoom);
+      BlocProvider.of<MessageCubit>(context).get_message();
+      BlocProvider.of<MessageCubit>(context).join_chat_room();
+      appRouter.push(const ChatPageRoute());
+    }
+    setState(() {
+      isNavigateChatRoom = false;
+    });
+  }
+
+  void navigateCreateApply(BuildContext context) async {
+    setState(() {
+      isNavigateCreateApply = true;
+    });
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      isNavigateCreateApply = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -267,6 +319,36 @@ class _ListBookingItemState extends State<ListBookingItem> {
                     )
                   ],
                 ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      (isNavigateChatRoom)
+                          ? CircularProgressIndicator()
+                          : ElevatedButton(
+                              onPressed: () {
+                                navigateChatRoom(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColor),
+                              child: Text(
+                                'Đến khung chat',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                      (isNavigateCreateApply)
+                          ? CircularProgressIndicator()
+                          : ElevatedButton(
+                              onPressed: () {
+                                navigateCreateApply(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColor),
+                              child: Text(
+                                'Apply',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                    ]),
               ],
             ),
           ),
