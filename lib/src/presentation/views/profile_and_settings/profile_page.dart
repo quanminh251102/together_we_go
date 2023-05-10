@@ -71,9 +71,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         });
                       }
                     },
-                    child: const Column(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: const [
                         Icon(
                           Icons.camera_alt,
                           size: 30,
@@ -98,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         // image.path
                       }
                     },
-                    child: const Column(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(

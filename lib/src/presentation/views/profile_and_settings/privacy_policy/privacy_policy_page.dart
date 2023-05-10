@@ -11,7 +11,7 @@ class PrivacyPolicyPage extends StatefulWidget {
 
 class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   List<String> title = [];
-  Column content = const Column();
+  Column content = Column();
 
   onePart(oneContent, index) => [
         Text(
