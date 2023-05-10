@@ -15,7 +15,8 @@ Ride-sharing application for students
 
 ## Project Description
 
-TogetherWeGo s a mobile application designed to help students share rides to and from campus, reducing transportation costs and promoting a more sustainable mode of transportation. The application aims to provide a convenient and affordable alternative to traditional transportation methods, such as driving alone or taking public transportation.
+TogetherWeGo s a mobile application designed to help students share rides to and from campus, reducing transportation costs and promoting a more sustainable mode of transportation. The application aims to provide a convenient and affordable alternative to traditional transportation methods, such as driving alone or taking public transportation.__
+TogetherWeGo_API is server of this project  ([https://github.com/quanminh251102/together_we_go](https://github.com/kiet-kun/together_we_go_api)).
 
 ## Member
 
@@ -27,7 +28,6 @@ TogetherWeGo s a mobile application designed to help students share rides to and
 ## Technology
 
 Flutter
-Backend : NodeJs (https://github.com/kiet-kun/together_we_go_api)
 
 ## Features
 
