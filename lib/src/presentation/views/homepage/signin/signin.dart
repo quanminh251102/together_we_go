@@ -238,8 +238,8 @@ class _SignInViewState extends State<SignInView> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
-                      const Row(
-                        children: [
+                      Row(
+                        children: const [
                           Expanded(
                               child: Divider(
                             thickness: 0.2,

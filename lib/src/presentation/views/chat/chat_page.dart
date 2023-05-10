@@ -91,7 +91,7 @@ class _ChatPageState extends State<ChatPage> {
                         });
                       }
                     },
-                    child: const Column(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
@@ -118,7 +118,7 @@ class _ChatPageState extends State<ChatPage> {
                         // image.path
                       }
                     },
-                    child: const Column(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
@@ -406,9 +406,9 @@ class _ChatPageState extends State<ChatPage> {
             child: CircularProgressIndicator(),
           );
         } else if (state is ErrorState) {
-          return const Center(
+          return Center(
             child: Column(
-              children: [
+              children: const [
                 Icon(Icons.close),
               ],
             ),
