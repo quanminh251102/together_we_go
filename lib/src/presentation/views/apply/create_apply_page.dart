@@ -61,7 +61,7 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
       note_string = note.text.trim();
     }
     String result = "pass";
-    await Future.delayed(Duration(seconds: 2));
+    // await Future.delayed(Duration(seconds: 2));
     Map<String, dynamic> _body = {
       'booking_id': widget.booking.id,
       'deal_price': price.toString(),

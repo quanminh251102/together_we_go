@@ -11,6 +11,7 @@ import '../../cubits/signin/signin_cubit.dart';
 import '../../cubits/update_profile/update_profile_cubit.dart';
 import '../../services/image.dart';
 import '../../services/user.dart';
+import '../apply/my_apply_page.dart';
 import 'update_profile/update_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -248,6 +249,23 @@ class _ProfilePageState extends State<ProfilePage> {
           trailing: Icon(Icons.keyboard_arrow_right),
           onTap: () {
             appRouter.push(const PrivacyPolicyPageRoute());
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.lock_clock),
+          title: Text('Bài đăng của tôi'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: Icon(Icons.lock_clock),
+          title: Text('Apply của tôi'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyApplyPage()),
+            );
           },
         ),
         ListTile(
