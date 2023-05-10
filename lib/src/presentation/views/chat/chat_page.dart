@@ -94,11 +94,11 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.camera_alt,
                           size: 30,
                         ),
-                        const Text('Máy ảnh')
+                        Text('Máy ảnh')
                       ],
                     ),
                   ),
@@ -121,11 +121,11 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        const Text('Thư viện')
+                        Text('Thư viện')
                       ],
                     ),
                   ),
@@ -223,8 +223,8 @@ class _ChatPageState extends State<ChatPage> {
           onPressed: () {
             //make_call('just_audio');
 
-            BlocProvider.of<CallingAudioCubit>(context)
-                .make_call(context.read<MessageCubit>().chatRoom.partner_id);
+            BlocProvider.of<CallingAudioCubit>(context).make_call(
+                context.read<MessageCubit>().chatRoom.partner_id, 'audio');
           },
           icon: const Icon(
             Icons.call,
@@ -233,6 +233,8 @@ class _ChatPageState extends State<ChatPage> {
         IconButton(
           onPressed: () {
             //make_call('meeting');
+            BlocProvider.of<CallingAudioCubit>(context).make_call(
+                context.read<MessageCubit>().chatRoom.partner_id, 'video');
           },
           icon: const Icon(
             Icons.video_call_sharp,
@@ -406,8 +408,8 @@ class _ChatPageState extends State<ChatPage> {
         } else if (state is ErrorState) {
           return Center(
             child: Column(
-              children: [
-                const Icon(Icons.close),
+              children: const [
+                Icon(Icons.close),
               ],
             ),
           );

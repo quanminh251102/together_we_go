@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_webservice/places.dart';
-import 'package:google_api_headers/google_api_headers.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 
-import '../../../utils/constants/strings.dart';
-import '../../cubits/booking/booking_cubit.dart';
 import '../../cubits/map/map/map_cubit.dart';
 
 class SearchPlaceScreen extends StatefulWidget {
@@ -21,15 +15,17 @@ class SearchPlaceScreen extends StatefulWidget {
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
 class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
-  Set<Marker> markerList = {};
-  late GoogleMapController googleMapController;
-  final Mode _mode = Mode.overlay;
+  MapboxMapController? mapController;
+
+  _onMapCreated(MapboxMapController controller) async {
+    mapController = controller;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     BlocProvider.of<MapCubit>(context).requestLocationPermission();
-    markerList = BlocProvider.of<MapCubit>(context).markerList;
   }
 
   @override
@@ -56,29 +52,47 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
               appBar: AppBar(
                 title: const Text("Google search places"),
               ),
-              body: Stack(children: [
-                GoogleMap(
+              body: Stack(
+                children: [
+                  MapboxMap(
                     myLocationEnabled: true,
+                    accessToken: dotenv.env['MAPBOX_ACCESS_TOKEN'],
                     initialCameraPosition: state.cameraPosition,
-                    markers: state.markers,
-                    onMapCreated: (GoogleMapController controller) {
-                      googleMapController = controller;
-                    }),
-                GestureDetector(
-                  onTap: _handleSearchButton,
-                  child: Container(
-                    color: Colors.blue,
-                    width: 100,
-                    height: 50,
-                    child: const Center(
-                        child: Text(
-                      'Tìm kiếm',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    )),
+                    onMapCreated: _onMapCreated,
+                    myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
+                    minMaxZoomPreference: const MinMaxZoomPreference(11, 11),
                   ),
-                )
-              ]),
+                  Positioned(
+                    bottom: 0,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text(
+                                'Hi there!',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text('You are currently here:'),
+                              Text(
+                                  'Longitude: ${state.position.longitude} - Latitude: ${state.position.latitude}',
+                                  style: const TextStyle(color: Colors.indigo)),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           } else {
             return const Center(
@@ -88,47 +102,5 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
         }
       },
     );
-  }
-
-  Future<void> _handleSearchButton() async {
-    Prediction? p = await PlacesAutocomplete.show(
-        context: context,
-        apiKey: GoogleAPI.APIKey,
-        onError: onError,
-        mode: _mode,
-        language: 'vi',
-        strictbounds: false,
-        types: [""],
-        textDecoration: InputDecoration(
-            hintText: 'Search',
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Colors.white))),
-        components: [Component(Component.country, "vn")]);
-    displayPredictions(p!, homeScaffoldKey.currentState);
-  }
-
-  void onError(PlacesAutocompleteResponse value) {
-    print(value.errorMessage);
-  }
-
-  void displayPredictions(Prediction p, ScaffoldState? currentState) async {
-    GoogleMapsPlaces places = GoogleMapsPlaces(
-        apiKey: GoogleAPI.APIKey,
-        apiHeaders: await const GoogleApiHeaders().getHeaders());
-    PlacesDetailsResponse detailsResponse =
-        await places.getDetailsByPlaceId(p.placeId!);
-
-    final lat = detailsResponse.result.geometry!.location.lat;
-    final lng = detailsResponse.result.geometry!.location.lng;
-
-    BlocProvider.of<MapCubit>(context).markerList.add(Marker(
-        markerId: const MarkerId("searchMarker"),
-        position: LatLng(lat, lng),
-        infoWindow: InfoWindow(title: detailsResponse.result.name)));
-    setState(() {});
-    googleMapController
-        .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 20));
-    BlocProvider.of<MapCubit>(context).markerList.remove("searchMarker");
   }
 }

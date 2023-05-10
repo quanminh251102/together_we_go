@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../models/booking.dart';
@@ -11,6 +10,14 @@ class ListBookingItem extends StatefulWidget {
 
   @override
   State<ListBookingItem> createState() => _ListBookingItemState();
+}
+
+String formatString(String input) {
+  if (input.length > 30) {
+    return input.substring(0, 27) + "...";
+  } else {
+    return input;
+  }
 }
 
 class _ListBookingItemState extends State<ListBookingItem> {
@@ -117,9 +124,9 @@ class _ListBookingItemState extends State<ListBookingItem> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              const Text(
-                                '4,5 km',
-                                style: TextStyle(
+                              Text(
+                                widget.booking.distance,
+                                style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -133,9 +140,9 @@ class _ListBookingItemState extends State<ListBookingItem> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              const Text(
-                                '15 phút',
-                                style: TextStyle(
+                              Text(
+                                widget.booking.duration,
+                                style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -208,31 +215,52 @@ class _ListBookingItemState extends State<ListBookingItem> {
                         const SizedBox(
                           width: 15,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.booking.startPoint,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        formatString(
+                                            widget.booking.startPointMainText),
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(widget.booking.startPointAddress),
+                                    ],
                                   ),
-                                  Text(widget.booking.startPointAddress),
-                                ],
+                                ),
                               ),
-                            ),
-                            Text(
-                              widget.booking.endPoint,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            Text(widget.booking.endPointAddress)
-                          ],
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      formatString(
+                                          widget.booking.endPointMainText),
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      widget.booking.endPointAddress,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     )

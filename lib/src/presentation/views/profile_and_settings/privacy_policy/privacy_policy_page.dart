@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../../../utils/constants/privacy_policy_text.dart';
 
@@ -18,15 +16,15 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   onePart(oneContent, index) => [
         Text(
           '${index + 1}. ${oneContent["title"]}',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
-        SizedBox(height: 24),
+        const SizedBox(height: 24),
         Text(
           oneContent["content"],
-          style: TextStyle(fontSize: 15),
+          style: const TextStyle(fontSize: 15),
           textAlign: TextAlign.justify,
         ),
-        SizedBox(height: 24)
+        const SizedBox(height: 24)
       ];
 
   @override
@@ -46,7 +44,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chính sách quyên riêng tư'),
+        title: const Text('Chính sách quyên riêng tư'),
         centerTitle: false,
       ),
       body: SingleChildScrollView(

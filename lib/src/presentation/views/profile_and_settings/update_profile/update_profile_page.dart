@@ -1,13 +1,11 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter/material.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/showSnackbar.dart';
 import '../../../cubits/update_profile/update_profile_cubit.dart';
+import '../../homepage/signin/widget/app_icon_button.dart';
 
 class UpdateProfilePage extends StatefulWidget {
   final Map<String, dynamic> user;
@@ -41,12 +39,10 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: AppColors.primaryColor,
               onPrimary: Colors.black,
               surface: AppColors.primaryColor,
-              onSurface: Colors.black,
-              onBackground: Colors.black,
             ),
             dialogBackgroundColor: Colors.white,
           ),
@@ -54,7 +50,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         );
       },
     ) as DateTime;
-    if (picked != null && picked != _birthday) {
+    if (picked != _birthday) {
       setState(() {
         _birthday = picked;
         if (this._birthday == null) {
@@ -97,10 +93,10 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
     if (widget.user["gender"] == "male") {
       this.gender.dropDownValue =
-          DropDownValueModel(name: 'Nam', value: "male");
+          const DropDownValueModel(name: 'Nam', value: "male");
     } else {
       this.gender.dropDownValue =
-          DropDownValueModel(name: 'Nữ', value: "female");
+          const DropDownValueModel(name: 'Nữ', value: "female");
     }
 
     if (widget.user["birth_date"] == "") {
@@ -198,7 +194,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 // ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             DropDownTextField(
@@ -237,14 +233,13 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 print(this.gender.dropDownValue);
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             TextFormField(
               readOnly: true,
               focusNode: birthdayFocus,
               controller: birthday,
-              maxLines: 1,
               onTap: () {
                 _selectDate(context);
               },
@@ -252,10 +247,11 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 if (value!.isEmpty || value.length < 1) {
                   return 'Chọn ngày';
                 }
+                return null;
               },
               decoration: InputDecoration(
                 labelText: 'Ngày sinh', hintText: 'Chọn ngày',
-                labelStyle: TextStyle(fontSize: 15),
+                labelStyle: const TextStyle(fontSize: 15),
                 filled: true, //<-- SEE HERE
                 fillColor: Colors.grey.withOpacity(0.1),
                 focusedBorder: OutlineInputBorder(
@@ -271,26 +267,23 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             (this._isLoadingUpdate)
-                ? CircularProgressIndicator()
+                ? const CircularProgressIndicator()
                 : Center(
-                    child: NeumorphicButton(
-                      onPressed: () {
+                    child: GestureDetector(
+                      onTap: () {
                         this.update_profile_click_event_button();
                       },
-                      style: NeumorphicStyle(
-                          shape: NeumorphicShape.concave,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(15)),
-                          depth: 4,
-                          color: AppColors.primaryColor),
-                      padding: const EdgeInsets.all(12.0),
-                      child: SizedBox(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(25)),
+                        height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'Cập nhật',
                             style: TextStyle(
@@ -306,7 +299,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cập nhật thông tin cá nhân'),
+        title: const Text('Cập nhật thông tin cá nhân'),
         centerTitle: false,
       ),
       body: SingleChildScrollView(

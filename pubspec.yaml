@@ -61,7 +61,6 @@ dependencies:
   cloudinary: ^1.1.1
   image_picker: ^0.8.7
   flutter_custom_cards: ^0.2.1
-  flutter_neumorphic: ^3.2.0
   http: ^0.13.5
   intl: ^0.17.0
   just_audio: ^0.9.32
@@ -83,6 +82,11 @@ dependencies:
   firebase_auth: ^4.4.2
   cached_network_image: ^3.2.3
   dropdown_textfield: ^1.0.8
+  flutter_map: ^4.0.0
+  latlong2: ^0.8.1
+  mapbox_gl: ^0.16.0
+  flutter_dotenv: ^5.0.2
+  flutter_local_notifications: ^14.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -108,6 +112,7 @@ flutter:
   assets:
     - assets/svg/
     - assets/audios/
+    - assets/config/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

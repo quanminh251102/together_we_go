@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
 import '../../../config/router/app_router.dart';
+import '../../../service/notifi_service.dart';
 import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/funtions/long_string.functions.dart';
 import '../../cubits/chat/chat_rooms_cubit.dart';
 import '../../cubits/chat/message_cubit.dart' as Message;
 
@@ -18,6 +21,8 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
       child: Column(
         children: [
           Row(
@@ -122,6 +127,6 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
