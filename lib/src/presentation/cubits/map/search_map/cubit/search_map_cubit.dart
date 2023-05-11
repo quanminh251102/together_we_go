@@ -32,11 +32,7 @@ class SearchMapCubit extends Cubit<SearchMapState> {
         var jsonResults = json['predictions'] as List;
         placeSearchList =
             jsonResults.map((place) => PlaceSearch.fromJson(place)).toList();
-        print(placeSearchList[0].description);
-        print(placeSearchList[1].description);
-        print(placeSearchList[2].description);
-        print(placeSearchList[3].description);
-        print(placeSearchList[4].description);
+
         emit(SearchMaping(placeSearchList: placeSearchList));
       } else {
         print('loi');

@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
@@ -13,7 +12,7 @@ import '../../services/image.dart';
 import '../../services/user.dart';
 import '../apply/my_apply_page.dart';
 import '../booking/my_booking_page.dart';
-import 'update_profile/update_profile_page.dart';
+import '../homepage/signin/widget/app_icon_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -76,12 +75,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
+                      children: const [
+                        Icon(
                           Icons.camera_alt,
                           size: 30,
                         ),
-                        const Text('Máy ảnh')
+                        Text('Máy ảnh')
                       ],
                     ),
                   ),
@@ -104,11 +103,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        const Text('Thư viện')
+                        Text('Thư viện')
                       ],
                     ),
                   ),
@@ -128,16 +127,15 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.transparent, //could change this to Color(0xFF737373),
             //so you don't have to change MaterialApp canvasColor
             child: new Container(
-                padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
-                decoration: new BoxDecoration(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+                decoration: const BoxDecoration(
                     color: Colors.white,
-                    borderRadius: new BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: const Radius.circular(30.0),
                         topRight: const Radius.circular(30.0))),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Đăng xuất",
                       style: TextStyle(
                           color: Colors.red,
@@ -145,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
-                    Text(
+                    const Text(
                       "Bạn chắc chắn muốn đăng xuất?",
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -154,19 +152,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        NeumorphicButton(
-                          onPressed: () {
+                        GestureDetector(
+                          onTap: () {
                             Navigator.pop(context);
                           },
-                          style: NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(15)),
-                              depth: 4,
-                              color: Color.fromARGB(255, 241, 229, 229)),
-                          padding: const EdgeInsets.all(12.0),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.35,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(25)),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             child: const Center(
                               child: Text(
                                 'Hủy',
@@ -177,19 +172,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ),
-                        NeumorphicButton(
+                        IconBtn(
                           onPressed: () {
                             BlocProvider.of<SigninCubit>(context).Logout();
                             appRouter.push(const SignInViewRoute());
                           },
-                          style: NeumorphicStyle(
-                              shape: NeumorphicShape.concave,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(15)),
-                              depth: 4,
-                              color: AppColors.primaryColor),
-                          padding: const EdgeInsets.all(12.0),
-                          child: SizedBox(
+                          children: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.35,
                             child: const Center(
                               child: Text(
@@ -217,11 +205,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   settings(context) => [
         ListTile(
-          leading: Icon(Icons.account_box),
-          title: Text('Cập nhật thông tin cá nhân'),
+          leading: const Icon(Icons.account_box),
+          title: const Text('Cập nhật thông tin cá nhân'),
           trailing: this._isLoadingForUpdateProfilePage
-              ? CircularProgressIndicator()
-              : Icon(
+              ? const CircularProgressIndicator()
+              : const Icon(
                   Icons.keyboard_arrow_right,
                 ),
           onTap: () {
@@ -245,9 +233,9 @@ class _ProfilePageState extends State<ProfilePage> {
         //   trailing: Icon(Icons.keyboard_arrow_right),
         // ),
         ListTile(
-          leading: Icon(Icons.lock_clock),
-          title: Text('Chính sách quyền riêng tư'),
-          trailing: Icon(Icons.keyboard_arrow_right),
+          leading: const Icon(Icons.lock_clock),
+          title: const Text('Chính sách quyền riêng tư'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
           onTap: () {
             appRouter.push(const PrivacyPolicyPageRoute());
           },
@@ -321,8 +309,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
           Visibility(
               visible: _isLoadingImage,
