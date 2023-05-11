@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:together_we_go/src/presentation/views/apply/widgets/apply_in_booking_item.dart';
+import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
-import '../../models/booking.dart';
-import '../../services/apply.dart';
+import '../../services/booking.dart';
+import 'widget/my_booking_item.dart';
 
-class ApplyInBookingPage extends StatefulWidget {
-  final dynamic booking;
-  const ApplyInBookingPage({super.key, required this.booking});
+class MyBookPage extends StatefulWidget {
+  const MyBookPage({super.key});
 
   @override
-  State<ApplyInBookingPage> createState() => _ApplyInBookingPageState();
+  State<MyBookPage> createState() => _MyBookPageState();
 }
 
-class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
-  bool isLoading_getApplyInBooking = false;
-  List<dynamic> applys = [];
+class _MyBookPageState extends State<MyBookPage> {
+  bool isLoading_getMyBook = false;
+  List<dynamic> bookings = [];
 
   @override
   void initState() {
@@ -28,14 +27,13 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
 
   void init() async {
     setState(() {
-      isLoading_getApplyInBooking = true;
+      isLoading_getMyBook = true;
     });
 
     String result = "pass";
 
-    // print(widget.booking.toString());
     try {
-      applys = await ApplyService.getApplyInBooking(widget.booking["_id"]);
+      bookings = await BookingService.getMyBooking();
     } catch (e) {
       result = "error";
     }
@@ -52,15 +50,18 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     setState(() {
-      isLoading_getApplyInBooking = false;
+      isLoading_getMyBook = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Apply của bài đăng')),
-      body: isLoading_getApplyInBooking
+      appBar: AppBar(
+        title: Text('Bài đăng của tôi'),
+        centerTitle: true,
+      ),
+      body: isLoading_getMyBook
           ? Center(
               child: CircularProgressIndicator(),
             )
@@ -68,18 +69,17 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
               padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
               child: Column(
                 children: [
-                  (applys.length == 0)
+                  (bookings.length == 0)
                       ? Text('Danh sách rỗng')
                       : SizedBox(
                           height: 400,
                           child: ListView.builder(
                             itemBuilder: (ctx, index) {
-                              return ApplyInBookItem(
-                                apply: applys[index],
-                                reload: init,
+                              return MyBookingItem(
+                                booking: bookings[index],
                               );
                             },
-                            itemCount: applys.length,
+                            itemCount: bookings.length,
                           ),
                         )
                 ],

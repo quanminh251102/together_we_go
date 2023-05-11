@@ -12,6 +12,7 @@ import '../../cubits/update_profile/update_profile_cubit.dart';
 import '../../services/image.dart';
 import '../../services/user.dart';
 import '../apply/my_apply_page.dart';
+import '../booking/my_booking_page.dart';
 import 'update_profile/update_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -255,7 +256,12 @@ class _ProfilePageState extends State<ProfilePage> {
           leading: Icon(Icons.lock_clock),
           title: Text('Bài đăng của tôi'),
           trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyBookPage()),
+            );
+          },
         ),
         ListTile(
           leading: Icon(Icons.lock_clock),
