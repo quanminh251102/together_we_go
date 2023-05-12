@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Booking {
+  String id;
   String authorId;
   String authorName;
   String authorAvatar;
@@ -15,7 +16,9 @@ class Booking {
   final String status;
   final String distance;
   final String duration;
+
   Booking({
+    required this.id,
     required this.authorId,
     required this.authorName,
     required this.authorAvatar,
@@ -34,6 +37,7 @@ class Booking {
   });
   static toBooking(Map<String, dynamic> map) {
     return Booking(
+      id: map["_id"],
       distance: map["distance"],
       duration: map["duration"],
       status: map["status"],

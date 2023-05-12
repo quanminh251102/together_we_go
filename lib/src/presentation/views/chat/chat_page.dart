@@ -94,11 +94,11 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.camera_alt,
                           size: 30,
                         ),
-                        Text('Máy ảnh')
+                        const Text('Máy ảnh')
                       ],
                     ),
                   ),
@@ -121,11 +121,11 @@ class _ChatPageState extends State<ChatPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        Text('Thư viện')
+                        const Text('Thư viện')
                       ],
                     ),
                   ),
@@ -408,8 +408,8 @@ class _ChatPageState extends State<ChatPage> {
         } else if (state is ErrorState) {
           return Center(
             child: Column(
-              children: const [
-                Icon(Icons.close),
+              children: [
+                const Icon(Icons.close),
               ],
             ),
           );
