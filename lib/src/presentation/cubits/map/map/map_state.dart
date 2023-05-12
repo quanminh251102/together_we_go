@@ -13,11 +13,11 @@ class MapInitial extends MapState {}
 class MapLoading extends MapState {}
 
 class MapLoadSuccess extends MapState {
-  final Position position;
-  final CameraPosition cameraPosition;
+  final Position userLocation;
+  final MapboxMap? mapboxMap;
   MapLoadSuccess({
-    required this.position,
-    required this.cameraPosition,
+    required this.userLocation,
+    required this.mapboxMap,
   });
 }
 

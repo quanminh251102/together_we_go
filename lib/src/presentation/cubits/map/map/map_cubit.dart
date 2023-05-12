@@ -1,21 +1,17 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:permission_handler/permission_handler.dart';
-
-import '../../../models/place_search.dart';
-
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 part 'map_state.dart';
 
 class MapCubit extends Cubit<MapState> {
   MapCubit() : super(MapInitial());
-  CameraPosition cameraPosition = const CameraPosition(target: LatLng(10, 10));
-  // Set<Marker> markerList = {};
-  Set<Circle> circles = {};
-  List<PlaceSearch> placeSearchList = [];
-  Position position = Position(
+  Position userLocation = Position(10.123456, 106.765432);
+  geolocator.Position _userLocation = geolocator.Position(
       latitude: 10.123456,
       longitude: 106.765432,
       timestamp: DateTime.now(),
@@ -24,6 +20,7 @@ class MapCubit extends Cubit<MapState> {
       heading: 0,
       speed: 0,
       speedAccuracy: 0);
+  MapboxMap? mapboxMap;
   Future<void> requestLocationPermission() async {
     emit(MapLoading());
     final status = await Permission.locationWhenInUse.status;
@@ -32,70 +29,34 @@ class MapCubit extends Cubit<MapState> {
       if (statusRequest.isDenied) {
         emit(MapLoadError());
       } else if (statusRequest.isGranted) {
-        position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
+        mapboxMap?.location
+            .updateSettings(LocationComponentSettings(enabled: true));
+        _userLocation = await geolocator.Geolocator.getCurrentPosition(
+          desiredAccuracy: geolocator.LocationAccuracy.high,
         );
-        cameraPosition = CameraPosition(
-            target: LatLng(position.latitude, position.longitude), zoom: 14);
-        // circles = Set.from([
-        //   Circle(
-        //       circleId: const CircleId("myCircle"),
-        //       radius: 230,
-        //       center: LatLng(position.latitude, position.longitude),
-        //       fillColor: Colors.blue.shade100.withOpacity(0.5),
-        //       strokeColor: Colors.blue.shade100.withOpacity(0.1),
-        //       onTap: () {
-        //         print('circle pressed');
-        //       })
-        // ]);
-        // markerList = {
-        //   Marker(
-        //     markerId: const MarkerId('current_Postion'),
-        //     infoWindow: const InfoWindow(title: 'Current Position'),
-        //     position: LatLng(position.latitude, position.longitude),
-        //     icon: BitmapDescriptor.defaultMarkerWithHue(
-        //       BitmapDescriptor.hueGreen,
-        //     ),
-        //   )
-        // };
+        userLocation =
+            Position(_userLocation.longitude, _userLocation.latitude);
+        print('Location: ${userLocation}');
+
         emit(MapLoadSuccess(
-          position: position,
-          cameraPosition: cameraPosition,
+          mapboxMap: mapboxMap,
+          userLocation: userLocation,
         ));
       } else if (statusRequest.isPermanentlyDenied) {
-        // Location permission has been permanently denied, navigate to app settings
         await openAppSettings();
       }
     } else if (status.isGranted) {
-      position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+      mapboxMap?.location
+          .updateSettings(LocationComponentSettings(enabled: true));
+      _userLocation = await geolocator.Geolocator.getCurrentPosition(
+        desiredAccuracy: geolocator.LocationAccuracy.high,
       );
-      cameraPosition = CameraPosition(
-          target: LatLng(position.latitude, position.longitude), zoom: 20);
-      // circles = Set.from([
-      //   Circle(
-      //       circleId: const CircleId("myCircle"),
-      //       radius: 20,
-      //       center: LatLng(position.latitude, position.longitude),
-      //       fillColor: Colors.blue.shade100.withOpacity(0.5),
-      //       strokeColor: Colors.blue.shade100.withOpacity(0.1),
-      //       onTap: () {
-      //         print('circle pressed');
-      //       })
-      // ]);
-      // markerList = {
-      //   Marker(
-      //     markerId: const MarkerId('current_Postion'),
-      //     infoWindow: const InfoWindow(title: 'Current Position'),
-      //     position: LatLng(position.latitude, position.longitude),
-      //     icon: BitmapDescriptor.defaultMarkerWithHue(
-      //       BitmapDescriptor.hueGreen,
-      //     ),
-      //   )
-      // };
+      userLocation = Position(_userLocation.longitude, _userLocation.latitude);
+      print('Location: ${userLocation}');
+
       emit(MapLoadSuccess(
-        position: position,
-        cameraPosition: cameraPosition,
+        mapboxMap: mapboxMap,
+        userLocation: userLocation,
       ));
     } else if (status.isPermanentlyDenied) {
       // Location permission has been permanently denied, navigate to app settings
