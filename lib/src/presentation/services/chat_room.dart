@@ -28,4 +28,24 @@ class ChatRoomService {
       throw "Failed to load list chat rooms";
     }
   }
+
+  static Future<ChatRoom> getChatRoomInBooking(String posterId) async {
+    var uri = Uri.parse(
+        '$baseUrl/api/chat_room/getChatRoomInBooking/$posterId/${appUser.id}');
+
+    print(
+        '$baseUrl/api/chat_room/getChatRoomInBooking/$posterId/${appUser.id}');
+    Response res = await get(
+      uri,
+    );
+
+    if (res.statusCode == 200) {
+      var body = json.decode(res.body);
+      print(body);
+
+      return ChatRoom.fromJson(body);
+    } else {
+      throw "error";
+    }
+  }
 }

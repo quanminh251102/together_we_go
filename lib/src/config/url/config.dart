@@ -1,7 +1,7 @@
 /*
   DEPLOY
 */
-const baseUrl = "http://192.168.0.111:8080";
+const baseUrl = "http://192.168.1.19:8080";
 
 const urlLogin = '$baseUrl/api/auth/login'; // post
 
