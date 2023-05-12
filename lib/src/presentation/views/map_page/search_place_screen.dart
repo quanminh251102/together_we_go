@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
 import '../../cubits/map/map/map_cubit.dart';
 
@@ -15,10 +15,10 @@ class SearchPlaceScreen extends StatefulWidget {
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
 class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
-  MapboxMapController? mapController;
+  MapboxMap? mapboxMap;
 
-  _onMapCreated(MapboxMapController controller) async {
-    mapController = controller;
+  _onMapCreated(MapboxMap? mapboxMap) {
+    this.mapboxMap = mapboxMap;
   }
 
   @override
@@ -54,13 +54,15 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
               ),
               body: Stack(
                 children: [
-                  MapboxMap(
-                    myLocationEnabled: true,
-                    accessToken: dotenv.env['MAPBOX_ACCESS_TOKEN'],
-                    initialCameraPosition: state.cameraPosition,
-                    onMapCreated: _onMapCreated,
-                    myLocationTrackingMode: MyLocationTrackingMode.TrackingGPS,
-                    minMaxZoomPreference: const MinMaxZoomPreference(11, 11),
+                  MapWidget(
+                    key: ValueKey("mapWidget"),
+                    resourceOptions: ResourceOptions(
+                        accessToken:
+                            dotenv.env['MAPBOX_ACCESS_TOKEN'].toString()),
+                    cameraOptions: CameraOptions(
+                        center: Point(coordinates: state.userLocation).toJson(),
+                        zoom: 16.0),
+                    onMapCreated: _onMapCreated(state.mapboxMap),
                   ),
                   Positioned(
                     bottom: 0,
@@ -82,7 +84,7 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
                               const SizedBox(height: 20),
                               const Text('You are currently here:'),
                               Text(
-                                  'Longitude: ${state.position.longitude} - Latitude: ${state.position.latitude}',
+                                  'Longitude: ${state.userLocation.lng} - Latitude: ${state.userLocation.lat}',
                                   style: const TextStyle(color: Colors.indigo)),
                               const SizedBox(height: 20),
                             ],
