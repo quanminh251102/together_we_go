@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -154,17 +155,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
+                            BlocProvider.of<SigninCubit>(context).Logout();
+                            appRouter.push(const SignInViewRoute());
                           },
                           child: Container(
                             decoration: BoxDecoration(
                                 color: AppColors.primaryColor,
                                 borderRadius: BorderRadius.circular(25)),
                             height: MediaQuery.of(context).size.height * 0.06,
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             child: const Center(
                               child: Text(
-                                'Hủy',
+                                'Vâng, Đăng xuất',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
@@ -172,16 +174,19 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ),
-                        IconBtn(
-                          onPressed: () {
-                            BlocProvider.of<SigninCubit>(context).Logout();
-                            appRouter.push(const SignInViewRoute());
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
                           },
-                          children: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.35,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 219, 219, 219),
+                                borderRadius: BorderRadius.circular(25)),
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             child: const Center(
                               child: Text(
-                                'Vâng, Đăng xuất',
+                                'Hủy',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),

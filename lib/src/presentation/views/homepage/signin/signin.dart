@@ -295,6 +295,9 @@ class _SignInViewState extends State<SignInView> {
                           //     },
                           //     onReleased: () {}),
                           CustomCard(
+                            height: 50,
+                            width: 50,
+                            borderRadius: 30,
                             onTap: () {
                               print("onClick");
                               BlocProvider.of<SigninCubit>(context)
@@ -307,6 +310,9 @@ class _SignInViewState extends State<SignInView> {
                             ),
                           ),
                           CustomCard(
+                            height: 50,
+                            width: 50,
+                            borderRadius: 30,
                             onTap: () {
                               print("onClick");
                               BlocProvider.of<SigninCubit>(context)
