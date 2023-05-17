@@ -14,10 +14,8 @@ class MapLoading extends MapState {}
 
 class MapLoadSuccess extends MapState {
   final Position userLocation;
-  final MapboxMap? mapboxMap;
   MapLoadSuccess({
     required this.userLocation,
-    required this.mapboxMap,
   });
 }
 
