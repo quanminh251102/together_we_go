@@ -8,6 +8,7 @@ import '../booking/booking_page.dart';
 import '../chat/chat_rooms_page.dart';
 import '../map_page/search_place_screen.dart';
 import '../profile_and_settings/profile_page.dart';
+import 'widget/nav_bar.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({super.key, required this.email});
@@ -169,6 +170,7 @@ class _HomePageViewState extends State<HomePageView>
       child: Scaffold(
         appBar: _appBar(_currentIndex),
         body: _body(_currentIndex),
+        drawer: NavBar(),
         bottomNavigationBar: _bottomNavigationBar(),
       ),
     );
