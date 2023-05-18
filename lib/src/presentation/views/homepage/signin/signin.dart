@@ -373,7 +373,7 @@ class _SignInViewState extends State<SignInView> {
             } else if (state is SigninSuccess) {
               clearTextData();
               init_app();
-              appRouter.push(HomePageViewRoute(email: state.email));
+              appRouter.push(HomePageViewRoute(email: state.email, index: 0));
             }
           },
           builder: (context, state) {

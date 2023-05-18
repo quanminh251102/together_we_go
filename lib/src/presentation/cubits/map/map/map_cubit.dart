@@ -20,7 +20,6 @@ class MapCubit extends Cubit<MapState> {
       heading: 0,
       speed: 0,
       speedAccuracy: 0);
-  MapboxMap? mapboxMap;
   Future<void> requestLocationPermission() async {
     emit(MapLoading());
     final status = await Permission.locationWhenInUse.status;
@@ -29,8 +28,6 @@ class MapCubit extends Cubit<MapState> {
       if (statusRequest.isDenied) {
         emit(MapLoadError());
       } else if (statusRequest.isGranted) {
-        mapboxMap?.location
-            .updateSettings(LocationComponentSettings(enabled: true));
         _userLocation = await geolocator.Geolocator.getCurrentPosition(
           desiredAccuracy: geolocator.LocationAccuracy.high,
         );
@@ -39,23 +36,19 @@ class MapCubit extends Cubit<MapState> {
         print('Location: ${userLocation}');
 
         emit(MapLoadSuccess(
-          mapboxMap: mapboxMap,
           userLocation: userLocation,
         ));
       } else if (statusRequest.isPermanentlyDenied) {
         await openAppSettings();
       }
     } else if (status.isGranted) {
-      mapboxMap?.location
-          .updateSettings(LocationComponentSettings(enabled: true));
       _userLocation = await geolocator.Geolocator.getCurrentPosition(
         desiredAccuracy: geolocator.LocationAccuracy.high,
       );
       userLocation = Position(_userLocation.longitude, _userLocation.latitude);
-      print('Location: ${userLocation}');
+      print('Location: ${userLocation.lng},${userLocation.lat}');
 
       emit(MapLoadSuccess(
-        mapboxMap: mapboxMap,
         userLocation: userLocation,
       ));
     } else if (status.isPermanentlyDenied) {

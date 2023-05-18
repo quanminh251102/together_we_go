@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -22,7 +23,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    print(widget.apply);
     isLoading_waiting_accpected = false;
     isLoading_waiting_rejected = false;
     isLoading_accepted_start = false;
@@ -97,8 +98,33 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
     return CustomCard(
       child: Column(
         children: [
-          Text(widget.apply["_id"]),
-          Text(widget.apply["state"]),
+          // Text(widget.apply["_id"]),
+          Text(
+            widget.apply["applyer"]["first_name"],
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            widget.apply["state"],
+          ),
+
+          CachedNetworkImage(
+            imageUrl: widget.apply["applyer"]["avatarUrl"],
+            imageBuilder: (context, imageProvider) => Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(
+                        60.0) //                 <--- border radius here
+                    ),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -36,6 +36,7 @@ class _$AppRouter extends RootStackRouter {
         child: HomePageView(
           key: args.key,
           email: args.email,
+          index: args.index,
         ),
       );
     },
@@ -152,12 +153,14 @@ class HomePageViewRoute extends PageRouteInfo<HomePageViewRouteArgs> {
   HomePageViewRoute({
     Key? key,
     required String email,
+    required int index,
   }) : super(
           HomePageViewRoute.name,
           path: '/home-page-view',
           args: HomePageViewRouteArgs(
             key: key,
             email: email,
+            index: index,
           ),
         );
 
@@ -168,15 +171,18 @@ class HomePageViewRouteArgs {
   const HomePageViewRouteArgs({
     this.key,
     required this.email,
+    required this.index,
   });
 
   final Key? key;
 
   final String email;
 
+  final int index;
+
   @override
   String toString() {
-    return 'HomePageViewRouteArgs{key: $key, email: $email}';
+    return 'HomePageViewRouteArgs{key: $key, email: $email, index: $index}';
   }
 }
 
