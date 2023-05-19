@@ -8,9 +8,11 @@ import '../booking/booking_page.dart';
 import '../chat/chat_rooms_page.dart';
 import '../map_page/search_place_screen.dart';
 import '../profile_and_settings/profile_page.dart';
+import 'widget/nav_bar.dart';
 
 class HomePageView extends StatefulWidget {
-  const HomePageView({super.key, required this.email});
+  const HomePageView({super.key, required this.email, required this.index});
+  final int index;
   final String email;
   @override
   State<HomePageView> createState() => _HomePageViewState();
@@ -25,6 +27,8 @@ class _HomePageViewState extends State<HomePageView>
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    _currentIndex = widget.index;
 
     _tabController = TabController(
       length: 3,
@@ -169,6 +173,7 @@ class _HomePageViewState extends State<HomePageView>
       child: Scaffold(
         appBar: _appBar(_currentIndex),
         body: _body(_currentIndex),
+        drawer: NavBar(),
         bottomNavigationBar: _bottomNavigationBar(),
       ),
     );

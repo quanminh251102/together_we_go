@@ -14,6 +14,7 @@ import '../../services/user.dart';
 import '../apply/my_apply_page.dart';
 import '../booking/my_booking_page.dart';
 import '../homepage/signin/widget/app_icon_button.dart';
+import 'my_reviews/my_reviews_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -264,6 +265,17 @@ class _ProfilePageState extends State<ProfilePage> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MyApplyPage()),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.star_rate),
+          title: Text('Đánh giá đến tôi'),
+          trailing: Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyReViewsPage()),
             );
           },
         ),

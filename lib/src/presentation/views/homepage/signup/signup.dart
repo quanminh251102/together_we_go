@@ -94,7 +94,7 @@ class _SignUpViewState extends State<SignUpView> {
             buildErrorLayout();
           } else if (state is SignupSuccess) {
             clearTextData();
-            appRouter.push(HomePageViewRoute(email: state.email));
+            appRouter.push(HomePageViewRoute(email: state.email, index: 0));
           }
         },
         builder: (context, state) {

@@ -5,8 +5,10 @@ import 'package:intl/intl.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
+import '../../cubits/booking/booking_cubit.dart';
 import '../../cubits/map/search_map/cubit/search_map_cubit.dart';
 import '../../models/place_search.dart';
+import '../../cubits/app_user.dart';
 
 enum BookingType { findDriver, findPassenger }
 
@@ -36,6 +38,9 @@ class _NewBookingViewState extends State<NewBookingView> {
   late GlobalKey<FormState> _formKey;
   DateTime _selectedDateTime = DateTime.now();
   BookingType _bookingType = BookingType.findDriver;
+
+  bool isLoading = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -454,7 +459,7 @@ class _NewBookingViewState extends State<NewBookingView> {
             } else {
               return SingleChildScrollView(
                 child: Container(
-                  height: screenSize.height,
+                  height: screenSize.height * 1.2,
                   decoration:
                       BoxDecoration(color: Colors.grey.withOpacity(0.05)),
                   child: Padding(
@@ -802,53 +807,114 @@ class _NewBookingViewState extends State<NewBookingView> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 20.0),
-                                      child: Align(
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            if (_bookingType ==
-                                                BookingType.findDriver) {
-                                              String booking = 'Tìm tài xế';
-                                              BlocProvider.of<SearchMapCubit>(
-                                                      context)
-                                                  .addNewBooking(
-                                                      time.text,
-                                                      booking,
-                                                      price.text,
-                                                      textEditingController
-                                                          .text);
-                                            } else {
-                                              String booking = 'Tìm hành khách';
-                                              BlocProvider.of<SearchMapCubit>(
-                                                      context)
-                                                  .addNewBooking(
-                                                      time.text,
-                                                      booking,
-                                                      price.text,
-                                                      textEditingController
-                                                          .text);
-                                            }
-                                          },
-                                          child: Container(
-                                              height: screenSize.height * 0.06,
-                                              width: screenSize.width * 0.8,
-                                              decoration: BoxDecoration(
-                                                  color: AppColors.primaryColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              child: const Center(
-                                                child: Text(
-                                                  'Thêm bài viết',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 14),
-                                                ),
-                                              )),
+                                      child: isLoading
+                                          ? Center(
+                                              child:
+                                                  CircularProgressIndicator())
+                                          : Align(
+                                              child: GestureDetector(
+                                                onTap: () async {
+                                                  print('add booking');
+                                                  setState(() {
+                                                    isLoading = true;
+                                                  });
+                                                  // await Future.delayed(
+                                                  //     Duration(seconds: 2));
+                                                  if (_bookingType ==
+                                                      BookingType.findDriver) {
+                                                    String booking =
+                                                        'Tìm tài xế';
+                                                    await BlocProvider.of<
+                                                                SearchMapCubit>(
+                                                            context)
+                                                        .addNewBooking(
+                                                            time.text,
+                                                            booking,
+                                                            price.text,
+                                                            textEditingController
+                                                                .text
+                                                                .trim());
+                                                    print(textEditingController
+                                                        .text
+                                                        .trim());
+                                                  } else {
+                                                    String booking =
+                                                        'Tìm hành khách';
+                                                    await BlocProvider.of<
+                                                                SearchMapCubit>(
+                                                            context)
+                                                        .addNewBooking(
+                                                            time.text,
+                                                            booking,
+                                                            price.text,
+                                                            textEditingController
+                                                                .text);
+                                                  }
+                                                  setState(() {
+                                                    isLoading = false;
+                                                  });
+                                                  appRouter.push(
+                                                      HomePageViewRoute(
+                                                          email: appUser.gmail,
+                                                          index: 1));
+                                                },
+                                                child: Container(
+                                                    height: screenSize.height *
+                                                        0.06,
+                                                    width:
+                                                        screenSize.width * 0.8,
+                                                    decoration: BoxDecoration(
+                                                        color: AppColors
+                                                            .primaryColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'Thêm bài viết',
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 14),
+                                                      ),
+                                                    )),
+                                              ),
+                                            ),
+                                    ),
+                                    if (isLoading)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 20.0),
+                                        child: Align(
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                              setState(() {
+                                                isLoading = false;
+                                              });
+                                            },
+                                            child: Container(
+                                                height:
+                                                    screenSize.height * 0.06,
+                                                width: screenSize.width * 0.8,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: Center(
+                                                  child: Text(
+                                                    'Hủy',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 14),
+                                                  ),
+                                                )),
+                                          ),
                                         ),
                                       ),
-                                    )
                                   ],
                                 ),
                               ],

@@ -54,7 +54,7 @@ class SearchMapCubit extends Cubit<SearchMapState> {
   Future<DistanceMatrix> getDistance(
       LatLng startLocation, LatLng endLocation) async {
     var distanceURL =
-        'https://rsapi.goong.io/DistanceMatrix?origins=${startLocation.latitude},${startLocation.longitude}&destinations=${endLocation.latitude},${endLocation.longitude}&vehicle=bike&api_key=FazAEl6Rima3SEVquUL7wib3FYu4sbS8gc94c2I2';
+        'https://rsapi.goong.io/DistanceMatrix?origins=${startLocation.latitude},${startLocation.longitude}&destinations=${endLocation.latitude},${endLocation.longitude}&vehicle=hd&api_key=FazAEl6Rima3SEVquUL7wib3FYu4sbS8gc94c2I2';
     var response = await http.get(Uri.parse(distanceURL));
     if (response.statusCode == 200) {
       var json = convert.jsonDecode(response.body);
@@ -83,6 +83,7 @@ class SearchMapCubit extends Cubit<SearchMapState> {
 
   Future<void> addNewBooking(
       String time, String bookingType, String price, String content) async {
+    print('addNewBooking');
     Location startLocation = await getLatLng(startPlace.placeId);
     Location endLocation = await getLatLng(endPlace.placeId);
     LatLng start = LatLng(double.parse(startLocation.latitude),
@@ -90,6 +91,13 @@ class SearchMapCubit extends Cubit<SearchMapState> {
     LatLng end = LatLng(double.parse(endLocation.latitude),
         double.parse(endLocation.longitude));
     DistanceMatrix distanceMatrix = await getDistance(start, end);
+    print('$urlAddNewBooking/${appUser.id}');
+    var _content = '';
+    if (content == '')
+      _content = ' ';
+    else
+      _content = content;
+
     var response =
         await http.post(Uri.parse('$urlAddNewBooking/${appUser.id}'), body: {
       'price': price,

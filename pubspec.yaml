@@ -87,6 +87,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   flutter_local_notifications: ^14.0.0+1
   mapbox_maps_flutter: ^0.4.3
+  rating_dialog: ^2.0.4
 
 dev_dependencies:
   flutter_test:

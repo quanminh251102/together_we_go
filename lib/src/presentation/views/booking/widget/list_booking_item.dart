@@ -322,39 +322,49 @@ class _ListBookingItemState extends State<ListBookingItem> {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 5),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            (isNavigateChatRoom)
+                                ? CircularProgressIndicator()
+                                : ElevatedButton(
+                                    onPressed: () {
+                                      navigateChatRoom(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size(100, 30),
+                                        maximumSize: Size(100, 30),
+                                        backgroundColor:
+                                            AppColors.primaryColor),
+                                    child: Text(
+                                      'Trò truyện',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                            (isNavigateCreateApply)
+                                ? CircularProgressIndicator()
+                                : ElevatedButton(
+                                    onPressed: () {
+                                      navigateCreateApply(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        minimumSize: Size(100, 30),
+                                        maximumSize: Size(100, 30),
+                                        backgroundColor:
+                                            AppColors.primaryColor),
+                                    child: Text(
+                                      'Apply',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                          ]),
+                    ),
                   ],
                 ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      (isNavigateChatRoom)
-                          ? CircularProgressIndicator()
-                          : ElevatedButton(
-                              onPressed: () {
-                                navigateChatRoom(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryColor),
-                              child: Text(
-                                'Đến khung chat',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                      (isNavigateCreateApply)
-                          ? CircularProgressIndicator()
-                          : ElevatedButton(
-                              onPressed: () {
-                                navigateCreateApply(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryColor),
-                              child: Text(
-                                'Apply',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                    ]),
               ],
             ),
           ),
