@@ -345,14 +345,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  enum_to_string:
-    dependency: transitive
-    description:
-      name: enum_to_string
-      sha256: bd9e83a33b754cb43a75b36a9af2a0b92a757bfd9847d2621ca0b1bed45f8e7a
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   equatable:
     dependency: "direct main"
     description:
@@ -510,6 +502,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  flutter_compass:
+    dependency: transitive
+    description:
+      name: flutter_compass
+      sha256: "1a0121bff32df95193812b4e0f69e95f45fdec042ebd7a326ba087c0f6ec8304"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   flutter_custom_cards:
     dependency: "direct main"
     description:
@@ -582,6 +582,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  flutter_map_location_marker:
+    dependency: "direct main"
+    description:
+      name: flutter_map_location_marker
+      sha256: "9757dceadda71a53d2d4004cff4d53a29210086083bdfebf44a1c4feb07f8eb1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -1040,14 +1048,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  mapbox_maps_flutter:
-    dependency: "direct main"
-    description:
-      name: mapbox_maps_flutter
-      sha256: acac611743fce6a6d7f982e7edf6c6a7ef065be1ba121ee01315b5ba312ab780
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.3"
   matcher:
     dependency: transitive
     description:
@@ -1589,22 +1589,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  turf:
-    dependency: transitive
-    description:
-      name: turf
-      sha256: "153ddb7b9588eaf3c036a411f95625ef48e37d71da862b207c9e5ae56f1ae4d5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.7"
-  turf_equality:
-    dependency: transitive
-    description:
-      name: turf_equality
-      sha256: "2ae3b117afd5fb134412a245a883589cae80d9d9472c587f754a0c34f82fa1b9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   typed_data:
     dependency: transitive
     description:

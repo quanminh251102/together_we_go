@@ -9,8 +9,14 @@ class Booking {
   final String time;
   final String contact;
   final String content;
+  final String startPointId;
+  final String startPointLat;
+  final String startPointLong;
   final String startPointMainText;
   final String startPointAddress;
+  final String endPointLat;
+  final String endPointLong;
+  final String endPointId;
   final String endPointMainText;
   final String endPointAddress;
   final String status;
@@ -27,8 +33,14 @@ class Booking {
     required this.time,
     required this.contact,
     required this.content,
+    required this.startPointId,
+    required this.startPointLat,
+    required this.startPointLong,
     required this.startPointMainText,
     required this.startPointAddress,
+    required this.endPointLat,
+    required this.endPointLong,
+    required this.endPointId,
     required this.endPointMainText,
     required this.endPointAddress,
     required this.status,
@@ -49,10 +61,16 @@ class Booking {
       time: map["time"],
       contact: map["authorId"]["phoneNumber"] ?? " ",
       content: map["content"],
+      startPointLat: map["startPointLat"],
+      startPointLong: map["startPointLong"],
       startPointMainText: map["startPointMainText"],
       startPointAddress: map["startPointAddress"],
+      endPointLat: map["endPointLat"],
+      endPointLong: map["endPointLong"],
       endPointAddress: map["endPointAddress"],
       endPointMainText: map["endPointMainText"],
+      endPointId: map["endPointId"],
+      startPointId: map["startPointId"],
     );
   }
 }

@@ -40,7 +40,9 @@ class BookingCubit extends Cubit<BookingState> {
             listCancel: bookingCancel));
       }
     } catch (e) {
-      print(e);
+      print('Lỗi');
+      print('--------------');
+      print('$e');
       emit(BookingError());
     }
   }

@@ -56,7 +56,16 @@ class _BookingPageState extends State<BookingPage> {
           ],
         );
       } else {
-        return const Center(child: Text('Danh sách trống'));
+        return Center(
+            child: Column(
+          children: [
+            Image.asset('assets/images/error.png'),
+            const Text(
+              'Danh sách trống!',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )
+          ],
+        ));
       }
     });
   }

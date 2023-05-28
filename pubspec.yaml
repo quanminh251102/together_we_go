@@ -86,8 +86,8 @@ dependencies:
   latlong2: ^0.8.1
   flutter_dotenv: ^5.0.2
   flutter_local_notifications: ^14.0.0+1
-  mapbox_maps_flutter: ^0.4.3
   rating_dialog: ^2.0.4
+  flutter_map_location_marker: ^6.0.0
 
 dev_dependencies:
   flutter_test:

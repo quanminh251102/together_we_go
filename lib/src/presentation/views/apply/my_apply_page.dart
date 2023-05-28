@@ -61,7 +61,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
         centerTitle: true,
       ),
       body: isLoading_getMyApply
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Padding(
@@ -69,19 +69,20 @@ class _MyApplyPageState extends State<MyApplyPage> {
               child: Column(
                 children: [
                   (applys.length == 0)
-                      ? Text('Danh sách rỗng')
+                      ? const Text('Danh sách rỗng')
                       : SizedBox(
                           height: 400,
                           child: ListView.builder(
                             itemBuilder: (ctx, index) {
-                              return CustomCard(
-                                child: Column(
-                                  children: [
-                                    Text(applys[index]["_id"]),
-                                    Text(applys[index]["state"])
-                                  ],
-                                ),
-                              );
+                              return Card(
+                                  child: Row(
+                                children: [
+                                  CircleAvatar(),
+                                  Column(
+                                    children: [Text(applys[index][''])],
+                                  )
+                                ],
+                              ));
                             },
                             itemCount: applys.length,
                           ),
