@@ -6,7 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import '../../../models/booking.dart';
 import 'list_booking_item.dart';
 
-class ListBooking extends StatefulWidget {
+class ListBooking extends StatelessWidget {
   final List<Booking> bookings;
   const ListBooking({
     Key? key,
@@ -14,19 +14,14 @@ class ListBooking extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ListBooking> createState() => _ListBookingState();
-}
-
-class _ListBookingState extends State<ListBooking> {
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (ctx, index) {
         return ListBookingItem(
-          booking: widget.bookings[index],
+          booking: bookings[index],
         );
       },
-      itemCount: widget.bookings.length,
+      itemCount: bookings.length,
     );
   }
 }

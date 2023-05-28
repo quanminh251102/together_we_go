@@ -58,11 +58,11 @@ class _MyBookPageState extends State<MyBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bài đăng của tôi'),
+        title: const Text('Bài đăng của tôi'),
         centerTitle: true,
       ),
       body: isLoading_getMyBook
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Padding(
@@ -70,7 +70,17 @@ class _MyBookPageState extends State<MyBookPage> {
               child: Column(
                 children: [
                   (bookings.length == 0)
-                      ? Text('Danh sách rỗng')
+                      ? Center(
+                          child: Column(
+                          children: [
+                            Image.asset('assets/images/error.png'),
+                            const Text(
+                              'Danh sách trống!',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ))
                       : SizedBox(
                           height: 400,
                           child: ListView.builder(

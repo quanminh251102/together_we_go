@@ -14,8 +14,10 @@ class MapLoading extends MapState {}
 
 class MapLoadSuccess extends MapState {
   final Position userLocation;
+  final List<Marker> listMarkers;
   MapLoadSuccess({
     required this.userLocation,
+    required this.listMarkers,
   });
 }
 
