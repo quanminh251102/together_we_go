@@ -25,11 +25,17 @@ class BookingCubit extends Cubit<BookingState> {
     List<Booking> bookingCancel = [];
     for (int i = 0; i < bookings.length; i++) {
       Booking booking = Booking.toBooking(bookings[i]);
+      String bookingStartPointAddress =
+          booking.startPointMainText.toLowerCase() +
+              booking.startPointAddress.toLowerCase();
+
+      String bookingEndPointAddress = booking.endPointMainText.toLowerCase() +
+          booking.endPointAddress.toLowerCase();
 
       bool check = true;
 
-      if (booking.startPointAddress.toLowerCase().contains(startPoint) &&
-          booking.endPointAddress.toLowerCase().contains(endPoint)) {
+      if (bookingStartPointAddress.contains(startPoint) &&
+          bookingEndPointAddress.toLowerCase().contains(endPoint)) {
         check = true;
       } else {
         check = false;
