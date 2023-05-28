@@ -5,6 +5,7 @@ import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
 import '../../cubits/chat/chat_rooms_cubit.dart';
 import '../booking/booking_page.dart';
+import '../booking/search_booking_page.dart';
 import '../chat/chat_rooms_page.dart';
 import '../map_page/search_place_screen.dart';
 import '../profile_and_settings/profile_page.dart';
@@ -45,7 +46,15 @@ class _HomePageViewState extends State<HomePageView>
           _appBar = AppBar(
             actions: [
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SearchBookingPage()),
+                  );
+                },
+                icon: const Icon(Icons.search_outlined),
+              ),
               IconButton(
                   onPressed: () {
                     appRouter.push(const NewBookingViewRoute());
