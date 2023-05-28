@@ -62,9 +62,11 @@ class _MyApplyPageState extends State<MyApplyPage> {
       print("do filter");
       applys_selected = applys.where((apply) {
         String booking_startPoint =
-            apply["booking"]["startPointAddress"].toString().toLowerCase();
+            apply["booking"]["startPointMainText"].toString().toLowerCase() +
+                apply["booking"]["startPointAddress"].toString().toLowerCase();
         String booking_endPoint =
-            apply["booking"]["endPointAddress"].toString().toLowerCase();
+            apply["booking"]["endPointMainText"].toString().toLowerCase() +
+                apply["booking"]["endPointAddress"].toString().toLowerCase();
         String search_startPoint = _startPoint.text.trim().toLowerCase();
         String search_endPoint = _endPoint.text.trim().toLowerCase();
 

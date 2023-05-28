@@ -45,11 +45,48 @@ class _BookingPageState extends State<BookingPage> {
               child: TabBarView(
                 controller: widget.tabController,
                 children: <Widget>[
-                  ListBooking(bookings: state.listAvailable),
-                  ListBooking(bookings: state.listComplete),
-                  ListBooking(
-                    bookings: state.listCancel,
-                  )
+                  (state.listAvailable.length == 0)
+                      ? Center(
+                          child: Column(
+                          children: [
+                            Image.asset('assets/images/error.png'),
+                            const Text(
+                              'Danh sách trống!',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ))
+                      : ListBooking(bookings: state.listAvailable),
+                  (state.listComplete.length == 0)
+                      ? Center(
+                          child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/images/error.png'),
+                            const Text(
+                              'Danh sách trống!',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ))
+                      : ListBooking(bookings: state.listComplete),
+                  (state.listCancel.length == 0)
+                      ? Center(
+                          child: Column(
+                          children: [
+                            Image.asset('assets/images/error.png'),
+                            const Text(
+                              'Danh sách trống!',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ))
+                      : ListBooking(
+                          bookings: state.listCancel,
+                        )
                 ],
               ),
             ),
