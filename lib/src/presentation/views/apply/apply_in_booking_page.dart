@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:together_we_go/src/presentation/views/apply/widgets/apply_in_booking_item.dart';
 
+import '../../../utils/constants/colors.dart';
 import '../../models/booking.dart';
 import '../../services/apply.dart';
 
@@ -19,11 +20,13 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
   List<dynamic> applys = [];
   List<dynamic> applys_selected = [];
   TextEditingController _name = TextEditingController();
-
+  late FocusNode nameFocus;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    nameFocus = FocusNode();
 
     init();
   }
@@ -77,6 +80,45 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
 
   @override
   Widget build(BuildContext context) {
+    search_bar() {
+      return [
+        Text('Search theo tên : '),
+        TextFormField(
+          style: const TextStyle(fontWeight: FontWeight.w600),
+          focusNode: nameFocus,
+          controller: _name,
+          validator: (value) {
+            return null;
+          },
+          decoration: InputDecoration(
+            filled: true, //<-- SEE HERE
+            fillColor: nameFocus.hasFocus
+                ? AppColors.primaryColor.withOpacity(0.1)
+                : Colors.grey.withOpacity(0.1),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: AppColors.primaryColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Colors.grey.withOpacity(0.1),
+                width: 2.0,
+              ),
+            ),
+            hintText: 'Tìm kiếm',
+            // prefixIcon: Icon(
+            //   Icons.email_outlined,
+            //   color: nameFocus.hasFocus ? AppColors.primaryColor : Colors.black,
+            // ),
+          ),
+          onChanged: (text) {
+            do_filter();
+          },
+        ),
+      ];
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text('Apply của bài đăng')),
       body: isLoading_getApplyInBooking
@@ -87,30 +129,14 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Search theo tên : '),
-                    TextField(
-                      controller: _name,
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3,
-                              color: Colors.greenAccent), //<-- SEE HERE
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 3,
-                              color: Colors.greenAccent), //<-- SEE HERE
-                        ),
-                      ),
-                      onChanged: (text) {
-                        do_filter();
-                      },
-                    ),
+                    ...search_bar(),
+                    const SizedBox(height: 20),
                     (applys_selected.length == 0)
                         ? Text('Danh sách rỗng')
                         : SizedBox(
-                            height: 400,
+                            height: 500,
                             child: ListView.builder(
                               itemBuilder: (ctx, index) {
                                 return ApplyInBookItem(

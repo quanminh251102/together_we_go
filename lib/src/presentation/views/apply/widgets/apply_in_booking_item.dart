@@ -215,6 +215,20 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
             placeholder: (context, url) => const CircularProgressIndicator(),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
+          if (widget.apply["state"] == "starting") ...[
+            Text(
+                'Tọa độ của người đăng : ${widget.apply["booking"]["authorId"]["first_name"]}'),
+            Text('id : ${widget.apply["booking"]["authorId"]["location_id"]}'),
+            Text(
+                'main text : ${widget.apply["booking"]["authorId"]["location_mainText"]}'),
+            Text(
+                'adrress : ${widget.apply["booking"]["authorId"]["location_address"]}'),
+            Text(
+                'Tọa độ của người apply : ${widget.apply["applyer"]["first_name"]}'),
+            Text('id : ${widget.apply["applyer"]["location_id"]}'),
+            Text('main text : ${widget.apply["applyer"]["location_mainText"]}'),
+            Text('adrress : ${widget.apply["applyer"]["location_address"]}'),
+          ],
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
