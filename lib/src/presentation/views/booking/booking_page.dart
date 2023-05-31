@@ -75,6 +75,7 @@ class _BookingPageState extends State<BookingPage> {
                   (state.listCancel.length == 0)
                       ? Center(
                           child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset('assets/images/error.png'),
                             const Text(

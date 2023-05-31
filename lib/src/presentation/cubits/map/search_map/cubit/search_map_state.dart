@@ -12,6 +12,13 @@ class SearchMapInitial extends SearchMapState {}
 
 class SearchMapLoading extends SearchMapState {}
 
+class SearchMapDoneSearch extends SearchMapState {
+  final Widget imageRoute;
+  SearchMapDoneSearch({
+    required this.imageRoute,
+  });
+}
+
 class SearchMaping extends SearchMapState {
   final List<PlaceSearch> placeSearchList;
   SearchMaping({

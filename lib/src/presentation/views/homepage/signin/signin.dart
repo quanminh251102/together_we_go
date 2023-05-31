@@ -290,66 +290,34 @@ class _SignInViewState extends State<SignInView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                // IconBtn(
-                                //     icon: SvgPicture.asset(
-                                //       'assets/svg/facebook.svg',
-                                //       height: 30,
-                                //       width: 30,
-                                //     ),
-                                //     onPressed: () {
-                                //       print("onClick");
-                                //       BlocProvider.of<SigninCubit>(context)
-                                //           .SignInWithFacebook();
-                                //     },
-                                //     onReleased: () {}),
-                                // IconBtn(
-                                //     icon: SvgPicture.asset(
-                                //       'assets/svg/google_box.svg',
-                                //       height: 30,
-                                //       width: 30,
-                                //     ),
-                                //     onPressed: () {
-                                //       print("onClick");
-                                //       BlocProvider.of<SigninCubit>(context)
-                                //           .SignInWithGoogle();
-                                //       print("google click");
-                                //     },
-                                //     onReleased: () {}),
-                                CustomCard(
-                                  height: 50,
-                                  width: 50,
-                                  borderRadius: 30,
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(30),
                                   onTap: () {
-                                    print("onClick");
+                                    BlocProvider.of<SigninCubit>(context)
+                                        .SignInWithGoogle();
+                                  },
+                                  child: SvgPicture.asset(
+                                    'assets/svg/google_box.svg',
+                                    height: 45,
+                                    width: 45,
+                                  ),
+                                ),
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(30),
+                                  onTap: () {
                                     BlocProvider.of<SigninCubit>(context)
                                         .SignInWithFacebook();
                                   },
                                   child: SvgPicture.asset(
                                     'assets/svg/facebook.svg',
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                ),
-                                CustomCard(
-                                  height: 50,
-                                  width: 50,
-                                  borderRadius: 30,
-                                  onTap: () {
-                                    print("onClick");
-                                    BlocProvider.of<SigninCubit>(context)
-                                        .SignInWithGoogle();
-                                    print("google click");
-                                  },
-                                  child: SvgPicture.asset(
-                                    'assets/svg/google_box.svg',
-                                    height: 30,
-                                    width: 30,
+                                    height: 50,
+                                    width: 50,
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.05,
+                              height: MediaQuery.of(context).size.height * 0.04,
                             ),
                             Center(
                               child: RichText(
