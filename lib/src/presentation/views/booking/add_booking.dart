@@ -45,6 +45,7 @@ class _NewBookingViewState extends State<NewBookingView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    BlocProvider.of<SearchMapCubit>(context).initState();
     startPlaceFocus = FocusNode();
     endPlaceFocus = FocusNode();
     startPlaceFocus.addListener(() {
@@ -136,8 +137,9 @@ class _NewBookingViewState extends State<NewBookingView> {
           builder: (context, state) {
             if (state is SearchMapLoading) {
               return Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenSize.width * 0.05,
+                    vertical: screenSize.height * 0.03),
                 child: Column(
                   children: [
                     Form(
@@ -248,8 +250,9 @@ class _NewBookingViewState extends State<NewBookingView> {
             } else if (state is SearchMaping) {
               return SingleChildScrollView(
                 child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: screenSize.width * 0.05),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.05,
+                      vertical: screenSize.height * 0.03),
                   child: Column(
                     children: [
                       Form(
@@ -456,78 +459,28 @@ class _NewBookingViewState extends State<NewBookingView> {
                   ),
                 ),
               );
-            } else {
+            } else if (state is SearchMapDoneSearch) {
               return SingleChildScrollView(
-                child: Container(
-                  height: screenSize.height * 1.2,
-                  decoration:
-                      BoxDecoration(color: Colors.grey.withOpacity(0.05)),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: screenSize.width * 0.05),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Form(
-                            key: _formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Địa điểm',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
-                                  child: TextFormField(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        BlocProvider.of<SearchMapCubit>(context)
-                                            .getSearchPlace(value);
-                                      });
-                                    },
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                    focusNode: startPlaceFocus,
-                                    controller: startPlace,
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return "Vui lòng nhập điểm đi";
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                      filled: true, //<-- SEE HERE
-                                      fillColor: startPlaceFocus.hasFocus
-                                          ? AppColors.primaryColor
-                                              .withOpacity(0.1)
-                                          : Colors.white,
-                                      focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppColors.primaryColor,
-                                              width: 2)),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Colors.grey.withOpacity(0.1),
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      hintText: 'Điểm đi',
-                                      prefixIcon: Icon(
-                                        Icons.start_outlined,
-                                        color: startPlaceFocus.hasFocus
-                                            ? AppColors.primaryColor
-                                            : Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                TextFormField(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.05,
+                      vertical: screenSize.height * 0.03),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Địa điểm',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: TextFormField(
                                   onChanged: (value) {
                                     setState(() {
                                       BlocProvider.of<SearchMapCubit>(context)
@@ -535,21 +488,18 @@ class _NewBookingViewState extends State<NewBookingView> {
                                     });
                                   },
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                  focusNode: endPlaceFocus,
-                                  controller: endPlace,
+                                      fontWeight: FontWeight.w600),
+                                  focusNode: startPlaceFocus,
+                                  controller: startPlace,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return "Vui lòng nhập điểm đến";
+                                      return "Vui lòng nhập điểm đi";
                                     }
                                     return null;
                                   },
                                   decoration: InputDecoration(
-                                    labelStyle: const TextStyle(
-                                        fontWeight: FontWeight.w600),
-                                    focusColor: Colors.black,
                                     filled: true, //<-- SEE HERE
-                                    fillColor: endPlaceFocus.hasFocus
+                                    fillColor: startPlaceFocus.hasFocus
                                         ? AppColors.primaryColor
                                             .withOpacity(0.1)
                                         : Colors.white,
@@ -563,82 +513,599 @@ class _NewBookingViewState extends State<NewBookingView> {
                                         width: 2.0,
                                       ),
                                     ),
-                                    hintText: 'Điểm đến',
-                                    prefixIcon: Icon(Icons.place_outlined,
-                                        color: endPlaceFocus.hasFocus
-                                            ? AppColors.primaryColor
-                                            : Colors.grey),
+                                    hintText: 'Điểm đi',
+                                    prefixIcon: Icon(
+                                      Icons.start_outlined,
+                                      color: startPlaceFocus.hasFocus
+                                          ? AppColors.primaryColor
+                                          : Colors.grey,
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      'Thời gian',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    BlocProvider.of<SearchMapCubit>(context)
+                                        .getSearchPlace(value);
+                                  });
+                                },
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                focusNode: endPlaceFocus,
+                                controller: endPlace,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Vui lòng nhập điểm đến";
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  labelStyle: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                  focusColor: Colors.black,
+                                  filled: true, //<-- SEE HERE
+                                  fillColor: endPlaceFocus.hasFocus
+                                      ? AppColors.primaryColor.withOpacity(0.1)
+                                      : Colors.white,
+                                  focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.primaryColor,
+                                          width: 2)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.withOpacity(0.1),
+                                      width: 2.0,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10.0, bottom: 10),
-                                      child: TextFormField(
-                                        readOnly: true,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                        controller: time,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Vui lòng chọn thời gian";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                            filled: true, //<-- SEE HERE
-                                            fillColor: Colors.white,
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                        width: 2)),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.grey
-                                                    .withOpacity(0.1),
-                                                width: 2.0,
-                                              ),
+                                  ),
+                                  hintText: 'Điểm đến',
+                                  prefixIcon: Icon(Icons.place_outlined,
+                                      color: endPlaceFocus.hasFocus
+                                          ? AppColors.primaryColor
+                                          : Colors.grey),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: state.imageRoute),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Thời gian',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, bottom: 10),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                  controller: time,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Vui lòng chọn thời gian";
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      filled: true, //<-- SEE HERE
+                                      fillColor: Colors.white,
+                                      focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.primaryColor,
+                                              width: 2)),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      hintText: 'Thời gian',
+                                      prefixIcon: IconButton(
+                                        onPressed: () =>
+                                            selectDateTime(context),
+                                        icon: const Icon(
+                                          Icons.calendar_month_outlined,
+                                          color: Colors.grey,
+                                        ),
+                                      )),
+                                ),
+                              ),
+                              const Text(
+                                'Loại bài đăng',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white),
+                                width: screenSize.width * 0.9,
+                                height: screenSize.height * 0.08,
+                                child: Center(
+                                  child: RadioListTile(
+                                    controlAffinity:
+                                        ListTileControlAffinity.trailing,
+                                    title: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/svg/driver.svg",
+                                          height: 40,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const Text(
+                                          'Tìm tài xế',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    value: BookingType.findDriver,
+                                    groupValue: _bookingType,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _bookingType = value!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Container(
+                                  width: screenSize.width * 0.9,
+                                  height: screenSize.height * 0.08,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white),
+                                  child: Center(
+                                    child: RadioListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
+                                      title: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/svg/passenger.svg",
+                                            height: 40,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Tìm hành khách',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      value: BookingType.findPassenger,
+                                      groupValue: _bookingType,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _bookingType = value!;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Giá tiền',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, bottom: 10),
+                                child: TextFormField(
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                  controller: price,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Vui lòng nhập giá tiền";
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                      filled: true, //<-- SEE HERE
+                                      fillColor: Colors.white,
+                                      focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.primaryColor,
+                                              width: 2)),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey.withOpacity(0.1),
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      hintText: 'Giá tiền',
+                                      prefixIcon: IconButton(
+                                        onPressed: () =>
+                                            selectDateTime(context),
+                                        icon: const Icon(
+                                          Icons.price_change_outlined,
+                                          color: Colors.grey,
+                                        ),
+                                      )),
+                                ),
+                              ),
+                              const Text(
+                                'Nội dung',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: TextField(
+                                  controller: textEditingController,
+                                  keyboardType: TextInputType.multiline,
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 20.0, horizontal: 20.0),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0xffF2F2F3)),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    hintText:
+                                        "Mình cần tìm người đi cùng chiều nay...",
+                                    hintStyle: const TextStyle(
+                                        color: Color(0xff616161),
+                                        fontFamily: "AvertaStdCY-Regular"),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black),
+                                  maxLines: 100,
+                                  minLines: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 20.0, bottom: 20),
+                                child: isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : Align(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            print('add booking');
+                                            setState(() {
+                                              isLoading = true;
+                                            });
+                                            // await Future.delayed(
+                                            //     Duration(seconds: 2));
+                                            if (_bookingType ==
+                                                BookingType.findDriver) {
+                                              String booking = 'Tìm tài xế';
+                                              await BlocProvider.of<
+                                                      SearchMapCubit>(context)
+                                                  .addNewBooking(
+                                                      time.text,
+                                                      booking,
+                                                      price.text,
+                                                      textEditingController.text
+                                                          .trim());
+                                              print(textEditingController.text
+                                                  .trim());
+                                            } else {
+                                              String booking = 'Tìm hành khách';
+                                              await BlocProvider.of<
+                                                      SearchMapCubit>(context)
+                                                  .addNewBooking(
+                                                      time.text,
+                                                      booking,
+                                                      price.text,
+                                                      textEditingController
+                                                          .text);
+                                            }
+                                            setState(() {
+                                              isLoading = false;
+                                            });
+                                            appRouter.push(HomePageViewRoute(
+                                                email: appUser.gmail,
+                                                index: 1));
+                                          },
+                                          child: Container(
+                                              height: screenSize.height * 0.06,
+                                              width: screenSize.width * 0.8,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.primaryColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: const Center(
+                                                child: Text(
+                                                  'Thêm bài viết',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                              ),
+                              if (isLoading)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20.0, bottom: 20),
+                                  child: Align(
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      },
+                                      child: Container(
+                                          height: screenSize.height * 0.06,
+                                          width: screenSize.width * 0.8,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: const Center(
+                                            child: Text(
+                                              'Hủy',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14),
                                             ),
-                                            hintText: 'Thời gian',
-                                            prefixIcon: IconButton(
-                                              onPressed: () =>
-                                                  selectDateTime(context),
-                                              icon: const Icon(
-                                                Icons.calendar_month_outlined,
-                                                color: Colors.grey,
-                                              ),
-                                            )),
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          )),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenSize.width * 0.05,
+                      vertical: screenSize.height * 0.03),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Địa điểm',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      BlocProvider.of<SearchMapCubit>(context)
+                                          .getSearchPlace(value);
+                                    });
+                                  },
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                  focusNode: startPlaceFocus,
+                                  controller: startPlace,
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "Vui lòng nhập điểm đi";
+                                    }
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    filled: true, //<-- SEE HERE
+                                    fillColor: startPlaceFocus.hasFocus
+                                        ? AppColors.primaryColor
+                                            .withOpacity(0.1)
+                                        : Colors.white,
+                                    focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: AppColors.primaryColor,
+                                            width: 2)),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        width: 2.0,
                                       ),
                                     ),
-                                    const Text(
-                                      'Loại bài đăng',
-                                      style: TextStyle(
-                                          fontSize: 20,
+                                    hintText: 'Điểm đi',
+                                    prefixIcon: Icon(
+                                      Icons.start_outlined,
+                                      color: startPlaceFocus.hasFocus
+                                          ? AppColors.primaryColor
+                                          : Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    BlocProvider.of<SearchMapCubit>(context)
+                                        .getSearchPlace(value);
+                                  });
+                                },
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                focusNode: endPlaceFocus,
+                                controller: endPlace,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Vui lòng nhập điểm đến";
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  labelStyle: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                  focusColor: Colors.black,
+                                  filled: true, //<-- SEE HERE
+                                  fillColor: endPlaceFocus.hasFocus
+                                      ? AppColors.primaryColor.withOpacity(0.1)
+                                      : Colors.white,
+                                  focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.primaryColor,
+                                          width: 2)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.withOpacity(0.1),
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  hintText: 'Điểm đến',
+                                  prefixIcon: Icon(Icons.place_outlined,
+                                      color: endPlaceFocus.hasFocus
+                                          ? AppColors.primaryColor
+                                          : Colors.grey),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Thời gian',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0, bottom: 10),
+                                    child: TextFormField(
+                                      readOnly: true,
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w600),
+                                      controller: time,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Vui lòng chọn thời gian";
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                          filled: true, //<-- SEE HERE
+                                          fillColor: Colors.white,
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      width: 2)),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          hintText: 'Thời gian',
+                                          prefixIcon: IconButton(
+                                            onPressed: () =>
+                                                selectDateTime(context),
+                                            icon: const Icon(
+                                              Icons.calendar_month_outlined,
+                                              color: Colors.grey,
+                                            ),
+                                          )),
                                     ),
-                                    const SizedBox(
-                                      height: 10,
+                                  ),
+                                  const Text(
+                                    'Loại bài đăng',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    width: screenSize.width * 0.9,
+                                    height: screenSize.height * 0.08,
+                                    child: Center(
+                                      child: RadioListTile(
+                                        controlAffinity:
+                                            ListTileControlAffinity.trailing,
+                                        title: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/svg/driver.svg",
+                                              height: 40,
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            const Text(
+                                              'Tìm tài xế',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        value: BookingType.findDriver,
+                                        groupValue: _bookingType,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _bookingType = value!;
+                                          });
+                                        },
+                                      ),
                                     ),
-                                    Container(
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: Container(
+                                      width: screenSize.width * 0.9,
+                                      height: screenSize.height * 0.08,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                           color: Colors.white),
-                                      width: screenSize.width * 0.9,
-                                      height: screenSize.height * 0.08,
                                       child: Center(
                                         child: RadioListTile(
                                           controlAffinity:
@@ -646,21 +1113,21 @@ class _NewBookingViewState extends State<NewBookingView> {
                                           title: Row(
                                             children: [
                                               SvgPicture.asset(
-                                                "assets/svg/driver.svg",
+                                                "assets/svg/passenger.svg",
                                                 height: 40,
                                               ),
                                               const SizedBox(
                                                 width: 10,
                                               ),
                                               const Text(
-                                                'Tìm tài xế',
+                                                'Tìm hành khách',
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
                                             ],
                                           ),
-                                          value: BookingType.findDriver,
+                                          value: BookingType.findPassenger,
                                           groupValue: _bookingType,
                                           onChanged: (value) {
                                             setState(() {
@@ -670,257 +1137,211 @@ class _NewBookingViewState extends State<NewBookingView> {
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 10.0),
-                                      child: Container(
-                                        width: screenSize.width * 0.9,
-                                        height: screenSize.height * 0.08,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.white),
-                                        child: Center(
-                                          child: RadioListTile(
-                                            controlAffinity:
-                                                ListTileControlAffinity
-                                                    .trailing,
-                                            title: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  "assets/svg/passenger.svg",
-                                                  height: 40,
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                const Text(
-                                                  'Tìm hành khách',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                            value: BookingType.findPassenger,
-                                            groupValue: _bookingType,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _bookingType = value!;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    const Text(
-                                      'Giá tiền',
-                                      style: TextStyle(
-                                          fontSize: 20,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    'Giá tiền',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0, bottom: 10),
+                                    child: TextFormField(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w600),
+                                      controller: price,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Vui lòng nhập giá tiền";
+                                        }
+                                        return null;
+                                      },
+                                      decoration: InputDecoration(
+                                          filled: true, //<-- SEE HERE
+                                          fillColor: Colors.white,
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      width: 2)),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          hintText: 'Giá tiền',
+                                          prefixIcon: IconButton(
+                                            onPressed: () =>
+                                                selectDateTime(context),
+                                            icon: const Icon(
+                                              Icons.price_change_outlined,
+                                              color: Colors.grey,
+                                            ),
+                                          )),
                                     ),
+                                  ),
+                                  const Text(
+                                    'Nội dung',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: TextField(
+                                      controller: textEditingController,
+                                      keyboardType: TextInputType.multiline,
+                                      decoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 20.0,
+                                                horizontal: 20.0),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Color(0xffF2F2F3)),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: AppColors.borderColor),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        hintText:
+                                            "Mình cần tìm người đi cùng chiều nay...",
+                                        hintStyle: const TextStyle(
+                                            color: Color(0xff616161),
+                                            fontFamily: "AvertaStdCY-Regular"),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                      ),
+                                      style: const TextStyle(
+                                          fontSize: 14, color: Colors.black),
+                                      maxLines: 100,
+                                      minLines: 1,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 20.0, bottom: 20),
+                                    child: isLoading
+                                        ? const Center(
+                                            child: CircularProgressIndicator())
+                                        : Align(
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                print('add booking');
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
+                                                // await Future.delayed(
+                                                //     Duration(seconds: 2));
+                                                if (_bookingType ==
+                                                    BookingType.findDriver) {
+                                                  String booking = 'Tìm tài xế';
+                                                  await BlocProvider.of<
+                                                              SearchMapCubit>(
+                                                          context)
+                                                      .addNewBooking(
+                                                          time.text,
+                                                          booking,
+                                                          price.text,
+                                                          textEditingController
+                                                              .text
+                                                              .trim());
+                                                  print(textEditingController
+                                                      .text
+                                                      .trim());
+                                                } else {
+                                                  String booking =
+                                                      'Tìm hành khách';
+                                                  await BlocProvider.of<
+                                                              SearchMapCubit>(
+                                                          context)
+                                                      .addNewBooking(
+                                                          time.text,
+                                                          booking,
+                                                          price.text,
+                                                          textEditingController
+                                                              .text);
+                                                }
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                                appRouter.push(
+                                                    HomePageViewRoute(
+                                                        email: appUser.gmail,
+                                                        index: 1));
+                                              },
+                                              child: Container(
+                                                  height:
+                                                      screenSize.height * 0.06,
+                                                  width: screenSize.width * 0.8,
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      'Thêm bài viết',
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 14),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                  ),
+                                  if (isLoading)
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 10.0, bottom: 10),
-                                      child: TextFormField(
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w600),
-                                        controller: price,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "Vui lòng nhập giá tiền";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                            filled: true, //<-- SEE HERE
-                                            fillColor: Colors.white,
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                        width: 2)),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Colors.grey
-                                                    .withOpacity(0.1),
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            hintText: 'Giá tiền',
-                                            prefixIcon: IconButton(
-                                              onPressed: () =>
-                                                  selectDateTime(context),
-                                              icon: const Icon(
-                                                Icons.price_change_outlined,
-                                                color: Colors.grey,
-                                              ),
-                                            )),
-                                      ),
-                                    ),
-                                    const Text(
-                                      'Nội dung',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      child: TextField(
-                                        controller: textEditingController,
-                                        keyboardType: TextInputType.multiline,
-                                        decoration: InputDecoration(
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 20.0,
-                                                  horizontal: 20.0),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Color(0xffF2F2F3)),
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: AppColors.borderColor),
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                          hintText:
-                                              "Mình cần tìm người đi cùng chiều nay...",
-                                          hintStyle: const TextStyle(
-                                              color: Color(0xff616161),
-                                              fontFamily:
-                                                  "AvertaStdCY-Regular"),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                        ),
-                                        style: const TextStyle(
-                                            fontSize: 14, color: Colors.black),
-                                        maxLines: 100,
-                                        minLines: 1,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 20.0),
-                                      child: isLoading
-                                          ? Center(
-                                              child:
-                                                  CircularProgressIndicator())
-                                          : Align(
-                                              child: GestureDetector(
-                                                onTap: () async {
-                                                  print('add booking');
-                                                  setState(() {
-                                                    isLoading = true;
-                                                  });
-                                                  // await Future.delayed(
-                                                  //     Duration(seconds: 2));
-                                                  if (_bookingType ==
-                                                      BookingType.findDriver) {
-                                                    String booking =
-                                                        'Tìm tài xế';
-                                                    await BlocProvider.of<
-                                                                SearchMapCubit>(
-                                                            context)
-                                                        .addNewBooking(
-                                                            time.text,
-                                                            booking,
-                                                            price.text,
-                                                            textEditingController
-                                                                .text
-                                                                .trim());
-                                                    print(textEditingController
-                                                        .text
-                                                        .trim());
-                                                  } else {
-                                                    String booking =
-                                                        'Tìm hành khách';
-                                                    await BlocProvider.of<
-                                                                SearchMapCubit>(
-                                                            context)
-                                                        .addNewBooking(
-                                                            time.text,
-                                                            booking,
-                                                            price.text,
-                                                            textEditingController
-                                                                .text);
-                                                  }
-                                                  setState(() {
-                                                    isLoading = false;
-                                                  });
-                                                  appRouter.push(
-                                                      HomePageViewRoute(
-                                                          email: appUser.gmail,
-                                                          index: 1));
-                                                },
-                                                child: Container(
-                                                    height: screenSize.height *
-                                                        0.06,
-                                                    width:
-                                                        screenSize.width * 0.8,
-                                                    decoration: BoxDecoration(
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20)),
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Thêm bài viết',
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 14),
-                                                      ),
-                                                    )),
-                                              ),
-                                            ),
-                                    ),
-                                    if (isLoading)
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 20.0),
-                                        child: Align(
-                                          child: GestureDetector(
-                                            onTap: () async {
-                                              setState(() {
-                                                isLoading = false;
-                                              });
-                                            },
-                                            child: Container(
-                                                height:
-                                                    screenSize.height * 0.06,
-                                                width: screenSize.width * 0.8,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.grey,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                child: Center(
-                                                  child: Text(
-                                                    'Hủy',
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 14),
-                                                  ),
-                                                )),
-                                          ),
+                                          top: 20.0, bottom: 20),
+                                      child: Align(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            setState(() {
+                                              isLoading = false;
+                                            });
+                                          },
+                                          child: Container(
+                                              height: screenSize.height * 0.06,
+                                              width: screenSize.width * 0.8,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              child: const Center(
+                                                child: Text(
+                                                  'Hủy',
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14),
+                                                ),
+                                              )),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ],
-                            )),
-                      ],
-                    ),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          )),
+                    ],
                   ),
                 ),
               );

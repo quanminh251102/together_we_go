@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -18,6 +20,13 @@ class SearchMapCubit extends Cubit<SearchMapState> {
       description: '', mainText: '', placeId: '', secondaryText: '');
   PlaceSearch endPlace = new PlaceSearch(
       description: '', mainText: '', placeId: '', secondaryText: '');
+  LatLng start = const LatLng(0, 0);
+  LatLng end = const LatLng(0, 0);
+  String urlImage = '';
+  void initState() {
+    emit(SearchMapInitial());
+  }
+
   Future<void> getSearchPlace(String search) async {
     if (search.isEmpty) {
       emit(SearchMapInitial());
@@ -46,9 +55,23 @@ class SearchMapCubit extends Cubit<SearchMapState> {
     emit(SearchMapInitial());
   }
 
-  void doneEndSearch(PlaceSearch placeSearch) {
+  Future<void> doneEndSearch(PlaceSearch placeSearch) async {
     endPlace = placeSearch;
-    emit(SearchMapInitial());
+    emit(SearchMapLoading());
+    Location startLocation = await getLatLng(startPlace.placeId);
+    Location endLocation = await getLatLng(endPlace.placeId);
+    start = LatLng(double.parse(startLocation.latitude),
+        double.parse(startLocation.longitude));
+    end = LatLng(double.parse(endLocation.latitude),
+        double.parse(endLocation.longitude));
+    urlImage =
+        'https://rsapi.goong.io/staticmap/route?origin=${start.latitude},${start.longitude}&destination=${end.latitude},${end.longitude}&vehicle=hd&api_key=FazAEl6Rima3SEVquUL7wib3FYu4sbS8gc94c2I2';
+    CachedNetworkImage routeImage = CachedNetworkImage(
+        imageUrl: urlImage,
+        placeholder: (context, url) =>
+            const Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => const Icon(Icons.error));
+    emit(SearchMapDoneSearch(imageRoute: routeImage));
   }
 
   Future<DistanceMatrix> getDistance(
@@ -84,12 +107,7 @@ class SearchMapCubit extends Cubit<SearchMapState> {
   Future<void> addNewBooking(
       String time, String bookingType, String price, String content) async {
     print('addNewBooking');
-    Location startLocation = await getLatLng(startPlace.placeId);
-    Location endLocation = await getLatLng(endPlace.placeId);
-    LatLng start = LatLng(double.parse(startLocation.latitude),
-        double.parse(startLocation.longitude));
-    LatLng end = LatLng(double.parse(endLocation.latitude),
-        double.parse(endLocation.longitude));
+
     DistanceMatrix distanceMatrix = await getDistance(start, end);
     print('$urlAddNewBooking/${appUser.id}');
     var _content = '';
@@ -97,7 +115,6 @@ class SearchMapCubit extends Cubit<SearchMapState> {
       _content = ' ';
     else
       _content = content;
-
     var response =
         await http.post(Uri.parse('$urlAddNewBooking/${appUser.id}'), body: {
       'price': price,

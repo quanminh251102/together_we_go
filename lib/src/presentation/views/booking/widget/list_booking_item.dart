@@ -20,14 +20,6 @@ class ListBookingItem extends StatefulWidget {
   State<ListBookingItem> createState() => _ListBookingItemState();
 }
 
-String formatString(String input) {
-  if (input.length > 30) {
-    return input.substring(0, 27) + "...";
-  } else {
-    return input;
-  }
-}
-
 class _ListBookingItemState extends State<ListBookingItem> {
   bool isNavigateChatRoom = false;
   bool isNavigateCreateApply = false;
@@ -71,18 +63,10 @@ class _ListBookingItemState extends State<ListBookingItem> {
       MaterialPageRoute(
           builder: (context) => CreateApplyPage(booking: widget.booking)),
     );
-    // setState(() {
-    //   isNavigateCreateApply = true;
-    // });
-    // await Future.delayed(Duration(seconds: 2));
-    // setState(() {
-    //   isNavigateCreateApply = false;
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
       child: Card(
@@ -274,47 +258,53 @@ class _ListBookingItemState extends State<ListBookingItem> {
                         const SizedBox(
                           width: 15,
                         ),
-                        Expanded(
+                        Container(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
+                                padding: const EdgeInsets.only(bottom: 40.0),
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        formatString(
-                                            widget.booking.startPointMainText),
+                                        widget.booking.startPointMainText,
                                         style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
-                                      Text(widget.booking.startPointAddress),
+                                      Text(widget.booking.startPointAddress,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1),
                                     ],
                                   ),
                                 ),
                               ),
                               Container(
+                                width: MediaQuery.of(context).size.width * 0.7,
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
+                                    const EdgeInsets.symmetric(horizontal: 8),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      formatString(
-                                          widget.booking.endPointMainText),
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      widget.booking.endPointAddress,
-                                    ),
+                                    Text(widget.booking.endPointMainText,
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1),
+                                    Text(widget.booking.endPointAddress,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1),
                                   ],
                                 ),
                               )
