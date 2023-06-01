@@ -12,6 +12,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../cubits/map/map/map_cubit.dart';
+import '../booking/widget/bottom_sheet.dart';
 
 class SearchPlaceScreen extends StatefulWidget {
   const SearchPlaceScreen({super.key});
@@ -20,26 +21,10 @@ class SearchPlaceScreen extends StatefulWidget {
   State<SearchPlaceScreen> createState() => _SearchPlaceScreenState();
 }
 
-final homeScaffoldKey = GlobalKey<ScaffoldState>();
-
 class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
   var isLight = true;
   bool showOrnaments = true;
   bool showScaleBar = true;
-
-  _onStyleLoadedCallback() async {
-    // for (CameraPosition _kRestaurant in _kRestaurantsList) {
-    //   await controller.addSymbol(
-    //     SymbolOptions(
-    //       geometry: _kRestaurant.target,
-    //       iconSize: 0.2,
-    //       iconImage: "assets/icon/food.png",
-    //     ),
-    //   );
-    // }
-    // _addSourceAndLineLayer(0, false);
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -67,9 +52,8 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
         } else {
           if (state is MapLoadSuccess) {
             return Scaffold(
-              key: homeScaffoldKey,
               appBar: AppBar(
-                title: const Text("Google search places"),
+                title: const Text("Trang chủ"),
               ),
               body: Stack(
                 children: [
