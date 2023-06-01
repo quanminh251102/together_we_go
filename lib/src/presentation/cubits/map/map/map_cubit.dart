@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -14,6 +15,7 @@ import 'package:together_we_go/src/presentation/models/address.dart';
 import '../../../../config/url/config.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../models/booking.dart';
+import '../../../views/booking/widget/bottom_sheet.dart';
 part 'map_state.dart';
 
 class MapCubit extends Cubit<MapState> {
@@ -55,14 +57,30 @@ class MapCubit extends Cubit<MapState> {
                     double.parse(book.startPointLong)),
                 builder: (context) {
                   return IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.book));
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return BottomSheetDetail(book: book);
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.book));
                 }));
             listMarker.add(Marker(
                 point: LatLng(double.parse(book.endPointLat),
                     double.parse(book.endPointLong)),
                 builder: (context) {
                   return IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.book));
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return BottomSheetDetail(book: book);
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.book));
                 }));
           }
           userLocation = await Geolocator.getCurrentPosition(
@@ -103,14 +121,30 @@ class MapCubit extends Cubit<MapState> {
                   double.parse(book.startPointLong)),
               builder: (context) {
                 return IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.book));
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BottomSheetDetail(book: book);
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.book));
               }));
           listMarker.add(Marker(
               point: LatLng(double.parse(book.endPointLat),
                   double.parse(book.endPointLong)),
               builder: (context) {
                 return IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.book));
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BottomSheetDetail(book: book);
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.book));
               }));
         }
         userLocation = await Geolocator.getCurrentPosition(
