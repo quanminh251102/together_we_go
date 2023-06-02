@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../models/booking.dart';
+import '../../apply/create_apply_page.dart';
 
 class BottomSheetDetail extends StatelessWidget {
   final Booking book;
@@ -108,7 +109,13 @@ class BottomSheetDetail extends StatelessWidget {
             ),
             Center(
                 child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CreateApplyPage(booking: book),
+                  ),
+                );
+              },
               child: Container(
                 decoration: BoxDecoration(
                     color: AppColors.primaryColor,
