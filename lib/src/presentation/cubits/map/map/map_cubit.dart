@@ -1,26 +1,25 @@
 import 'dart:convert' as convert;
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_map_directions/flutter_map_directions.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong.dart' as latlong2;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
-import 'package:together_we_go/src/presentation/models/address.dart';
-
 import '../../../../config/url/config.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../models/booking.dart';
-import '../../../views/booking/widget/bottom_sheet.dart';
+import '../../../views/map_page/widget/bottom_sheet.dart';
 part 'map_state.dart';
 
 class MapCubit extends Cubit<MapState> {
   MapCubit() : super(MapInitial());
   List<Marker> listMarker = [];
+  List<LatLng> coordinates = [];
+  late LatLngBounds bounds;
 
   Position userLocation = Position(
       latitude: 10.123456,
@@ -52,46 +51,51 @@ class MapCubit extends Cubit<MapState> {
             }
           }
           for (var book in bookingAvailable) {
+            userLocation = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high,
+            );
             listMarker.add(Marker(
-                point: LatLng(double.parse(book.startPointLat),
+              point: latlong2.LatLng(
+                  userLocation.latitude, userLocation.longitude),
+              builder: (context) {
+                return const UserMarker();
+              },
+            ));
+            listMarker.add(Marker(
+                point: latlong2.LatLng(double.parse(book.startPointLat),
                     double.parse(book.startPointLong)),
                 builder: (context) {
                   return IconButton(
                       onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
+                        listMarker.removeAt(0);
+                        emit(MapLoading());
+                        coordinates = [
+                          LatLng(double.parse(book.startPointLat),
+                              double.parse(book.startPointLong)),
+                          LatLng(double.parse(book.endPointLat),
+                              double.parse(book.endPointLong))
+                        ];
+                        bounds = LatLngBounds.fromPoints(coordinates
+                            .map((location) => latlong2.LatLng(
+                                location.latitude, location.longitude))
+                            .toList());
+                        listMarker.add(Marker(
+                          point: latlong2.LatLng(double.parse(book.endPointLat),
+                              double.parse(book.endPointLong)),
                           builder: (context) {
-                            return BottomSheetDetail(book: book);
+                            return const Icon(Icons.location_pin);
                           },
-                        );
-                      },
-                      icon: const Icon(Icons.book));
-                }));
-            listMarker.add(Marker(
-                point: LatLng(double.parse(book.endPointLat),
-                    double.parse(book.endPointLong)),
-                builder: (context) {
-                  return IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return BottomSheetDetail(book: book);
-                          },
-                        );
+                        ));
+                        emit(MapShowDetail(
+                            coordinates: coordinates,
+                            bounds: bounds,
+                            listMarkers: listMarker,
+                            book: book));
                       },
                       icon: const Icon(Icons.book));
                 }));
           }
-          userLocation = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high,
-          );
-          listMarker.add(Marker(
-              point: LatLng(userLocation.latitude, userLocation.longitude),
-              builder: (context) {
-                return IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.book));
-              }));
+
           emit(MapLoadSuccess(
             listMarkers: listMarker,
             userLocation: userLocation,
@@ -116,48 +120,52 @@ class MapCubit extends Cubit<MapState> {
           }
         }
         for (var book in bookingAvailable) {
+          userLocation = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high,
+          );
           listMarker.add(Marker(
-              point: LatLng(double.parse(book.startPointLat),
+            point:
+                latlong2.LatLng(userLocation.latitude, userLocation.longitude),
+            width: 60,
+            height: 60,
+            builder: (context) {
+              return const UserMarker();
+            },
+          ));
+          listMarker.add(Marker(
+              point: latlong2.LatLng(double.parse(book.startPointLat),
                   double.parse(book.startPointLong)),
               builder: (context) {
                 return IconButton(
                     onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
+                      listMarker.removeAt(0);
+                      emit(MapLoading());
+                      coordinates = [
+                        LatLng(double.parse(book.startPointLat),
+                            double.parse(book.startPointLong)),
+                        LatLng(double.parse(book.endPointLat),
+                            double.parse(book.endPointLong))
+                      ];
+                      bounds = LatLngBounds.fromPoints(coordinates
+                          .map((location) => latlong2.LatLng(
+                              location.latitude, location.longitude))
+                          .toList());
+                      listMarker.add(Marker(
+                        point: latlong2.LatLng(double.parse(book.endPointLat),
+                            double.parse(book.endPointLong)),
                         builder: (context) {
-                          return BottomSheetDetail(book: book);
+                          return const Icon(Icons.location_pin);
                         },
-                      );
-                    },
-                    icon: const Icon(Icons.book));
-              }));
-          listMarker.add(Marker(
-              point: LatLng(double.parse(book.endPointLat),
-                  double.parse(book.endPointLong)),
-              builder: (context) {
-                return IconButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return BottomSheetDetail(book: book);
-                        },
-                      );
+                      ));
+                      emit(MapShowDetail(
+                          coordinates: coordinates,
+                          bounds: bounds,
+                          listMarkers: listMarker,
+                          book: book));
                     },
                     icon: const Icon(Icons.book));
               }));
         }
-        userLocation = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        );
-        listMarker.add(Marker(
-          point: LatLng(userLocation.latitude, userLocation.longitude),
-          width: 60,
-          height: 60,
-          builder: (context) {
-            return const UserMarker();
-          },
-        ));
         emit(MapLoadSuccess(
           listMarkers: listMarker,
           userLocation: userLocation,
@@ -167,6 +175,11 @@ class MapCubit extends Cubit<MapState> {
       // Location permission has been permanently denied, navigate to app settings
       await openAppSettings();
     }
+  }
+
+  Future<void> backtoInitial() async {
+    listMarker.clear();
+    await requestLocationPermission();
   }
 }
 

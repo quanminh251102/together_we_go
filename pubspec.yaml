@@ -89,6 +89,7 @@ dependencies:
   rating_dialog: ^2.0.4
   flutter_map_location_marker: ^6.0.0
   flutter_rating_bar: ^4.0.1
+  flutter_map_directions: ^0.0.3
 
 dev_dependencies:
   flutter_test:

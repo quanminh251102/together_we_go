@@ -320,33 +320,33 @@ class _ListBookingItemState extends State<ListBookingItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             (isNavigateChatRoom)
-                                ? CircularProgressIndicator()
+                                ? const CircularProgressIndicator()
                                 : ElevatedButton(
                                     onPressed: () {
                                       navigateChatRoom(context);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                        minimumSize: Size(100, 30),
-                                        maximumSize: Size(100, 30),
+                                        minimumSize: const Size(120, 30),
+                                        maximumSize: const Size(120, 30),
                                         backgroundColor:
                                             AppColors.primaryColor),
-                                    child: Text(
-                                      'Trò truyện',
+                                    child: const Text(
+                                      'Trò chuyện',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                             (isNavigateCreateApply)
-                                ? CircularProgressIndicator()
+                                ? const CircularProgressIndicator()
                                 : ElevatedButton(
                                     onPressed: () {
                                       navigateCreateApply(context);
                                     },
                                     style: ElevatedButton.styleFrom(
-                                        minimumSize: Size(100, 30),
-                                        maximumSize: Size(100, 30),
+                                        minimumSize: const Size(100, 30),
+                                        maximumSize: const Size(100, 30),
                                         backgroundColor:
                                             AppColors.primaryColor),
-                                    child: Text(
+                                    child: const Text(
                                       'Apply',
                                       style: TextStyle(color: Colors.white),
                                     ),
