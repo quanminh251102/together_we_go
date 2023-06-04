@@ -65,34 +65,43 @@ class _MyBookPageState extends State<MyBookPage> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Padding(
-              padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
-              child: Column(
-                children: [
-                  (bookings.length == 0)
-                      ? Center(
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+                child: Column(
+                  children: [
+                    if (bookings.length == 0)
+                      Center(
                           child: Column(
-                          children: [
-                            Image.asset('assets/images/error.png'),
-                            const Text(
-                              'Danh sách trống!',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ))
-                      : SizedBox(
-                          height: 400,
-                          child: ListView.builder(
-                            itemBuilder: (ctx, index) {
-                              return MyBookingItem(
-                                booking: bookings[index],
-                              );
-                            },
-                            itemCount: bookings.length,
-                          ),
-                        )
-                ],
+                        children: [
+                          Image.asset('assets/images/error.png'),
+                          const Text(
+                            'Danh sách trống!',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      )),
+                    if (bookings.length > 0)
+                      for (var booking in bookings) ...[
+                        MyBookingItem(
+                          booking: booking,
+                        ),
+                        const SizedBox(height: 12),
+                      ]
+                    //  SizedBox(
+                    //     height: 400,
+                    //     child: ListView.builder(
+                    //       itemBuilder: (ctx, index) {
+                    //         return MyBookingItem(
+                    //           booking: bookings[index],
+                    //         );
+                    //       },
+                    //       itemCount: bookings.length,
+                    //     ),
+                    //   )
+                  ],
+                ),
               ),
             ),
     );
