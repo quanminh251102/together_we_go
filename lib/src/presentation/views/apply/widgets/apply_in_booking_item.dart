@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 
+import '../../../../utils/handle_string.dart';
 import '../../../cubits/app_user.dart';
 import '../../../services/apply.dart';
 import '../../../services/review.dart';
@@ -186,35 +187,196 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
+      childPadding: 12,
       child: Column(
         children: [
-          // Text(widget.apply["_id"]),
-          Text(
-            widget.apply["applyer"]["first_name"],
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            widget.apply["state"],
-          ),
-
-          CachedNetworkImage(
-            imageUrl: widget.apply["applyer"]["avatarUrl"],
-            imageBuilder: (context, imageProvider) => Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(
-                        60.0) //                 <--- border radius here
-                    ),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30.0,
+                    backgroundImage:
+                        NetworkImage(widget.apply["applyer"]["avatarUrl"]),
+                    backgroundColor: Colors.transparent,
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.apply["applyer"]["first_name"],
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(widget.apply["applyer"]["phoneNumber"]),
+                    ],
+                  ),
+                ],
               ),
-            ),
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                      'Giá : ${HandleString.priceInPost_noType((widget.apply["booking"]["price"]).toString())}'),
+                  Text(HandleString.timeDistanceFromNow(
+                      DateTime.parse(widget.apply["createdAt"]))),
+                ],
+              )
+            ],
           ),
+          const SizedBox(height: 8),
+          if (widget.apply["state"] == 'waiting')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Material(
+                  color: Color(0xffEDF3FC),
+                  borderRadius: BorderRadius.circular(52),
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(52),
+                    child: Container(
+                      width: 109,
+                      height: 39,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(52),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Đang chờ',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff5386E4),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          if (widget.apply["state"] == 'accepted')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Material(
+                  color: Color(0xffE8FDF2),
+                  borderRadius: BorderRadius.circular(52),
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(52),
+                    child: Container(
+                      width: 76,
+                      height: 39,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(52),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Chấp nhận',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff0E9D57),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          if (widget.apply["state"] == 'starting')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Material(
+                  color: Color(0xffE8FDF2),
+                  borderRadius: BorderRadius.circular(52),
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(52),
+                    child: Container(
+                      width: 120,
+                      height: 39,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(52),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Đang bắt đầu',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff0E9D57),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          if (widget.apply["state"] == 'close')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Material(
+                  color: Color(0xffE8FDF2),
+                  borderRadius: BorderRadius.circular(52),
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(52),
+                    child: Container(
+                      width: 76,
+                      height: 39,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(52),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Đã đóng',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff0E9D57),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          if (widget.apply["state"] == 'refuse')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Material(
+                    color: Color(0xffFFEDED),
+                    borderRadius: BorderRadius.circular(52),
+                    child: InkWell(
+                      onTap: () {},
+                      borderRadius: BorderRadius.circular(52),
+                      child: Container(
+                        width: 80,
+                        height: 39,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(52),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Bị từ chối',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffDC312D),
+                          ),
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          const SizedBox(height: 8),
+          // Text(widget.apply["_id"]),
           if (widget.apply["state"] == "starting") ...[
             Text(
                 'Tọa độ của người đăng : ${widget.apply["booking"]["authorId"]["first_name"]}'),

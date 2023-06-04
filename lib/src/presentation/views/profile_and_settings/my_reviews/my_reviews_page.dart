@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../cubits/app_user.dart';
@@ -136,35 +137,63 @@ class _MyReViewsPageState extends State<MyReViewsPage> {
                   children: [
                     ...search_bar(),
                     const SizedBox(height: 20),
-                    (reviews_selected.length == 0)
-                        ? Text('Danh sách rỗng')
-                        : SizedBox(
-                            height: 600,
-                            child: ListView.builder(
-                              itemBuilder: (ctx, index) {
-                                return CustomCard(
-                                  child: Column(
+                    if (reviews_selected.length == 0) Text('Danh sách rỗng'),
+                    if (reviews_selected.length > 0)
+                      for (var review in reviews_selected) ...[
+                        CustomCard(
+                          childPadding: 12,
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 30.0,
+                                    backgroundImage: NetworkImage(
+                                        review["creater"]["avatarUrl"]),
+                                    backgroundColor: Colors.transparent,
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      CircleAvatar(
-                                        radius: 30.0,
-                                        backgroundImage: NetworkImage(
-                                            reviews_selected[index]["creater"]
-                                                ["avatarUrl"]),
-                                        backgroundColor: Colors.transparent,
+                                      RatingBar.builder(
+                                        initialRating:
+                                            review["review_star"].toDouble(),
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemPadding: EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
                                       ),
-                                      Text(
-                                          'Người đánh giá : ${reviews_selected[index]["creater"]["first_name"]}'),
-                                      Text(
-                                          'Số sao : ${reviews_selected[index]["review_star"]}'),
-                                      Text(
-                                          'Lời đánh giá : ${reviews_selected[index]["review_note"]}')
+                                      Text('02/06/2023'),
                                     ],
                                   ),
-                                );
-                              },
-                              itemCount: reviews_selected.length,
-                            ),
-                          )
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                '${review["creater"]["first_name"]}',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 10),
+                              Text('${review["review_note"]}')
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                      ],
                   ],
                 ),
               ),

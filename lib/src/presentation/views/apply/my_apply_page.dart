@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 
 import '../../../utils/constants/colors.dart';
+import '../../../utils/handle_string.dart';
 import '../../services/apply.dart';
 
 class MyApplyPage extends StatefulWidget {
@@ -184,57 +185,261 @@ class _MyApplyPageState extends State<MyApplyPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ...search_bar(),
-                    (applys_selected.length == 0)
-                        ? const Text('Danh sách rỗng')
-                        : SizedBox(
-                            height: 700,
-                            child: ListView.builder(
-                              itemBuilder: (ctx, index) {
-                                var _apply = applys_selected[index];
-                                return Card(
-                                    child: Column(
-                                  children: [
-                                    Text(
-                                        'state : ${applys_selected[index]["state"]}'),
-                                    Text("Thông tin bài post"),
-                                    Text(
-                                        "Điểm đi: ${applys_selected[index]["booking"]["startPointAddress"]}"),
-                                    Text(
-                                        "Điểm đến: ${applys_selected[index]["booking"]["endPointAddress"]}"),
-                                    Text("avatar của người đăng booking :"),
-                                    CircleAvatar(
-                                      radius: 30.0,
-                                      backgroundImage: NetworkImage(
-                                          applys_selected[index]["booking"]
-                                              ["authorId"]["avatarUrl"]),
-                                      backgroundColor: Colors.transparent,
-                                    ),
-                                    Text(
-                                        "Đã apply vào ${applys_selected[index]["createdAt"]}"),
-                                    if (_apply["state"] == "starting") ...[
-                                      Text(
-                                          'Tọa độ của người đăng : ${_apply["booking"]["authorId"]["first_name"]}'),
-                                      Text(
-                                          'id : ${_apply["booking"]["authorId"]["location_id"]}'),
-                                      Text(
-                                          'main text : ${_apply["booking"]["authorId"]["location_mainText"]}'),
-                                      Text(
-                                          'adrress : ${_apply["booking"]["authorId"]["location_address"]}'),
-                                      Text(
-                                          'Tọa độ của người apply : ${_apply["applyer"]["first_name"]}'),
-                                      Text(
-                                          'id : ${_apply["applyer"]["location_id"]}'),
-                                      Text(
-                                          'main text : ${_apply["applyer"]["location_mainText"]}'),
-                                      Text(
-                                          'adrress : ${_apply["applyer"]["location_address"]}'),
+                    if (applys_selected.length == 0)
+                      const Text('Danh sách rỗng'),
+                    if (applys_selected.length > 0)
+                      for (var _apply in applys_selected) ...[
+                        CustomCard(
+                            borderRadius: 10,
+                            childPadding: 16,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 30.0,
+                                            backgroundImage: NetworkImage(
+                                                _apply["booking"]["authorId"]
+                                                    ["avatarUrl"]),
+                                            backgroundColor: Colors.transparent,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                _apply["booking"]["authorId"]
+                                                    ["first_name"],
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(_apply["booking"]["authorId"]
+                                                  ["phoneNumber"]),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                              'Giá : ${HandleString.priceInPost_noType((_apply["booking"]["price"]).toString())}'),
+                                          Text(HandleString.timeDistanceFromNow(
+                                              DateTime.parse(
+                                                  _apply["createdAt"]))),
+                                        ],
+                                      )
                                     ],
-                                  ],
-                                ));
-                              },
-                              itemCount: applys_selected.length,
-                            ),
-                          )
+                                  ),
+                                  const SizedBox(height: 8),
+                                  if (_apply["state"] == 'waiting')
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Material(
+                                          color: Color(0xffEDF3FC),
+                                          borderRadius:
+                                              BorderRadius.circular(52),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            borderRadius:
+                                                BorderRadius.circular(52),
+                                            child: Container(
+                                              width: 109,
+                                              height: 39,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(52),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: const Text(
+                                                'Đang chờ',
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xff5386E4),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  if (_apply["state"] == 'accepted')
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Material(
+                                          color: Color(0xffE8FDF2),
+                                          borderRadius:
+                                              BorderRadius.circular(52),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            borderRadius:
+                                                BorderRadius.circular(52),
+                                            child: Container(
+                                              width: 76,
+                                              height: 39,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(52),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: const Text(
+                                                'Chấp nhận',
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xff0E9D57),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  if (_apply["state"] == 'starting')
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Material(
+                                          color: Color(0xffE8FDF2),
+                                          borderRadius:
+                                              BorderRadius.circular(52),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            borderRadius:
+                                                BorderRadius.circular(52),
+                                            child: Container(
+                                              width: 120,
+                                              height: 39,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(52),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: const Text(
+                                                'Đang bắt đầu',
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xff0E9D57),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  if (_apply["state"] == 'close')
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Material(
+                                          color: Color(0xffE8FDF2),
+                                          borderRadius:
+                                              BorderRadius.circular(52),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            borderRadius:
+                                                BorderRadius.circular(52),
+                                            child: Container(
+                                              width: 76,
+                                              height: 39,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(52),
+                                              ),
+                                              alignment: Alignment.center,
+                                              child: const Text(
+                                                'Đã đóng',
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xff0E9D57),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  if (_apply["state"] == 'refuse')
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Material(
+                                            color: Color(0xffFFEDED),
+                                            borderRadius:
+                                                BorderRadius.circular(52),
+                                            child: InkWell(
+                                              onTap: () {},
+                                              borderRadius:
+                                                  BorderRadius.circular(52),
+                                              child: Container(
+                                                width: 80,
+                                                height: 39,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(52),
+                                                ),
+                                                alignment: Alignment.center,
+                                                child: const Text(
+                                                  'Bị từ chối',
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xffDC312D),
+                                                  ),
+                                                ),
+                                              ),
+                                            ))
+                                      ],
+                                    ),
+                                  const SizedBox(height: 8),
+                                  const Text(
+                                    "Thông tin bài post",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                      "Điểm đi: ${_apply["booking"]["startPointAddress"]}"),
+                                  Text(
+                                      "Điểm đến: ${_apply["booking"]["endPointAddress"]}"),
+                                  if (_apply["state"] == "starting") ...[
+                                    // Text(
+                                    //     'Tọa độ của người đăng : ${applys_selected[index]["booking"]["authorId"]["first_name"]}'),
+                                    // Text(
+                                    //     'id : ${applys_selected[index]["booking"]["authorId"]["location_id"]}'),
+                                    // Text(
+                                    //     'main text : $applys_selected[index]["booking"]["authorId"]["location_mainText"]}'),
+                                    // Text(
+                                    //     'adrress : ${applys_selected[index]["booking"]["authorId"]["location_address"]}'),
+                                    // Text(
+                                    //     'Tọa độ của người apply : ${applys_selected[index]["applyer"]["first_name"]}'),
+                                    // Text(
+                                    //     'id : ${applys_selected[index]["applyer"]["location_id"]}'),
+                                    // Text(
+                                    //     'main text : ${applys_selected[index]["applyer"]["location_mainText"]}'),
+                                    // Text(
+                                    //     'adrress : ${applys_selected[index]["applyer"]["location_address"]}'),
+                                  ]
+                                ])),
+                        const SizedBox(height: 12),
+                      ],
                   ],
                 ),
               ),

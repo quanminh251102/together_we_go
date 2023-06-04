@@ -88,6 +88,7 @@ dependencies:
   flutter_local_notifications: ^14.0.0+1
   rating_dialog: ^2.0.4
   flutter_map_location_marker: ^6.0.0
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
