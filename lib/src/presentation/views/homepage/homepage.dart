@@ -24,6 +24,8 @@ class _HomePageViewState extends State<HomePageView>
   int _currentIndex = 0;
   late TabController _tabController;
   bool isBookingPage = false;
+  GlobalKey<ScaffoldState> _key = GlobalKey();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -61,7 +63,14 @@ class _HomePageViewState extends State<HomePageView>
                   },
                   icon: const Icon(Icons.post_add))
             ],
-            leading: const Icon(Icons.book_outlined),
+            leading: InkWell(
+              onTap: () {
+                print('hello');
+
+                _key.currentState!.openDrawer();
+              },
+              child: const Icon(Icons.menu),
+            ),
             title: const Text(
               'Bài đăng',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -180,9 +189,10 @@ class _HomePageViewState extends State<HomePageView>
         return false;
       },
       child: Scaffold(
+        key: _key,
         appBar: _appBar(_currentIndex),
         body: _body(_currentIndex),
-        drawer: NavBar(),
+        drawer: const NavBar(),
         bottomNavigationBar: _bottomNavigationBar(),
       ),
     );
