@@ -21,6 +21,19 @@ class MapLoadSuccess extends MapState {
   });
 }
 
+class MapShowDetail extends MapState {
+  final coordinates;
+  final LatLngBounds bounds;
+  final List<Marker> listMarkers;
+  final Booking book;
+  MapShowDetail({
+    required this.coordinates,
+    required this.bounds,
+    required this.listMarkers,
+    required this.book,
+  });
+}
+
 class SearchPlace extends MapState {}
 
 class MapLoadError extends MapState {}

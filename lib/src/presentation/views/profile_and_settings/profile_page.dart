@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import '../../services/image.dart';
 import '../../services/user.dart';
 import '../apply/my_apply_page.dart';
 import '../booking/my_booking_page.dart';
-import '../homepage/signin/widget/app_icon_button.dart';
 import 'my_reviews/my_reviews_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -105,11 +103,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.image,
                           size: 30,
                         ),
-                        Text('Thư viện')
+                        const Text('Thư viện')
                       ],
                     ),
                   ),
@@ -239,7 +237,7 @@ class _ProfilePageState extends State<ProfilePage> {
         //   trailing: Icon(Icons.keyboard_arrow_right),
         // ),
         ListTile(
-          leading: const Icon(Icons.lock_clock),
+          leading: const Icon(Icons.lock),
           title: const Text('Chính sách quyền riêng tư'),
           trailing: const Icon(Icons.keyboard_arrow_right),
           onTap: () {
@@ -247,35 +245,35 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
         ListTile(
-          leading: Icon(Icons.lock_clock),
-          title: Text('Bài đăng của tôi'),
-          trailing: Icon(Icons.keyboard_arrow_right),
+          leading: const Icon(Icons.book),
+          title: const Text('Bài đăng của tôi'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MyBookPage()),
+              MaterialPageRoute(builder: (context) => const MyBookPage()),
             );
           },
         ),
         ListTile(
-          leading: Icon(Icons.lock_clock),
-          title: Text('Apply của tôi'),
-          trailing: Icon(Icons.keyboard_arrow_right),
+          leading: const Icon(Icons.check),
+          title: const Text('Apply của tôi'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MyApplyPage()),
+              MaterialPageRoute(builder: (context) => const MyApplyPage()),
             );
           },
         ),
         ListTile(
-          leading: Icon(Icons.star_rate),
-          title: Text('Đánh giá đến tôi'),
-          trailing: Icon(Icons.keyboard_arrow_right),
+          leading: const Icon(Icons.star_rate),
+          title: const Text('Đánh giá'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MyReViewsPage()),
+              MaterialPageRoute(builder: (context) => const MyReViewsPage()),
             );
           },
         ),

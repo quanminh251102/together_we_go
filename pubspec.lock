@@ -582,6 +582,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  flutter_map_directions:
+    dependency: "direct main"
+    description:
+      name: flutter_map_directions
+      sha256: "0f98db7336db2483f6f5bda7095a3ee101bfcabc661fb25b4376e39983f4e88b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   flutter_map_location_marker:
     dependency: "direct main"
     description:
