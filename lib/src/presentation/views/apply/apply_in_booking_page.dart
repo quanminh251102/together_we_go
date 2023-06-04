@@ -133,20 +133,15 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
                   children: [
                     ...search_bar(),
                     const SizedBox(height: 20),
-                    (applys_selected.length == 0)
-                        ? Text('Danh sách rỗng')
-                        : SizedBox(
-                            height: 500,
-                            child: ListView.builder(
-                              itemBuilder: (ctx, index) {
-                                return ApplyInBookItem(
-                                  apply: applys_selected[index],
-                                  reload: init,
-                                );
-                              },
-                              itemCount: applys_selected.length,
-                            ),
-                          )
+                    if (applys_selected.length == 0) Text('Danh sách rỗng'),
+                    if (applys_selected.length > 0)
+                      for (var _apply in applys_selected) ...[
+                        ApplyInBookItem(
+                          apply: _apply,
+                          reload: init,
+                        ),
+                        const SizedBox(height: 12),
+                      ],
                   ],
                 ),
               ),
