@@ -54,9 +54,10 @@ class _MyBookingItemState extends State<MyBookingItem> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ApplyInBookingPage(
-                                  booking: widget.booking,
-                                )),
+                          builder: (context) => ApplyInBookingPage(
+                            booking: widget.booking,
+                          ),
+                        ),
                       );
                     },
                     child: Text('Danh sách apply'),

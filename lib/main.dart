@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'src/presentation/cubits/calling_audio/calling_audio_cubit.dart';
 import 'src/presentation/cubits/map/map/map_cubit.dart';
-import 'package:together_we_go/src/service/notifi_service.dart';
+import 'src/service/notifi_service.dart';
 import 'src/presentation/cubits/booking/booking_cubit.dart';
 import 'src/presentation/cubits/chat/chat_rooms_cubit.dart';
 import 'src/presentation/cubits/home_page/home_page_cubit.dart';

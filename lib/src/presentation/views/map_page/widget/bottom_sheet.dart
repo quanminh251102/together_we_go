@@ -38,7 +38,10 @@ class BottomSheetDetail extends StatelessWidget {
               ),
               Text(
                 '${book.startPointMainText} - ${book.endPointMainText}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
                 height: 10,
