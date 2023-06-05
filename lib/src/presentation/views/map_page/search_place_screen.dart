@@ -91,37 +91,39 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
             );
           } else if (state is MapShowDetail) {
             return Scaffold(
-              body: Stack(children: [
-                FlutterMap(
-                  options: MapOptions(
-                    bounds: state.bounds,
-                    boundsOptions: FitBoundsOptions(
-                      padding: EdgeInsets.only(
-                          left: 100,
-                          top: 50 + MediaQuery.of(context).padding.top,
-                          right: 100,
-                          bottom: 300),
+              body: Stack(
+                children: [
+                  FlutterMap(
+                    options: MapOptions(
+                      bounds: state.bounds,
+                      boundsOptions: FitBoundsOptions(
+                        padding: EdgeInsets.only(
+                            left: 100,
+                            top: 50 + MediaQuery.of(context).padding.top,
+                            right: 100,
+                            bottom: 300),
+                      ),
+                      zoom: 8,
                     ),
-                    zoom: 8,
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://api.mapbox.com/styles/v1/minhquan2511/clhf4ua40019201qycb11gxr4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWluaHF1YW4yNTExIiwiYSI6ImNsaGVpNGNrbTB4ZHozZXA0NWN4NHAydWsifQ.eFaaP1FOzhDovmTSXS6Lsw',
+                        userAgentPackageName: 'com.example.app',
+                      ),
+                      DirectionsLayer(
+                        coordinates: state.coordinates,
+                        color: AppColors.primaryColor,
+                        strokeWidth: 6,
+                      ),
+                      MarkerLayer(
+                        markers: state.listMarkers,
+                      ),
+                    ],
                   ),
-                  children: [
-                    TileLayer(
-                      urlTemplate:
-                          'https://api.mapbox.com/styles/v1/minhquan2511/clhf4ua40019201qycb11gxr4/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWluaHF1YW4yNTExIiwiYSI6ImNsaGVpNGNrbTB4ZHozZXA0NWN4NHAydWsifQ.eFaaP1FOzhDovmTSXS6Lsw',
-                      userAgentPackageName: 'com.example.app',
-                    ),
-                    DirectionsLayer(
-                      coordinates: state.coordinates,
-                      color: AppColors.primaryColor,
-                      strokeWidth: 6,
-                    ),
-                    MarkerLayer(
-                      markers: state.listMarkers,
-                    ),
-                  ],
-                ),
-                BottomSheetDetail(book: state.book)
-              ]),
+                  BottomSheetDetail(book: state.book)
+                ],
+              ),
             );
           } else {
             return const Center(

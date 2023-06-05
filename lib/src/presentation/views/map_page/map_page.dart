@@ -31,13 +31,17 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      isLoading = true;
-    });
+    setState(
+      () {
+        isLoading = true;
+      },
+    );
     requestLocationPermission();
-    setState(() {
-      isLoading = false;
-    });
+    setState(
+      () {
+        isLoading = false;
+      },
+    );
   }
 
   Future<void> requestLocationPermission() async {

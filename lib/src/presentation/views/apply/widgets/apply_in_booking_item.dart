@@ -122,7 +122,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
     final _dialog = RatingDialog(
       initialRating: 1.0,
       // your app's name?
-      title: Text(
+      title: const Text(
         'Đánh giá người đi chung',
         textAlign: TextAlign.center,
         style: const TextStyle(
@@ -131,7 +131,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
         ),
       ),
       // encourage your user to leave a high rating?
-      message: Text(
+      message: const Text(
         'Hãy chọn số sao và viết ghi chú nếu bạn muốn',
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 15),
