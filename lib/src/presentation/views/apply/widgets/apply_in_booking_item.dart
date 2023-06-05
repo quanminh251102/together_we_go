@@ -137,7 +137,8 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
         style: const TextStyle(fontSize: 15),
       ),
       // your app's logo?
-      image: const FlutterLogo(size: 100),
+      // image: const FlutterLogo(size: 100),
+      image: Image.asset('assets/images/reviews.jpg'),
       submitButtonText: 'Gửi',
       commentHint: 'Ghi chú',
       onCancelled: () => print('cancelled'),
