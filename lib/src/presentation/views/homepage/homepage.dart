@@ -44,6 +44,22 @@ class _HomePageViewState extends State<HomePageView>
     _appBar(index) {
       var _appBar;
       switch (index) {
+        case 0:
+          _appBar = AppBar(
+            leading: InkWell(
+              onTap: () {
+                print('hello');
+
+                _key.currentState!.openDrawer();
+              },
+              child: const Icon(Icons.menu),
+            ),
+            title: const Text(
+              'Trang chủ',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          );
+          break;
         case 1:
           _appBar = AppBar(
             actions: [
@@ -100,6 +116,7 @@ class _HomePageViewState extends State<HomePageView>
             ),
           );
           break;
+
         case 2:
           _appBar = AppBar(
             toolbarHeight: 0,
