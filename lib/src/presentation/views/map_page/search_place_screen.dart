@@ -48,9 +48,9 @@ class _SearchPlaceScreenState extends State<SearchPlaceScreen> {
         } else {
           if (state is MapLoadSuccess) {
             return Scaffold(
-              appBar: AppBar(
-                title: const Text("Trang chủ"),
-              ),
+              // appBar: AppBar(
+              //   title: const Text("Trang chủ"),
+              // ),
               body: FlutterMap(
                 options: MapOptions(
                   // bounds: bounds,
