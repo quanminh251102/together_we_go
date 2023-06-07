@@ -63,7 +63,7 @@ class _MyBookingItemState extends State<MyBookingItem> {
                     child: Text('Danh sách apply'),
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Row(children: [

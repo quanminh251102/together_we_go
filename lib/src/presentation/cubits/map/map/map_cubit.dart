@@ -115,8 +115,11 @@ class MapCubit extends Cubit<MapState> {
                           listMarkers: listSelectedMarker,
                           book: book));
                     },
-                    icon: SvgPicture.asset(
-                      'assets/svg/waving.svg',
+                    icon: Transform.scale(
+                      scale: 1,
+                      child: SvgPicture.asset(
+                        'assets/svg/pin.svg',
+                      ),
                     ),
                   );
                 },
@@ -165,7 +168,6 @@ class MapCubit extends Cubit<MapState> {
                   double.parse(book.startPointLong)),
               builder: (context) {
                 return IconButton(
-                  iconSize: 50,
                   onPressed: () {
                     emit(MapLoading());
                     coordinates = [
@@ -183,7 +185,7 @@ class MapCubit extends Cubit<MapState> {
                           double.parse(book.startPointLong)),
                       builder: (context) {
                         return Transform.scale(
-                          scale: 1.5,
+                          scale: 1,
                           child: SvgPicture.asset(
                             'assets/svg/start.svg',
                           ),
@@ -195,7 +197,7 @@ class MapCubit extends Cubit<MapState> {
                           double.parse(book.endPointLong)),
                       builder: (context) {
                         return Transform.scale(
-                          scale: 1.5,
+                          scale: 1,
                           child: SvgPicture.asset(
                             'assets/svg/end.svg',
                           ),

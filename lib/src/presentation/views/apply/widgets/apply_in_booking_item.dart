@@ -46,7 +46,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
       widget.reload();
     } else {
       const snackBar = SnackBar(
-        content: Text('Bị lổi'),
+        content: Text('Bị lỗii'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }

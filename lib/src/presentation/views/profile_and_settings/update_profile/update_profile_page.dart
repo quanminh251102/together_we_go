@@ -2,8 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 
+import '../../../../config/router/app_router.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/showSnackbar.dart';
+import '../../../cubits/app_user.dart';
 import '../../../cubits/update_profile/update_profile_cubit.dart';
 import '../../homepage/signin/widget/app_icon_button.dart';
 
@@ -301,6 +303,11 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       appBar: AppBar(
         title: const Text('Cập nhật thông tin cá nhân'),
         centerTitle: false,
+        leading: InkWell(
+            onTap: () {
+              appRouter.push(HomePageViewRoute(email: appUser.gmail, index: 3));
+            },
+            child: const Icon(Icons.arrow_back_ios)),
       ),
       body: SingleChildScrollView(
         child: Padding(
