@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:http/http.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../config/url/config.dart';
 import '../app_user.dart';
 
@@ -37,6 +38,11 @@ class SigninCubit extends Cubit<SigninState> {
 
         print(email);
         print(password);
+
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('email', email);
+        await prefs.setString('password', password);
+
         emit(SigninSuccess(email));
       } else {
         print("Failed");
@@ -164,6 +170,10 @@ class SigninCubit extends Cubit<SigninState> {
 
   void Logout() async {
     emit(SigninLoading());
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove('email');
+    await prefs.remove('password');
     _googleSignIn.signOut().then((value) {
       _isLoggedIn = false;
     }).catchError((e) {});
