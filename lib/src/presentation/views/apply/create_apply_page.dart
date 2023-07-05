@@ -65,9 +65,9 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
       'applyer_Id': appUser.id,
     };
     result = await ApplyService.createApply(_body);
-    if (result == "error") {
-      const snackBar = SnackBar(
-        content: Text('Tạo apply bị lổi'),
+    if (result != "pass") {
+      var snackBar = SnackBar(
+        content: Text(result),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } else {

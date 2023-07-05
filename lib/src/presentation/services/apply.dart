@@ -16,6 +16,12 @@ class ApplyService {
       body: _body,
     );
 
+    if (res.statusCode == 400) {
+      print(jsonDecode(res.body));
+      dynamic data = jsonDecode(res.body) as dynamic;
+      return data["message"];
+    }
+
     if (res.statusCode == 200) {
       return "pass";
     } else {
