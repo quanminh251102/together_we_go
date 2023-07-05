@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
+import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/handle_string.dart';
 import '../../services/apply.dart';
@@ -82,6 +83,10 @@ class _MyApplyPageState extends State<MyApplyPage> {
       }).toList();
       print(applys_selected);
     });
+  }
+
+  void watch_map(_apply) {
+    appRouter.push(TrackingScreenRoute(apply: _apply));
   }
 
   @override
@@ -301,7 +306,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                         ),
                                       ],
                                     ),
-                                  if (_apply["state"] == 'starting')
+                                  if (_apply["state"] == 'starting') ...[
                                     Row(
                                       children: [
                                         Material(
@@ -333,6 +338,12 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                         ),
                                       ],
                                     ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          watch_map(_apply);
+                                        },
+                                        child: const Text('Xem bản đồ')),
+                                  ],
                                   if (_apply["state"] == 'close')
                                     Row(
                                       children: [
@@ -345,7 +356,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                             borderRadius:
                                                 BorderRadius.circular(52),
                                             child: Container(
-                                              width: 76,
+                                              width: 120,
                                               height: 39,
                                               decoration: BoxDecoration(
                                                 borderRadius:
@@ -353,7 +364,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                               ),
                                               alignment: Alignment.center,
                                               child: const Text(
-                                                'Đã đóng',
+                                                'Đã hoàn thành',
                                                 style: TextStyle(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.bold,

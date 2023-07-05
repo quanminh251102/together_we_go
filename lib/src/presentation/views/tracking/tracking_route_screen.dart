@@ -219,15 +219,16 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                       child: GestureDetector(
                                     onTap: () {
                                       print(vm.currentBooking.id);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ApplyInBookingPage(
-                                            booking: vm.currentBooking.toJson(),
-                                          ),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) =>
+                                      //         ApplyInBookingPage(
+                                      //       booking: vm.currentBooking.toJson(),
+                                      //     ),
+                                      //   ),
+                                      // );
+                                      Navigator.of(context).pop();
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

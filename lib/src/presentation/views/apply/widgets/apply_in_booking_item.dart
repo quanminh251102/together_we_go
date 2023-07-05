@@ -76,6 +76,10 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
     });
   }
 
+  void watch_map() {
+    appRouter.push(TrackingScreenRoute(apply: widget.apply));
+  }
+
   void accepted_starting() async {
     setState(() {
       isLoading_accepted_start = true;
@@ -84,7 +88,10 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
       "state": "starting",
     });
     if (result == "pass") {
-      appRouter.push(TrackingScreenRoute(apply: widget.apply));
+      const snackBar = SnackBar(
+        content: Text('Thành công'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       widget.reload();
     } else {
       const snackBar = SnackBar(
@@ -264,7 +271,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
                     onTap: () {},
                     borderRadius: BorderRadius.circular(52),
                     child: Container(
-                      width: 76,
+                      width: 120,
                       height: 39,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(52),
@@ -300,7 +307,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
                       ),
                       alignment: Alignment.center,
                       child: const Text(
-                        'Hoàn thành chuyến đi',
+                        'Đang thực hiện',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -322,14 +329,14 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
                     onTap: () {},
                     borderRadius: BorderRadius.circular(52),
                     child: Container(
-                      width: 76,
+                      width: 120,
                       height: 39,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(52),
                       ),
                       alignment: Alignment.center,
                       child: const Text(
-                        'Đã đóng',
+                        'Đã hoàn thành',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -404,6 +411,24 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
                   ),
                 ],
                 if (widget.apply["state"] == "starting") ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            watch_map();
+                          },
+                          child: const Text('Xem bản đồ')),
+                      const SizedBox(width: 50),
+                      ElevatedButton(
+                          onPressed: () {
+                            accepted_close();
+                          },
+                          child: const Text('Đóng chuyến đi')),
+                    ],
+                  )
+                ],
+                if (widget.apply["state"] == "close") ...[
                   Center(
                     child: ElevatedButton(
                         onPressed: () {
