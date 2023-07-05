@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 
+import '../../../../config/router/app_router.dart';
 import '../../../../utils/handle_string.dart';
 import '../../../cubits/app_user.dart';
 import '../../../services/apply.dart';
@@ -25,7 +26,6 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print(widget.apply);
     isLoading_waiting_accpected = false;
@@ -67,7 +67,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
       widget.reload();
     } else {
       const snackBar = SnackBar(
-        content: Text('Bị lổi'),
+        content: Text('Bị lỗi'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
@@ -80,15 +80,15 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
     setState(() {
       isLoading_accepted_start = true;
     });
-    // await Future.delayed(Duration(seconds: 2));
     String result = await ApplyService.update(widget.apply["_id"], {
       "state": "starting",
     });
     if (result == "pass") {
+      appRouter.push(TrackingScreenRoute(apply: widget.apply));
       widget.reload();
     } else {
       const snackBar = SnackBar(
-        content: Text('Bị lổi'),
+        content: Text('Bị lỗi'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
@@ -109,7 +109,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
       widget.reload();
     } else {
       const snackBar = SnackBar(
-        content: Text('Bị lổi'),
+        content: Text('Bị lỗi'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
@@ -168,7 +168,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         } else {
           const snackBar = SnackBar(
-            content: Text('Bị lổi'),
+            content: Text('Bị lỗi'),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
@@ -206,7 +206,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
                     children: [
                       Text(
                         widget.apply["applyer"]["first_name"],
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(widget.apply["applyer"]["phoneNumber"]),
                     ],
@@ -227,10 +227,9 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
           const SizedBox(height: 8),
           if (widget.apply["state"] == 'waiting')
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Material(
-                  color: Color(0xffEDF3FC),
+                  color: const Color(0xffEDF3FC),
                   borderRadius: BorderRadius.circular(52),
                   child: InkWell(
                     onTap: () {},
@@ -257,10 +256,9 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
             ),
           if (widget.apply["state"] == 'accepted')
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Material(
-                  color: Color(0xffE8FDF2),
+                  color: const Color(0xffE8FDF2),
                   borderRadius: BorderRadius.circular(52),
                   child: InkWell(
                     onTap: () {},
@@ -287,23 +285,22 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
             ),
           if (widget.apply["state"] == 'starting')
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Material(
-                  color: Color(0xffE8FDF2),
+                  color: const Color(0xffE8FDF2),
                   borderRadius: BorderRadius.circular(52),
                   child: InkWell(
                     onTap: () {},
                     borderRadius: BorderRadius.circular(52),
                     child: Container(
-                      width: 120,
+                      width: 150,
                       height: 39,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(52),
                       ),
                       alignment: Alignment.center,
                       child: const Text(
-                        'Đang bắt đầu',
+                        'Hoàn thành chuyến đi',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -317,10 +314,9 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
             ),
           if (widget.apply["state"] == 'close')
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Material(
-                  color: Color(0xffE8FDF2),
+                  color: const Color(0xffE8FDF2),
                   borderRadius: BorderRadius.circular(52),
                   child: InkWell(
                     onTap: () {},
@@ -347,7 +343,6 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
             ),
           if (widget.apply["state"] == 'refuse')
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Material(
                     color: Color(0xffFFEDED),
@@ -375,21 +370,6 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
               ],
             ),
           const SizedBox(height: 8),
-          // Text(widget.apply["_id"]),
-          if (widget.apply["state"] == "starting") ...[
-            Text(
-                'Tọa độ của người đăng : ${widget.apply["booking"]["authorId"]["first_name"]}'),
-            Text('id : ${widget.apply["booking"]["authorId"]["location_id"]}'),
-            Text(
-                'main text : ${widget.apply["booking"]["authorId"]["location_mainText"]}'),
-            Text(
-                'adrress : ${widget.apply["booking"]["authorId"]["location_address"]}'),
-            Text(
-                'Tọa độ của người apply : ${widget.apply["applyer"]["first_name"]}'),
-            Text('id : ${widget.apply["applyer"]["location_id"]}'),
-            Text('main text : ${widget.apply["applyer"]["location_mainText"]}'),
-            Text('adrress : ${widget.apply["applyer"]["location_address"]}'),
-          ],
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -397,7 +377,7 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
                   isLoading_waiting_rejected ||
                   isLoading_accepted_start ||
                   isLoading_accepted_close)
-                CircularProgressIndicator(),
+                const CircularProgressIndicator(),
               if (!(isLoading_waiting_accpected ||
                   isLoading_waiting_rejected ||
                   isLoading_accepted_start ||
@@ -407,33 +387,30 @@ class _ApplyInBookItemState extends State<ApplyInBookItem> {
                       onPressed: () {
                         waiting_accpected();
                       },
-                      child: Text('Đồng ý')),
+                      child: const Text('Đồng ý')),
                   ElevatedButton(
                       onPressed: () {
                         waiting_rejected();
                       },
-                      child: Text('Từ chối')),
+                      child: const Text('Từ chối')),
                 ],
                 if (widget.apply["state"] == "accepted") ...[
-                  ElevatedButton(
-                      onPressed: () {
-                        accepted_starting();
-                      },
-                      child: Text('Bắt đầu')),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          accepted_starting();
+                        },
+                        child: const Text('Bắt đầu')),
+                  ),
                 ],
                 if (widget.apply["state"] == "starting") ...[
-                  ElevatedButton(
-                      onPressed: () {
-                        accepted_close();
-                      },
-                      child: Text('Đóng')),
-                ],
-                if (widget.apply["state"] == "close") ...[
-                  ElevatedButton(
-                      onPressed: () {
-                        close_review();
-                      },
-                      child: Text('Đánh giá')),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          close_review();
+                        },
+                        child: const Text('Đánh giá')),
+                  ),
                 ],
                 if (widget.apply["state"] == "refuse") ...[],
               ],

@@ -27,14 +27,6 @@ class _MyBookingItemState extends State<MyBookingItem> {
 
   @override
   Widget build(BuildContext context) {
-    // return CustomCard(
-    //   child: Column(
-    //     children: [
-    //       Text(widget.booking["_id"]),
-    //       Text(widget.booking["authorId"]["first_name"])
-    //     ],
-    //   ),
-    // );
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
@@ -60,7 +52,7 @@ class _MyBookingItemState extends State<MyBookingItem> {
                         ),
                       );
                     },
-                    child: Text('Danh sách apply'),
+                    child: const Text('Danh sách apply'),
                   ),
                 ),
                 const SizedBox(height: 4),

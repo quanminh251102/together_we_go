@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/funtions/audio_player.functions.dart';
-import '../../views/calling_audio/calling_audio_page.dart';
 import '../app_socket.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:peerdart/peerdart.dart';
@@ -30,8 +29,6 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
   bool isTorchOn = false;
   bool isVideo = true;
   bool isAudio = true;
-  bool _isLoading_init = false;
-  bool _partner_isVideo = true;
   bool inCall = false;
   bool videoEnabled = true;
   bool audioEnabled = true;
@@ -47,7 +44,6 @@ class CallingAudioCubit extends Cubit<CallingAudioState> {
   RTCVideoRenderer remoteRenderer = RTCVideoRenderer();
   Peer peer = Peer(options: PeerOptions(debug: LogLevel.All));
   MediaConnection? mediaConection;
-  MediaStream? _MediaStream;
 
   Timer? _timer;
   int start = 0;

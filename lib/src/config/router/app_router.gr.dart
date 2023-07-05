@@ -80,6 +80,16 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    TrackingScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<TrackingScreenRouteArgs>();
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: TrackingScreen(
+          key: args.key,
+          apply: args.apply,
+        ),
+      );
+    },
   };
 
   @override
@@ -119,6 +129,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           UpdateProfilePageRoute.name,
           path: '/update-profile-page',
+        ),
+        RouteConfig(
+          TrackingScreenRoute.name,
+          path: '/tracking-screen',
         ),
       ];
 }
@@ -277,5 +291,39 @@ class UpdateProfilePageRouteArgs {
   @override
   String toString() {
     return 'UpdateProfilePageRouteArgs{key: $key, user: $user}';
+  }
+}
+
+/// generated route for
+/// [TrackingScreen]
+class TrackingScreenRoute extends PageRouteInfo<TrackingScreenRouteArgs> {
+  TrackingScreenRoute({
+    Key? key,
+    required dynamic apply,
+  }) : super(
+          TrackingScreenRoute.name,
+          path: '/tracking-screen',
+          args: TrackingScreenRouteArgs(
+            key: key,
+            apply: apply,
+          ),
+        );
+
+  static const String name = 'TrackingScreenRoute';
+}
+
+class TrackingScreenRouteArgs {
+  const TrackingScreenRouteArgs({
+    this.key,
+    required this.apply,
+  });
+
+  final Key? key;
+
+  final dynamic apply;
+
+  @override
+  String toString() {
+    return 'TrackingScreenRouteArgs{key: $key, apply: $apply}';
   }
 }

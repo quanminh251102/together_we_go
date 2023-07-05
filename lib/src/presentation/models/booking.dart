@@ -47,6 +47,30 @@ class Booking {
     required this.distance,
     required this.duration,
   });
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.id;
+    data['status'] = this.status;
+    data['price'] = this.price;
+    data['bookingType'] = this.bookingType;
+    data['time'] = this.time;
+    data['content'] = this.content;
+    data['startPointLat'] = this.startPointLat;
+    data['startPointLong'] = this.startPointLong;
+    data['startPointId'] = this.startPointId;
+    data['startPointMainText'] = this.startPointMainText;
+    data['startPointAddress'] = this.startPointAddress;
+    data['endPointLat'] = this.endPointLat;
+    data['endPointLong'] = this.endPointLong;
+    data['endPointId'] = this.endPointId;
+    data['endPointMainText'] = this.endPointMainText;
+    data['endPointAddress'] = this.endPointAddress;
+    data['distance'] = this.distance;
+    data['duration'] = this.duration;
+
+    return data;
+  }
+
   static toBooking(Map<String, dynamic> map) {
     return Booking(
       id: map["_id"],

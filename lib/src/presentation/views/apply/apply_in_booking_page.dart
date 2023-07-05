@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:together_we_go/src/presentation/views/apply/widgets/apply_in_booking_item.dart';
-
+import 'widgets/apply_in_booking_item.dart';
 import '../../../utils/constants/colors.dart';
-import '../../models/booking.dart';
 import '../../services/apply.dart';
 
 class ApplyInBookingPage extends StatefulWidget {
@@ -44,18 +40,13 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
       applys_selected = applys;
     } catch (e) {
       result = "error";
+      print(e);
     }
 
     if (result == "error") {
-      const snackBar = SnackBar(
-        content: Text('Bị lổi'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print('lỗi');
     } else {
-      const snackBar = SnackBar(
-        content: Text('Thành công'),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print('thành công');
     }
     setState(() {
       isLoading_getApplyInBooking = false;
@@ -82,7 +73,7 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
   Widget build(BuildContext context) {
     search_bar() {
       return [
-        Text('Search theo tên : '),
+        const Text('Search theo tên : '),
         TextFormField(
           style: const TextStyle(fontWeight: FontWeight.w600),
           focusNode: nameFocus,
@@ -120,9 +111,9 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Apply của bài đăng')),
+      appBar: AppBar(title: const Text('Apply của bài đăng')),
       body: isLoading_getApplyInBooking
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
@@ -133,7 +124,8 @@ class _ApplyInBookingPageState extends State<ApplyInBookingPage> {
                   children: [
                     ...search_bar(),
                     const SizedBox(height: 20),
-                    if (applys_selected.length == 0) Text('Danh sách rỗng'),
+                    if (applys_selected.length == 0)
+                      const Text('Danh sách rỗng'),
                     if (applys_selected.length > 0)
                       for (var _apply in applys_selected) ...[
                         ApplyInBookItem(

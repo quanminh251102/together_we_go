@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 
 import '../../config/url/config.dart';
 import '../cubits/app_user.dart';
+import '../models/booking.dart';
 
 class ApplyService {
   static Future<String> createApply(Map<String, dynamic> _body) async {

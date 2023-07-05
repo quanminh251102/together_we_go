@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
-
 import '../../../utils/constants/colors.dart';
 import '../../../utils/handle_string.dart';
 import '../../services/apply.dart';
@@ -91,7 +88,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
   Widget build(BuildContext context) {
     search_bar() {
       return [
-        Text('Điểm đi : '),
+        const Text('Điểm đi : '),
         TextFormField(
           style: const TextStyle(fontWeight: FontWeight.w600),
           focusNode: startPointFocus,
@@ -127,7 +124,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
             do_filter();
           },
         ),
-        Text('Điểm đến : '),
+        const Text('Điểm đến : '),
         TextFormField(
           style: const TextStyle(fontWeight: FontWeight.w600),
           focusNode: endPointFocus,
@@ -163,7 +160,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
             do_filter();
           },
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ];
@@ -171,7 +168,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Apply của tôi'),
+        title: const Text('Apply của tôi'),
         centerTitle: true,
       ),
       body: isLoading_getMyApply
@@ -216,7 +213,7 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                               Text(
                                                 _apply["booking"]["authorId"]
                                                     ["first_name"],
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
@@ -242,11 +239,9 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                   const SizedBox(height: 8),
                                   if (_apply["state"] == 'waiting')
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Material(
-                                          color: Color(0xffEDF3FC),
+                                          color: const Color(0xffEDF3FC),
                                           borderRadius:
                                               BorderRadius.circular(52),
                                           child: InkWell(
@@ -276,11 +271,9 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                     ),
                                   if (_apply["state"] == 'accepted')
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Material(
-                                          color: Color(0xffE8FDF2),
+                                          color: const Color(0xffE8FDF2),
                                           borderRadius:
                                               BorderRadius.circular(52),
                                           child: InkWell(
@@ -310,11 +303,9 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                     ),
                                   if (_apply["state"] == 'starting')
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Material(
-                                          color: Color(0xffE8FDF2),
+                                          color: const Color(0xffE8FDF2),
                                           borderRadius:
                                               BorderRadius.circular(52),
                                           child: InkWell(
@@ -344,11 +335,9 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                     ),
                                   if (_apply["state"] == 'close')
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Material(
-                                          color: Color(0xffE8FDF2),
+                                          color: const Color(0xffE8FDF2),
                                           borderRadius:
                                               BorderRadius.circular(52),
                                           child: InkWell(
@@ -378,11 +367,9 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                     ),
                                   if (_apply["state"] == 'refuse')
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       children: [
                                         Material(
-                                            color: Color(0xffFFEDED),
+                                            color: const Color(0xffFFEDED),
                                             borderRadius:
                                                 BorderRadius.circular(52),
                                             child: InkWell(
@@ -419,24 +406,6 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                       "Điểm đi: ${_apply["booking"]["startPointAddress"]}"),
                                   Text(
                                       "Điểm đến: ${_apply["booking"]["endPointAddress"]}"),
-                                  if (_apply["state"] == "starting") ...[
-                                    // Text(
-                                    //     'Tọa độ của người đăng : ${applys_selected[index]["booking"]["authorId"]["first_name"]}'),
-                                    // Text(
-                                    //     'id : ${applys_selected[index]["booking"]["authorId"]["location_id"]}'),
-                                    // Text(
-                                    //     'main text : $applys_selected[index]["booking"]["authorId"]["location_mainText"]}'),
-                                    // Text(
-                                    //     'adrress : ${applys_selected[index]["booking"]["authorId"]["location_address"]}'),
-                                    // Text(
-                                    //     'Tọa độ của người apply : ${applys_selected[index]["applyer"]["first_name"]}'),
-                                    // Text(
-                                    //     'id : ${applys_selected[index]["applyer"]["location_id"]}'),
-                                    // Text(
-                                    //     'main text : ${applys_selected[index]["applyer"]["location_mainText"]}'),
-                                    // Text(
-                                    //     'adrress : ${applys_selected[index]["applyer"]["location_address"]}'),
-                                  ]
                                 ])),
                         const SizedBox(height: 12),
                       ],
