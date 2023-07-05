@@ -10,6 +10,7 @@ import '../../presentation/views/homepage/signin/signin.dart';
 import '../../presentation/views/homepage/homepage.dart';
 import '../../presentation/views/chat/chat_page.dart';
 import '../../presentation/views/homepage/signup/signup.dart';
+import '../../presentation/views/tracking/tracking_route_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -24,6 +25,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: ForgotPasswordScreen),
     AutoRoute(page: PrivacyPolicyPage),
     AutoRoute(page: UpdateProfilePage),
+    AutoRoute(page: TrackingScreen),
   ],
 )
 class AppRouter extends _$AppRouter {}

@@ -122,22 +122,23 @@ class _MyReViewsPageState extends State<MyReViewsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Đánh giá đến tôi'),
+        title: const Text('Đánh giá đến tôi'),
         centerTitle: true,
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ...search_bar(),
                     const SizedBox(height: 20),
-                    if (reviews_selected.length == 0) Text('Danh sách rỗng'),
+                    if (reviews_selected.length == 0)
+                      const Text('Danh sách rỗng'),
                     if (reviews_selected.length > 0)
                       for (var review in reviews_selected) ...[
                         CustomCard(

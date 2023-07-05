@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
 import '../../cubits/chat/chat_rooms_cubit.dart';
+import '../../cubits/map/map/map_cubit.dart';
 import '../booking/booking_page.dart';
 import '../booking/search_booking_page.dart';
 import '../chat/chat_rooms_page.dart';
@@ -144,15 +145,6 @@ class _HomePageViewState extends State<HomePageView>
           _body = const ChatRoomsPage();
           break;
         case 3:
-          _body = Container(
-            child: const Center(
-                child: Text(
-              'Wallet',
-              style: TextStyle(fontSize: 20),
-            )),
-          );
-          break;
-        case 4:
           _body = Container(child: const ProfilePage());
           break;
         default:
@@ -167,6 +159,7 @@ class _HomePageViewState extends State<HomePageView>
         unselectedItemColor: AppColors.borderColor,
         currentIndex: _currentIndex,
         onTap: (value) {
+          BlocProvider.of<MapCubit>(context).listSelectedMarker = [];
           if (value == 2) context.read<ChatRoomsCubit>().get_chatRoom();
           if (value == 1)
             setState(() {
@@ -189,10 +182,6 @@ class _HomePageViewState extends State<HomePageView>
               backgroundColor: Colors.white,
               icon: Icon(Icons.message),
               label: 'Inbox'),
-          const BottomNavigationBarItem(
-              backgroundColor: Colors.white,
-              icon: Icon(Icons.wallet),
-              label: 'Wallet'),
           const BottomNavigationBarItem(
               backgroundColor: Colors.white,
               icon: Icon(Icons.person),

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
 import '../../../utils/constants/colors.dart';
 import '../../cubits/app_user.dart';
 import '../../models/booking.dart';
@@ -28,7 +25,6 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _site = PriceOpition.accpected;
 
@@ -90,7 +86,7 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tạo apply'),
+        title: const Text('Tạo apply'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -101,8 +97,8 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Lựa chọn giá'),
-                SizedBox(height: 12),
+                const Text('Lựa chọn giá'),
+                const SizedBox(height: 12),
                 ListTile(
                   title: const Text('Đồng ý giá'),
                   leading: Radio(
@@ -177,9 +173,9 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 24),
-                Text('Ghi chú'),
-                SizedBox(height: 12),
+                const SizedBox(height: 24),
+                const Text('Ghi chú'),
+                const SizedBox(height: 12),
                 TextFormField(
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   focusNode: noteFocus,
@@ -216,10 +212,10 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
                             : Colors.black),
                   ),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 Center(
                   child: (isLoading_create_apply)
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator(),
                         )
                       : ElevatedButton(
@@ -229,10 +225,10 @@ class _CreateApplyPageState extends State<CreateApplyPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                              minimumSize: Size(200, 50),
-                              maximumSize: Size(200, 50),
+                              minimumSize: const Size(200, 50),
+                              maximumSize: const Size(200, 50),
                               backgroundColor: AppColors.primaryColor),
-                          child: Text(
+                          child: const Text(
                             'Tạo apply',
                             style: TextStyle(color: Colors.white),
                           ),

@@ -163,7 +163,7 @@ class _MyBookPageState extends State<MyBookPage> {
             do_filter();
           },
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
       ];
@@ -180,7 +180,7 @@ class _MyBookPageState extends State<MyBookPage> {
             )
           : SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

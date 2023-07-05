@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 import 'src/presentation/cubits/calling_audio/calling_audio_cubit.dart';
 import 'src/presentation/cubits/map/map/map_cubit.dart';
+import 'src/presentation/views/tracking/viewmodel/implement/tracking_route_viewmodel.dart';
+import 'src/presentation/views/tracking/viewmodel/interfaces/itracking_route_viewmodel.dart';
 import 'src/service/notifi_service.dart';
 import 'src/presentation/cubits/booking/booking_cubit.dart';
 import 'src/presentation/cubits/chat/chat_rooms_cubit.dart';
@@ -48,11 +51,18 @@ class MyApp extends StatelessWidget {
           create: (context) => NotificationCubit(),
         ),
       ],
-      child: MaterialApp.router(
-        theme: AppTheme.light,
-        debugShowCheckedModeBanner: false,
-        routerDelegate: appRouter.delegate(),
-        routeInformationParser: appRouter.defaultRouteParser(),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ITrackingRouteViewModel>(
+            create: (_) => TrackingRouteViewModel(),
+          ),
+        ],
+        child: MaterialApp.router(
+          theme: AppTheme.light,
+          debugShowCheckedModeBanner: false,
+          routerDelegate: appRouter.delegate(),
+          routeInformationParser: appRouter.defaultRouteParser(),
+        ),
       ),
     );
   }

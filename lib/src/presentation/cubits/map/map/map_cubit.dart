@@ -15,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../config/url/config.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../models/booking.dart';
+import '../../../views/common_widget/user_marker.dart';
 
 part 'map_state.dart';
 
@@ -115,8 +116,11 @@ class MapCubit extends Cubit<MapState> {
                           listMarkers: listSelectedMarker,
                           book: book));
                     },
-                    icon: SvgPicture.asset(
-                      'assets/svg/waving.svg',
+                    icon: Transform.scale(
+                      scale: 2,
+                      child: SvgPicture.asset(
+                        'assets/svg/pin.svg',
+                      ),
                     ),
                   );
                 },
@@ -165,7 +169,6 @@ class MapCubit extends Cubit<MapState> {
                   double.parse(book.startPointLong)),
               builder: (context) {
                 return IconButton(
-                  iconSize: 50,
                   onPressed: () {
                     emit(MapLoading());
                     coordinates = [
@@ -183,7 +186,7 @@ class MapCubit extends Cubit<MapState> {
                           double.parse(book.startPointLong)),
                       builder: (context) {
                         return Transform.scale(
-                          scale: 1.5,
+                          scale: 1,
                           child: SvgPicture.asset(
                             'assets/svg/start.svg',
                           ),
@@ -195,7 +198,7 @@ class MapCubit extends Cubit<MapState> {
                           double.parse(book.endPointLong)),
                       builder: (context) {
                         return Transform.scale(
-                          scale: 1.5,
+                          scale: 1,
                           child: SvgPicture.asset(
                             'assets/svg/end.svg',
                           ),
@@ -209,7 +212,7 @@ class MapCubit extends Cubit<MapState> {
                         book: book));
                   },
                   icon: Transform.scale(
-                    scale: 3,
+                    scale: 2,
                     child: SvgPicture.asset(
                       'assets/svg/pin.svg',
                     ),
@@ -233,66 +236,5 @@ class MapCubit extends Cubit<MapState> {
   Future<void> backtoInitial() async {
     listSelectedMarker = [];
     await requestLocationPermission();
-  }
-}
-
-class UserMarker extends StatefulWidget {
-  const UserMarker({Key? key}) : super(key: key);
-
-  @override
-  State<UserMarker> createState() => _UserMarkerState();
-}
-
-class _UserMarkerState extends State<UserMarker>
-    with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<double> sizeAnimation;
-
-  @override
-  void initState() {
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-    sizeAnimation = Tween<double>(
-      begin: 45,
-      end: 60,
-    ).animate(CurvedAnimation(
-        parent: animationController, curve: Curves.fastOutSlowIn));
-    animationController.repeat(
-      reverse: true,
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: sizeAnimation,
-      builder: (context, child) {
-        return Center(
-          child: Container(
-            width: sizeAnimation.value,
-            height: sizeAnimation.value,
-            decoration: const BoxDecoration(
-              color: AppColors.primaryColor,
-              shape: BoxShape.circle,
-            ),
-            child: child,
-          ),
-        );
-      },
-      child: const Icon(
-        Icons.person_pin,
-        color: Colors.black,
-        size: 35,
-      ),
-    );
   }
 }
