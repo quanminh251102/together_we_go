@@ -22,4 +22,34 @@ class BookingService {
       throw "error";
     }
   }
+
+  static Future<List<dynamic>> getBookingWithId(String userId) async {
+    var uri = Uri.parse('$baseUrl/api/booking/getMyBooking/${userId}');
+    Response res = await get(
+      uri,
+    );
+
+    if (res.statusCode == 200) {
+      print(jsonDecode(res.body));
+      List<dynamic> data = jsonDecode(res.body) as List<dynamic>;
+      return data;
+    } else {
+      throw "error";
+    }
+  }
+
+  static Future<List<dynamic>> getMyCompleteBooking(String userId) async {
+    var uri = Uri.parse('$baseUrl/api/booking/getMyCompleteBooking/${userId}');
+    Response res = await get(
+      uri,
+    );
+
+    if (res.statusCode == 200) {
+      print(jsonDecode(res.body));
+      List<dynamic> data = jsonDecode(res.body) as List<dynamic>;
+      return data;
+    } else {
+      throw "error";
+    }
+  }
 }

@@ -94,163 +94,152 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       bottom: 0,
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 20, left: 10, right: 10),
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            appRouter.pop();
-                                          },
-                                          icon:
-                                              const Icon(Icons.close_outlined)),
-                                    ],
-                                  ),
-                                  Text(
-                                    '${vm.currentBooking.startPointMainText} - ${vm.currentBooking.endPointMainText}',
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    '${vm.currentBooking.time}',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.1,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          CircleAvatar(
-                                              radius: 25,
-                                              backgroundImage: NetworkImage(vm
-                                                  .currentBooking
-                                                  .authorAvatar)),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                vm.currentBooking.authorName,
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    "assets/svg/distance.svg",
-                                                    height: 30,
-                                                  ),
-                                                  Text(
-                                                    vm.currentBooking.distance,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  SvgPicture.asset(
-                                                    "assets/svg/clock.svg",
-                                                    height: 30,
-                                                  ),
-                                                  Text(
-                                                    vm.currentBooking.duration,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                '${vm.currentBooking.price} VND',
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                        child: InkWell(
+                          onTap: () {
+                            appRouter.push(
+                                DetailPageRoute(booking: vm.currentBooking));
+                          },
+                          child: Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 20, left: 10, right: 10),
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '${vm.currentBooking.startPointMainText} - ${vm.currentBooking.endPointMainText}',
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Center(
-                                      child: GestureDetector(
-                                    onTap: () {
-                                      print(vm.currentBooking.id);
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) =>
-                                      //         ApplyInBookingPage(
-                                      //       booking: vm.currentBooking.toJson(),
-                                      //     ),
-                                      //   ),
-                                      // );
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: AppColors.primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '${vm.currentBooking.time}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.06,
+                                              0.1,
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
-                                      child: const Center(
-                                        child: Text(
-                                          'Kết thúc chuyến đi',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 20),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            CircleAvatar(
+                                                radius: 25,
+                                                backgroundImage: NetworkImage(vm
+                                                    .currentBooking
+                                                    .authorAvatar)),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  vm.currentBooking.authorName,
+                                                  style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      "assets/svg/distance.svg",
+                                                      height: 30,
+                                                    ),
+                                                    Text(
+                                                      vm.currentBooking
+                                                          .distance,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      "assets/svg/clock.svg",
+                                                      height: 30,
+                                                    ),
+                                                    Text(
+                                                      vm.currentBooking
+                                                          .duration,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  '${vm.currentBooking.price} VND',
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  )),
-                                ]),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Center(
+                                        child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.06,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        child: const Center(
+                                          child: Text(
+                                            'Kết thúc chuyến đi',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                    )),
+                                  ]),
+                            ),
                           ),
                         ),
                       ),

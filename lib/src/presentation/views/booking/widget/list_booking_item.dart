@@ -80,59 +80,64 @@ class _ListBookingItemState extends State<ListBookingItem> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Row(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: CircleAvatar(
-                            radius: 25,
-                            backgroundImage:
-                                NetworkImage(widget.booking.authorAvatar)),
+                  child: InkWell(
+                    onTap: () {
+                      appRouter.push(DetailPageRoute(booking: widget.booking));
+                    },
+                    child: Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: CircleAvatar(
+                              radius: 25,
+                              backgroundImage:
+                                  NetworkImage(widget.booking.authorAvatar)),
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.booking.authorName,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          widget.booking.contact,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          widget.booking.bookingType,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: widget.booking.status == 'available'
-                                ? AppColors.primaryColor
-                                : widget.booking.status == 'complete'
-                                    ? Colors.green
-                                    : Colors.red),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            widget.booking.status.toUpperCase(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.booking.authorName,
                             style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                        ))
-                  ]),
+                          Text(
+                            widget.booking.contact,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            widget.booking.bookingType,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: widget.booking.status == 'available'
+                                  ? AppColors.primaryColor
+                                  : widget.booking.status == 'complete'
+                                      ? Colors.green
+                                      : Colors.red),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.booking.status.toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ))
+                    ]),
+                  ),
                 ),
                 ExpansionTile(
                   title: const Text('Chi tiết'),

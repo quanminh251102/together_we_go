@@ -23,6 +23,16 @@ class _$AppRouter extends RootStackRouter {
         child: const SignInView(),
       );
     },
+    DetailPageRoute.name: (routeData) {
+      final args = routeData.argsAs<DetailPageRouteArgs>();
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: DetailPage(
+          key: args.key,
+          booking: args.booking,
+        ),
+      );
+    },
     ChatPageRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
         routeData: routeData,
@@ -99,6 +109,10 @@ class _$AppRouter extends RootStackRouter {
           path: '/',
         ),
         RouteConfig(
+          DetailPageRoute.name,
+          path: '/detail-page',
+        ),
+        RouteConfig(
           ChatPageRoute.name,
           path: '/chat-page',
         ),
@@ -147,6 +161,40 @@ class SignInViewRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignInViewRoute';
+}
+
+/// generated route for
+/// [DetailPage]
+class DetailPageRoute extends PageRouteInfo<DetailPageRouteArgs> {
+  DetailPageRoute({
+    Key? key,
+    required Booking booking,
+  }) : super(
+          DetailPageRoute.name,
+          path: '/detail-page',
+          args: DetailPageRouteArgs(
+            key: key,
+            booking: booking,
+          ),
+        );
+
+  static const String name = 'DetailPageRoute';
+}
+
+class DetailPageRouteArgs {
+  const DetailPageRouteArgs({
+    this.key,
+    required this.booking,
+  });
+
+  final Key? key;
+
+  final Booking booking;
+
+  @override
+  String toString() {
+    return 'DetailPageRouteArgs{key: $key, booking: $booking}';
+  }
 }
 
 /// generated route for
