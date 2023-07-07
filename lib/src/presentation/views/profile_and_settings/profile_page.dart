@@ -179,7 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 219, 219, 219),
+                                color: const Color.fromARGB(255, 219, 219, 219),
                                 borderRadius: BorderRadius.circular(25)),
                             height: MediaQuery.of(context).size.height * 0.06,
                             width: MediaQuery.of(context).size.width * 0.4,
@@ -301,14 +301,6 @@ class _ProfilePageState extends State<ProfilePage> {
             horizontal: MediaQuery.of(context).size.width * 0.05,
             vertical: MediaQuery.of(context).size.height * 0.05),
         child: Column(children: [
-          const Align(
-            child: Text(
-              'Thông tin tài khoản',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            alignment: Alignment.topLeft,
-          ),
-          const SizedBox(height: 8),
           CachedNetworkImage(
             imageUrl: appUser.avatar,
             imageBuilder: (context, imageProvider) => Container(
@@ -330,6 +322,9 @@ class _ProfilePageState extends State<ProfilePage> {
           Visibility(
               visible: _isLoadingImage,
               child: const CircularProgressIndicator()),
+          const SizedBox(
+            height: 20,
+          ),
           ElevatedButton(
             onPressed: () {
               openMediaDialog();

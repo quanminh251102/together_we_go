@@ -4,7 +4,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../config/router/app_router.dart';
 import '../../../../utils/constants/colors.dart';
+import '../../../models/booking.dart';
 import '../../apply/apply_in_booking_page.dart';
 
 class MyBookingItem extends StatefulWidget {
@@ -58,59 +60,65 @@ class _MyBookingItemState extends State<MyBookingItem> {
                 const SizedBox(height: 4),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Row(children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: CircleAvatar(
-                            radius: 25,
-                            backgroundImage: NetworkImage(
-                                widget.booking["authorId"]["avatarUrl"])),
+                  child: InkWell(
+                    onTap: () {
+                      appRouter.push(DetailPageRoute(
+                          booking: Booking.toBooking(widget.booking)));
+                    },
+                    child: Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0),
+                        child: SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: CircleAvatar(
+                              radius: 25,
+                              backgroundImage: NetworkImage(
+                                  widget.booking["authorId"]["avatarUrl"])),
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.booking["authorId"]["first_name"],
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          widget.booking["authorId"]["phoneNumber"],
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          widget.booking["bookingType"],
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: widget.booking["status"] == 'available'
-                                ? AppColors.primaryColor
-                                : widget.booking["status"] == 'complete'
-                                    ? Colors.green
-                                    : Colors.red),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            widget.booking["status"].toUpperCase(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.booking["authorId"]["first_name"],
                             style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
-                        ))
-                  ]),
+                          Text(
+                            widget.booking["authorId"]["phoneNumber"],
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            widget.booking["bookingType"],
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      const Spacer(),
+                      Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: widget.booking["status"] == 'available'
+                                  ? AppColors.primaryColor
+                                  : widget.booking["status"] == 'complete'
+                                      ? Colors.green
+                                      : Colors.red),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.booking["status"].toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ))
+                    ]),
+                  ),
                 ),
                 ExpansionTile(
                   title: const Text('Chi tiết'),

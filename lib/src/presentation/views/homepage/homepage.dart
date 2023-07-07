@@ -49,8 +49,6 @@ class _HomePageViewState extends State<HomePageView>
           _appBar = AppBar(
             leading: InkWell(
               onTap: () {
-                print('hello');
-
                 _key.currentState!.openDrawer();
               },
               child: const Icon(Icons.menu),
@@ -120,13 +118,30 @@ class _HomePageViewState extends State<HomePageView>
 
         case 2:
           _appBar = AppBar(
-            toolbarHeight: 0,
+            leading: InkWell(
+              onTap: () {
+                print('hello');
+
+                _key.currentState!.openDrawer();
+              },
+              child: const Icon(Icons.menu),
+            ),
+            title: const Text(
+              'Trò chuyện',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          );
+          break;
+        case 3:
+          _appBar = AppBar(
+            title: const Text(
+              'Thông tin tài khoản',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           );
           break;
         default:
-          _appBar = AppBar(
-            toolbarHeight: 0,
-          );
+          _appBar = AppBar();
           break;
       }
       return _appBar;

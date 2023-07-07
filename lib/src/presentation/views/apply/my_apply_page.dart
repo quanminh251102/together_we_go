@@ -3,6 +3,7 @@ import 'package:flutter_custom_cards/flutter_custom_cards.dart';
 import '../../../config/router/app_router.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/handle_string.dart';
+import '../../models/booking.dart';
 import '../../services/apply.dart';
 
 class MyApplyPage extends StatefulWidget {
@@ -201,32 +202,41 @@ class _MyApplyPageState extends State<MyApplyPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 30.0,
-                                            backgroundImage: NetworkImage(
-                                                _apply["booking"]["authorId"]
-                                                    ["avatarUrl"]),
-                                            backgroundColor: Colors.transparent,
-                                          ),
-                                          const SizedBox(width: 12),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                _apply["booking"]["authorId"]
-                                                    ["first_name"],
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Text(_apply["booking"]["authorId"]
-                                                  ["phoneNumber"]),
-                                            ],
-                                          ),
-                                        ],
+                                      InkWell(
+                                        onTap: () {
+                                          appRouter.push(DetailPageRoute(
+                                              booking: Booking.toBooking(
+                                                  _apply["booking"])));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 30.0,
+                                              backgroundImage: NetworkImage(
+                                                  _apply["booking"]["authorId"]
+                                                      ["avatarUrl"]),
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  _apply["booking"]["authorId"]
+                                                      ["first_name"],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(_apply["booking"]
+                                                        ["authorId"]
+                                                    ["phoneNumber"]),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       Column(
                                         crossAxisAlignment:
