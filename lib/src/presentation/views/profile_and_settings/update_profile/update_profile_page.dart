@@ -160,6 +160,9 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
     _formUpdateProfile() => Form(
           key: _formKey,
           child: Column(children: [
+            const SizedBox(
+              height: 20,
+            ),
             TextFormField(
               style: const TextStyle(fontWeight: FontWeight.w600),
               focusNode: nameFocus,
